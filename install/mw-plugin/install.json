@@ -1,0 +1,12 @@
+[
+    {
+       "icon" : "microweber.png",
+       "group_id" : "applications",
+       "order" : 100,
+       "name" : "Microweber",
+       "type" : "link",
+       "id" : "microweber",
+       "uri" : "microweber.live.php",
+       "featuremanager": true
+    }
+]
