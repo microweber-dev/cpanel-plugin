@@ -8,7 +8,7 @@ if ($_POST) {
 }
 $storedData = $storage->read();
 $autoInstall = isset($storedData->auto_install) && $storedData->auto_install == '1';
-$install_type = isset($storedData->install_type) && $storedData->install_type == '';
+$install_type = isset($storedData->install_type) && $storedData->install_type == 'symlinked';
 
 WHM::header('Microweber', 0, 0);
 ?>

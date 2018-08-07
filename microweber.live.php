@@ -3,7 +3,6 @@ include('/usr/local/cpanel/php/cpanel.php');
 
 require_once(__DIR__ . '/lib/MicroweberPluginController.php');
 
-
 $cpanel = new CPANEL();
 $controller = new MicroweberPluginController($cpanel);
 echo $cpanel->header();

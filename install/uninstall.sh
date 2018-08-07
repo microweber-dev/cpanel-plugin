@@ -3,6 +3,7 @@
 echo "Uninstalling Microweber cPanel plugin...";
 
 ## Check if being ran by root
+
 username=`whoami`
 if [ "$username" != "root" ]; then
     echo "Please run this script as root";
@@ -31,28 +32,29 @@ if [ -z "$unregister_hooks" ]; then
 fi
 
 ## Remove symlinks
+
 echo "Removing symlinks...";
 
 step1=`rm -rf /usr/local/cpanel/whostmgr/docroot/cgi/3rdparty/microweber`
 
-if [ -z "$step1" ]; then
+if [ -n "$step1" ]; then
     echo "Unable to complete step 1"
 fi
 
 step2=`rm -rf /usr/local/cpanel/whostmgr/docroot/3rdparty/microweber`
 
-if [ -z "$step2" ]; then
+if [ -n "$step2" ]; then
     echo "Unable to complete step 2"
 fi
 
 step3=`rm -rf /usr/local/cpanel/whostmgr/docroot/addon_plugins/microweber.png`
 
-if [ -z "$step3" ]; then
+if [ -n "$step3" ]; then
     echo "Unable to complete step 3"
 fi
 
 step4=`rm -rf /var/cpanel/microweber`
 
-if [ -z "$step4" ]; then
+if [ -n "$step4" ]; then
     echo "Unable to complete step 4"
 fi

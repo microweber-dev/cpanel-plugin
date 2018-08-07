@@ -4,9 +4,11 @@ include_once(__DIR__ . '/MicroweberStorage.php');
 
 class MicroweberHooks
 {
+    private $input;
     private $storage;
 
-    public function __construct() {
+    public function __construct($input) {
+        $this->input = $input;
         $this->storage = new MicroweberStorage();
     }
 
@@ -27,64 +29,42 @@ class MicroweberHooks
            'hook'     => '/var/cpanel/microweber/mw_hooks.php --remove-account',
            'exectype' => 'script',
        );
-       $add_domain = array(
-           'category' => 'Cpanel',
-           'event'    => 'Api2::AddonDomain::addaddondomain',
-           'stage'    => 'post',
-           'hook'     => '/var/cpanel/microweber/mw_hooks.php --add-domain',
-           'exectype' => 'script',
-       );
-       $remove_domain = array(
-           'blocking' => 1,
-           'category' => 'Cpanel',
-           'event'    => 'Api2::AddonDomain::deladdondomain',
-           'stage'    => 'pre',
-           'hook'     => '/var/cpanel/microweber/mw_hooks.php --remove-domain',
-           'exectype' => 'script',
-       );
-       $add_subdomain = array(
-           'category' => 'Cpanel',
-           'event'    => 'Api2::SubDomain::addsubdomain',
-           'stage'    => 'post',
-           'hook'     => '/var/cpanel/microweber/mw_hooks.php --add-subdomain',
-           'exectype' => 'script',
-       );
-       $remove_subdomain = array(
-           'blocking' => 1,
-           'category' => 'Cpanel',
-           'event'    => 'Api2::AddonDomain::deladdondomain',
-           'stage'    => 'pre',
-           'hook'     => '/var/cpanel/microweber/mw_hooks.php --remove-subdomain',
-           'exectype' => 'script',
-       );
-       $move_subdomain = array(
-           'category' => 'Cpanel',
-           'event'    => 'Api2::AddonDomain::changedocroot',
-           'stage'    => 'post',
-           'hook'     => '/var/cpanel/microweber/mw_hooks.php --move-subdomain',
-           'exectype' => 'script',
-       );
-       return json_encode(array($add_account, $remove_account, $add_domain, $remove_domain, $add_subdomain, $remove_subdomain, $move_subdomain));
+       return json_encode(array($add_account, $remove_account));
     }
     
     public function add_account() {
+        if(!$this->checkIfAutoInstall()) return;
+        $this->input->data->user;
+        $this->input->data->args->domain;
+        $this->input->data->args->homedir;
     }
     
     public function remove_account() {
+        if(!$this->checkIfAutoInstall()) return;
+    }
+    
+    // ----------------------
+
+    private function checkIfAutoInstall() {
+        $config = $this->storage->read();
+        return isset($config->auto_install) && $config->auto_install;
     }
 
-    public function add_domain() {
+    private function checkIfSymlinkInstall() {
+        $config = $this->storage->read();
+        return isset($config->install_type) && $config->install_type == 'symlinked';
     }
 
-    public function remove_domain() {
+    private function execUapi($module, $function, $args = array()) {
+        $user = $this->input->data->user;
+        $argsString = '';
+        foreach($args as $key=>$value) {
+            $argsString = urlencode($key) . '=' . urlencode($value);
+        }
+        $createDBCommand = "uapi --user=$user --output=json $module $function $argsString";
     }
 
-    public function add_subdomain() {
-    }
-
-    public function remove_subdomain() {
-    }
-
-    public function move_subdomain() {
+    private function install($config) {
+        $this->execUapi('Mysql', 'create_database', array('name' => ''));
     }
 }
