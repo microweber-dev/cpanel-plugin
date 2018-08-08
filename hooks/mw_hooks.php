@@ -12,6 +12,7 @@ $switches = (count($argv) > 1) ? $argv : array();
 $controller = new MicroweberHooks($input);
 $allowed = array('describe', 'add-account', 'remove-account');
 
+// Route controller
 foreach($allowed as $arg) {
     if(in_array("--$arg", $switches)) {
         $method = str_replace('-', '_', $arg);
@@ -20,6 +21,7 @@ foreach($allowed as $arg) {
     }
 }
 
+// Exit
 echo '0 microweber/mw_hooks.php needs a valid switch';
 exit(1);
 
