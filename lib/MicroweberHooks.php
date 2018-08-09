@@ -21,29 +21,18 @@ class MicroweberHooks
            'hook'     => '/var/cpanel/microweber/mw_hooks.php --add-account',
            'exectype' => 'script',
        );
-       $remove_account = array(
-           'blocking' => 1,
-           'category' => 'Whostmgr',
-           'event'    => 'Accounts::Remove',
-           'stage'    => 'pre',
-           'hook'     => '/var/cpanel/microweber/mw_hooks.php --remove-account',
-           'exectype' => 'script',
-       );
-       return json_encode(array($add_account, $remove_account));
+       return json_encode(array($add_account));
     }
     
     public function add_account() {
         if(!$this->checkIfAutoInstall()) return;
+        if(!$this->checkIfFeatureEnabled()) return;
         $domain = $this->input->data->args->domain;
         $installPath = $this->input->data->args->homedir;
         $adminEmail = $this->input->data->args->contactemail;
         $adminUsername = $this->input->data->user;
         $adminPassword = $this->input->data->args->password;
         $this->install($domain, $installPath, $adminEmail, $adminUsername, $adminPassword);
-    }
-    
-    public function remove_account() {
-        if(!$this->checkIfAutoInstall()) return;
     }
     
     // ----------------------
@@ -96,6 +85,24 @@ class MicroweberHooks
 
     // ----------------------
 
+    private function checkIfFeatureEnabled() {
+        $user = $this->input->data->user;
+        $account = $this->execApi1('accountsummary', compact('user'));
+        $account = $account->data->acct[0];
+        $pkg = $account->plan;
+        $package = $this->execApi1('getpkginfo', compact('pkg'));
+        $package = $package->data->pkg;
+        $featurelist = $package->FEATURELIST;
+        $featurelistData = $this->execApi1('get_featurelist_data', compact('featurelist'));
+        $featureHash = $featurelistData->data->features;
+        foreach($featureHash as $hash) {
+            if($hash->id == 'microweber') {
+                return $hash->is_disabled == '0';
+            }
+        }
+        return false;
+    }
+
     private function checkIfAutoInstall() {
         $config = $this->storage->read();
         return isset($config->auto_install) && $config->auto_install;
@@ -113,6 +120,16 @@ class MicroweberHooks
             $argsString = urlencode($key) . '=' . urlencode($value);
         }
         $command = "uapi --user=$user --output=json $module $function $argsString";
+        $json = shell_exec($command);
+        return json_decode($json);
+    }
+
+    private function execApi1($function, $args) {
+        $argsString = '';
+        foreach($args as $key=>$value) {
+            $argsString = urlencode($key) . '=' . urlencode($value);
+        }
+        $command = "whmapi1 --output=json $function $argsString";
         $json = shell_exec($command);
         return json_decode($json);
     }
