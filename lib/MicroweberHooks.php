@@ -43,7 +43,7 @@ class MicroweberHooks
         $zipInstallPath = '/tmp/microweber-latest.zip';
         $zipUserfilesUrl = 'https://members.microweber.com/_partners/csigma/userfiles.zip';
         $zipUserfilesPath = '/tmp/userfiles.zip';
-        $dbPrefix = substr($dbUsername, 0, 8) . '_';
+        $dbPrefix = substr($adminUsername, 0, 8) . '_';
 
         $dbNameLength = 16 - strlen($dbPrefix);
         $dbName = str_replace('.', '_', $domain);
