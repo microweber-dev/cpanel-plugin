@@ -64,7 +64,7 @@ class MicroweberPluginController
         exec("unzip $zipUserfilesPath -d $installPath");
 
         // Permissions
-        exec("chmod -R 777 $installPath");
+        exec("chmod -R 755 $installPath");
 
         // Clear cache
         exec("php $installPath/artisan cache:clear");
@@ -109,7 +109,7 @@ class MicroweberPluginController
         return substr($this->getUsername(), 0, 8) . '_';
     }
 
-    private function randomPassword($length = 8)
+    private function randomPassword($length = 32)
     {
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
         $pass = array();

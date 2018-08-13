@@ -4,7 +4,7 @@ class MicroweberStorage
 {
     private $file;
 
-    public function __construct($file = '/usr/local/cpanel/microweber/settings.json') {
+    public function __construct($file = '/usr/local/cpanel/microweber/storage/settings.json') {
         $this->file = $file;
     }
 

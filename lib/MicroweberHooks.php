@@ -44,7 +44,6 @@ class MicroweberHooks
         $zipUserfilesUrl = 'https://members.microweber.com/_partners/csigma/userfiles.zip';
         $zipUserfilesPath = '/tmp/userfiles.zip';
         $dbPrefix = substr($adminUsername, 0, 8) . '_';
-
         $dbNameLength = 16 - strlen($dbPrefix);
         $dbName = str_replace('.', '_', $domain);
         $dbName = $dbPrefix . substr($dbName, 0, $dbNameLength);
@@ -70,7 +69,8 @@ class MicroweberHooks
         exec("unzip $zipUserfilesPath -d $installPath");
 
         // Permissions
-        exec("chmod -R 777 $installPath");
+        exec("chmod -R 755 $installPath");
+        exec("chown $adminUsername $installPath");
 
         // Clear cache
         exec("php $installPath/artisan cache:clear");
