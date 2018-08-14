@@ -19,10 +19,6 @@ class MicroweberPluginController
         $adminPassword = $_POST['admin_password'];
         $dbDriver = 'mysql';
         $dbHost = 'localhost';
-        $dbName = '';
-        $dbUsername = '';
-        $dbPassword = $this->randomPassword();
-        $dbPrefix = '';
 
         // Prepare data
         $domainData = json_decode($_POST['domain']);
@@ -31,14 +27,15 @@ class MicroweberPluginController
 
 
 
-        $dbUsername = $this->getUsername();
-        $dbPrefix = $this->getDBPrefix();
+        $user = $this->getUsername();
+        $dbPrefix = $this->makeDBPrefix();
 
 
         $dbNameLength = 16 - strlen($dbPrefix);
         $dbName = str_replace('.', '_', $domainData->domain);
         $dbName = $dbPrefix . substr($dbName, 0, $dbNameLength);
         $dbUsername = $dbName;
+
         $dbHost = $this->cpanel->uapi('Mysql', 'locate_server');
         $dbHost = $dbHost['cpanelresult']['result']['data']['remote_host'];
         if ($_POST['express'] == '0') {
@@ -63,7 +60,32 @@ class MicroweberPluginController
             return;
         }
 
-        $dbPassword = $this->randomPassword();
+
+        $cpapi = new MicroweberCpanelApi();
+
+
+
+
+        $dbNameLength = 15;
+        $dbPrefix = $cpapi->makeDbPrefixFromUsername($user);
+
+        $dbName = $dbPrefix . str_replace('.', '', $domain);
+        $dbName = substr($dbName, 0, $dbNameLength);
+
+        $dbUsername = $dbName;
+        $dbPassword = $dbPass = $cpapi->randomPassword(12);
+
+        $this->log('Creating database user ' . $dbUsername);
+        $cpapi->execUapi(false, 'Mysql', 'create_user', array('name' => $dbUsername, 'password' => $dbPass));
+
+
+        $this->log('Creating database ' . $dbName);
+        $cpapi->execUapi(false, 'Mysql', 'create_database', array('name' => $dbName));
+
+        $this->log('Setting privileges ' . $dbUsername);
+        $cpapi->execUapi(false, 'Mysql', 'set_privileges_on_database', array('user' => $dbUsername, 'database' => $dbName, 'privileges' => 'ALL PRIVILEGES'));
+
+
 
 
         $opts = array();
@@ -118,7 +140,10 @@ class MicroweberPluginController
 //        return compact('adminEmail', 'adminUsername', 'adminPassword');
     }
 
-
+    public function log($msg)
+    {
+       // echo '[debug]  ' . $msg . "\n";
+    }
     public function OOOOLD___install()
     {
         $installPath = '/var/www/microweber';

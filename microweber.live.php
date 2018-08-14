@@ -306,14 +306,14 @@ $allDomains = array_merge(array($domaindata['main_domain']), $domaindata['addon_
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Database Name</label>
                                 <div class="col-lg-9">
-                                    <input type="text" class="form-control" name="db_name" value="<?php echo $controller->getDBPrefix(); ?>">
+                                    <input type="text" class="form-control" name="db_name" value="<?php echo $controller->makeDBPrefix(); ?>">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Database Username</label>
                                 <div class="col-lg-9">
-                                    <input type="text" class="form-control" name="db_username" value="<?php echo $controller->getDBPrefix(); ?>">
+                                    <input type="text" class="form-control" name="db_username" value="<?php echo $controller->makeDBPrefix(); ?>">
                                 </div>
                             </div>
 

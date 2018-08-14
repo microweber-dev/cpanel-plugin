@@ -30,10 +30,14 @@ class MicroweberCpanelApi
         // $user = $this->input->data->user;
         $argsString = '';
         foreach ($args as $key => $value) {
-            $argsString .= escapeshellarg($key) . '=' . escapeshellarg($value). ' ';
+            $argsString .= escapeshellarg($key) . '=' . escapeshellarg($value) . ' ';
         }
-        $command = "/usr/bin/uapi --user=$user --output=json $module $function $argsString";
-     //   print "\n\n execUapi  \n\n " . $command."\n\n";
+        if ($user) {
+            $command = "/usr/bin/uapi --user=$user --output=json $module $function $argsString";
+        } else {
+            $command = "/usr/bin/uapi --output=json $module $function $argsString";
+
+        }
         $json = shell_exec($command);
         return json_decode($json);
     }
@@ -42,7 +46,7 @@ class MicroweberCpanelApi
     {
         $argsString = '';
         foreach ($args as $key => $value) {
-            $argsString .=  escapeshellarg($key) . '=' . escapeshellarg($value). ' ';;
+            $argsString .= escapeshellarg($key) . '=' . escapeshellarg($value) . ' ';;
         }
         //$command = "whmapi1 --output=json $function $argsString";
         $command = "/usr/sbin/whmapi1 --output=json $function $argsString";

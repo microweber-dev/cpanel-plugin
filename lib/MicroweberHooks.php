@@ -61,9 +61,7 @@ class MicroweberHooks
 
         }
         if (!$cpapi->checkIfFeatureEnabled($adminUsername)) {
-
             $this->log('Website feature is not enabled for user ' . $adminUsername);
-
             return;
         }
 
@@ -81,8 +79,6 @@ class MicroweberHooks
     {
         $cpapi = new MicroweberCpanelApi();
 
-        //$source_folder = '/usr/share/microweber/latest/';
-
         $source_folder = $source_path;
 
 
@@ -97,49 +93,26 @@ class MicroweberHooks
         $this->log('Source is downloaded in ' . $source_folder);
 
 
-
         //$dbDriver @todo get from settings ?
 
-        $dbNameLength = 15 ;
-      //  $dbPrefix = substr($adminUsername, 0, 8) . '_';
+        $dbNameLength = 15;
         $dbPrefix = $cpapi->makeDbPrefixFromUsername($adminUsername);
-        //$dbUsername = $cpapi->makeDbPrefixFromUsername($adminUsername);
+        $dbName = $dbPrefix . str_replace('.', '', $domain);
+        $dbName = substr($dbName, 0, $dbNameLength);
 
-
-        $dbUsername = $adminUsername.'_mw';
-        $dbUsername = $dbUsername.'website'.date('Ymd');
-        $dbUsername =   substr($dbUsername, 0, $dbNameLength);
-
-
-
-
-
-        $dbName = $dbPrefix.str_replace('.', '', $domain);
-        $dbName =   substr($dbName, 0, $dbNameLength);
-
-
-      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // @TODO see  $dbUsername = $dbName;
-
-       $dbUsername = $dbName;
-
-
+        $dbUsername = $dbName;
         $dbPass = $cpapi->randomPassword(12);
 
 
-        $this->log('Creating database user ' .$dbUsername);
-        $cpapi->execUapi($adminUsername,'Mysql', 'create_user', array('name' => $dbUsername, 'password' => $dbPass));
+        $this->log('Creating database user ' . $dbUsername);
+        $cpapi->execUapi($adminUsername, 'Mysql', 'create_user', array('name' => $dbUsername, 'password' => $dbPass));
 
 
-        $this->log('Creating database ' .$dbName);
+        $this->log('Creating database ' . $dbName);
+        $cpapi->execUapi($adminUsername, 'Mysql', 'create_database', array('name' => $dbName));
 
-        $cpapi->execUapi($adminUsername,'Mysql', 'create_database', array('name' => $dbName));
-
-        $this->log('Setting privileges ' .$dbUsername);
-
-        $cpapi->execUapi($adminUsername,'Mysql', 'set_privileges_on_database', array('user' => $dbUsername, 'database' => $dbName, 'privileges' => 'ALL PRIVILEGES'));
+        $this->log('Setting privileges ' . $dbUsername);
+        $cpapi->execUapi($adminUsername, 'Mysql', 'set_privileges_on_database', array('user' => $dbUsername, 'database' => $dbName, 'privileges' => 'ALL PRIVILEGES'));
 
 
         $opts = array();
@@ -151,14 +124,13 @@ class MicroweberHooks
         $opts['database_password'] = $dbPass;
         $opts['database_table_prefix'] = $dbPrefix;
         $opts['database_name'] = $dbName;
-        $opts['default_template'] = 'dream'; //@todo get from settings
-
         $opts['source_folder'] = $source_folder;
         $opts['public_html_folder'] = $installPath;
 
+
+        $opts['default_template'] = 'dream'; //@todo get from settings
         $opts['is_symliked'] = true; //@todo get from settings
         $opts['debug_email'] = 'boksiora@gmail.com'; //@todo get from settings
-
 
 
 //        $install_opts = array();
@@ -274,10 +246,6 @@ class MicroweberHooks
 
         return compact('adminEmail', 'adminUsername', 'adminPassword');
     }
-
-    // ----------------------
-
-
     private function checkIfAutoInstall()
     {
         $config = $this->storage->read();
@@ -290,60 +258,5 @@ class MicroweberHooks
         return isset($config->install_type) && $config->install_type == 'symlinked';
     }
 
-//    private function checkIfFeatureEnabled()
-//    {
-//        $user = $this->input->data->user;
-//        $account = $this->execApi1('accountsummary', compact('user'));
-//        $account = $account->data->acct[0];
-//        $pkg = $account->plan;
-//        $package = $this->execApi1('getpkginfo', compact('pkg'));
-//        $package = $package->data->pkg;
-//        $featurelist = $package->FEATURELIST;
-//        $featurelistData = $this->execApi1('get_featurelist_data', compact('featurelist'));
-//        $featureHash = $featurelistData->data->features;
-//
-//
-//        foreach ($featureHash as $hash) {
-//            if ($hash->id == 'microweber') {
-//                return $hash->is_disabled == '0';
-//            }
-//        }
-//        return false;
-//    }
-//
-//    private function execUapi($module, $function, $args = array())
-//    {
-//        $user = $this->input->data->user;
-//        $argsString = '';
-//        foreach ($args as $key => $value) {
-//            $argsString = urlencode($key) . '=' . urlencode($value);
-//        }
-//        $command = "/usr/sbin/uapi --user=$user --output=json $module $function $argsString";
-//        $json = shell_exec($command);
-//        return json_decode($json);
-//    }
-//
-//    private function execApi1($function, $args)
-//    {
-//        $argsString = '';
-//        foreach ($args as $key => $value) {
-//            $argsString = urlencode($key) . '=' . urlencode($value);
-//        }
-//        //$command = "whmapi1 --output=json $function $argsString";
-//        $command = "/usr/sbin/whmapi1 --output=json $function $argsString";
-//        $json = shell_exec($command);
-//        return json_decode($json);
-//    }
-//
-//    private function randomPassword($length = 32)
-//    {
-//        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-//        $pass = array();
-//        $alphaLength = strlen($alphabet) - 1;
-//        for ($i = 0; $i < $length; $i++) {
-//            $n = rand(0, $alphaLength);
-//            $pass[] = $alphabet[$n];
-//        }
-//        return implode($pass);
-//    }
+
 }
