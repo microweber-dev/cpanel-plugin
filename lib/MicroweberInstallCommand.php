@@ -12,9 +12,11 @@ class MicroweberInstallCommand
     // $opts['database_table_prefix'];
     // $opts['default_template'];
     // $opts['source_folder'];
+    // $opts['public_html_folder'];
     // $opts['is_symliked'];
     // $opts['debug_email'];
     // $opts['debug_email_subject'];
+    // $opts['install_debug_file'];
     // $opts['install_debug_file'];
     // $opts['options'];
     // $opts['options'][0]['option_key'];
@@ -25,6 +27,9 @@ class MicroweberInstallCommand
         if (isset($opts['is_symliked']) and $opts['is_symliked']) {
             $is_symliked = $opts['is_symliked'];
         }
+
+
+
 
 
         if ($is_symliked) {
@@ -281,7 +286,7 @@ class MicroweberInstallCommand
             }
             $exec = "cd {$user_public_html_folder} ;";
             $exec .= "php artisan microweber:install ";
-            $exec .= $contact_email . " " . $auth_user . " " . $auth_pass . " " . $database_host . " " . $database_name . " " . $database_user . " " . $database_password ." " . $database_driver . " -p " . $database_prefix;
+            $exec .= $contact_email . " " . $auth_user . " " . escapeshellarg($auth_pass) . " " . $database_host . " " . $database_name . " " . $database_user . " " . escapeshellarg($database_password) ." " . $database_driver . " -p " . $database_prefix;
             $exec .= " -t " . $default_template . " -d 1 ";
             $message = $message . "\n\n\n" . $exec;
             shell_exec($exec);

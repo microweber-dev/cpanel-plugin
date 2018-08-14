@@ -10,7 +10,7 @@ include_once(__DIR__ . '/../lib/MicroweberHooks.php');
 $switches = (count($argv) > 1) ? $argv : array();
 
 $controller = new MicroweberHooks($input);
-$allowed = array('describe', 'add-account');
+$allowed = array('describe', 'add-account', 'remove-account');
 
 // Route controller
 foreach($allowed as $arg) {

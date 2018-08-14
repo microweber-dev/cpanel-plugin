@@ -43,6 +43,12 @@ h2 {
             <h2>Automatic Installation</h2>
             <div>
                 <label>
+                    <input type="radio" name="auto_install" value="1" <?php echo $autoInstall ? 'checked' : ''; ?>>
+                    Automatically install Microweber on new domains and subdomains creation.
+                </label>
+
+                <br>
+                <label>
                     <input type="radio" name="auto_install" <?php echo !isset($storedData->auto_install) ? 'checked' : ''; ?>>
                     Default
                 </label>
@@ -52,10 +58,9 @@ h2 {
                     Manually install Microweber from cPanel.
                 </label>
                 <br>
-                <label>
-                    <input type="radio" name="auto_install" value="1" <?php echo $autoInstall ? 'checked' : ''; ?>>
-                    Automatically install Microweber on new domains and subdomains creation.
-                </label>
+
+
+
             </div>
 
 

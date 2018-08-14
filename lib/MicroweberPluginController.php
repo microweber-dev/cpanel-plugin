@@ -1,5 +1,6 @@
 <?php
 include_once(__DIR__ . '/MicroweberHooks.php');
+include_once(__DIR__ . '/MicroweberCpanelApi.php');
 
 class MicroweberPluginController
 {
@@ -27,8 +28,13 @@ class MicroweberPluginController
         $domainData = json_decode($_POST['domain']);
         $installPath = $domainData->documentroot;
         $domainData = json_decode($_POST['domain']);
+
+
+
         $dbUsername = $this->getUsername();
         $dbPrefix = $this->getDBPrefix();
+
+
         $dbNameLength = 16 - strlen($dbPrefix);
         $dbName = str_replace('.', '_', $domainData->domain);
         $dbName = $dbPrefix . substr($dbName, 0, $dbNameLength);
@@ -44,7 +50,10 @@ class MicroweberPluginController
         }
 
         $domain = $domainData->domain;
+        $sourcepath = $domainData->homedir;
         $installPath = $domainData->documentroot;
+
+
 
         $version_manager = new MicroweberVersionsManager($installPath);
         if (!$version_manager->hasDownloaded()) {
@@ -58,7 +67,8 @@ class MicroweberPluginController
 
 
         $opts = array();
-        $opts['source_folder'] = $installPath;
+        $opts['source_folder'] = $sourcepath;
+        $opts['public_html_folder'] = $installPath;
         $opts['user'] = $adminUsername;
         $opts['pass'] = $adminPassword;
         $opts['email'] = $adminEmail;
@@ -70,7 +80,7 @@ class MicroweberPluginController
         $opts['database_host'] = $dbHost;
         $opts['default_template'] = 'dream'; //@todo get from settings
 
-      
+
 //        $install_opts = array();
 //        $opts['options'] = $install_opts;
         $do_install = new MicroweberInstallCommand();
@@ -146,10 +156,14 @@ class MicroweberPluginController
             $dbPassword = $_POST['db_password'];
         }
 
+
+
         // Create database
         $this->cpanel->uapi('Mysql', 'create_database', array('name' => $dbName));
         $this->cpanel->uapi('Mysql', 'create_user', array('name' => $dbUsername, 'password' => $dbPassword));
         $this->cpanel->uapi('Mysql', 'set_privileges_on_database', array('user' => $dbUsername, 'database' => $dbName, 'privileges' => 'ALL PRIVILEGES'));
+
+
 
         // Create empty install directory
         exec("rm -rf $installPath");
@@ -204,7 +218,7 @@ class MicroweberPluginController
         return $username['cpanelresult']['data']['result'];
     }
 
-    public function getDBPrefix()
+    public function makeDBPrefix()
     {
         return substr($this->getUsername(), 0, 8) . '_';
     }

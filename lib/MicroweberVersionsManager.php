@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . '/functions.php');
+
 require_once(__DIR__ . '/MicroweberHelpers.php');
 
 
@@ -33,15 +33,20 @@ class MicroweberVersionsManager
         if ($this->hasDownloaded()) {
            // exec("rm -rf {$this->sharedDir}");
         }
-     //   MicroweberHelpers::mkdirRecursive($this->sharedDir);
+
+        if(!is_dir($this->sharedDir)){
+            MicroweberHelpers::mkdirRecursive($this->sharedDir);
+        }
+
+
         $latest = $this->getLatestVersion();
 
-        var_dump($latest);
 
         copy($latest->url, $this->tempZipFile);
         //$cmd = "wget -O $this->tempZipFile {$latest->url}";
        // exec($cmd);
         exec("unzip {$this->tempZipFile} -d {$this->sharedDir}");
+        unlink($this->tempZipFile);
     }
 
     public function hasDownloaded()

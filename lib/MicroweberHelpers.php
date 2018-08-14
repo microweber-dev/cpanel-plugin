@@ -1,12 +1,20 @@
 <?php
 
-require_once (__DIR__.'/functions.php');
 
 class MicroweberHelpers
-{   
-    public static function mkdirRecursive($pathname) {
-        return mkdir_recursive($pathname);
+{
+
+
+    public static function mkdirRecursive($pathname)
+    {
+        if ($pathname == '') {
+            return false;
+        }
+        is_dir(dirname($pathname)) || self::mkdirRecursive(dirname($pathname));
+
+        return is_dir($pathname) || @mkdir($pathname);
     }
+
 
     public static function fileSizeNice($size)
     {
@@ -15,6 +23,6 @@ class MicroweberHelpers
         for ($i = 0; $size > $mod; ++$i) {
             $size /= $mod;
         }
-        return round($size, 2).' '.$units[$i];
+        return round($size, 2) . ' ' . $units[$i];
     }
 }
