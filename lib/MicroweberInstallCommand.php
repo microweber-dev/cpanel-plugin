@@ -2,6 +2,9 @@
 
 class MicroweberInstallCommand
 {
+
+    public $logger = null;
+
     // $opts['user'];
     // $opts['pass'];
     // $opts['email'];
@@ -29,10 +32,7 @@ class MicroweberInstallCommand
         }
 
 
-
-
-
-        if ($is_symliked) {
+        if (true) {
 
             $remove_paths = array();
             $remove_paths[] = 'config.php';
@@ -75,117 +75,12 @@ class MicroweberInstallCommand
             $copy_files[] = 'bootstrap/autoload.php';
             $copy_files[] = 'storage/database.sqlite';
 
-            $link_paths = array();
-            $link_paths[] = 'vendor';
-            $link_paths[] = 'database';
-            $link_paths[] = 'resources';
-            $link_paths[] = 'app';
-            $link_paths[] = 'tests';
-            $link_paths[] = 'src';
-            $link_paths[] = 'userfiles/modules/admin';
-            $link_paths[] = 'userfiles/elements';
-            $link_paths[] = 'userfiles/templates/default';
-            $link_paths[] = 'userfiles/templates/liteness';
-            $link_paths[] = 'userfiles/modules/audio';
-            $link_paths[] = 'userfiles/modules/admin';
-// B
-            $link_paths[] = 'userfiles/modules/btn';
-            $link_paths[] = 'userfiles/modules/breadcrumb';
-// C
-            $link_paths[] = 'userfiles/modules/content';
-            $link_paths[] = 'userfiles/modules/categories';
-            $link_paths[] = 'userfiles/modules/comments';
-            $link_paths[] = 'userfiles/modules/contact_form';
-            $link_paths[] = 'userfiles/modules/custom_fields';
-// D
-// E
-            $link_paths[] = 'userfiles/modules/embed';
-            $link_paths[] = 'userfiles/modules/editor';
-// F
-            $link_paths[] = 'userfiles/modules/files';
-            $link_paths[] = 'userfiles/modules/forms';
-//$link_paths[] = 'userfiles/modules/free'.DS;
-//G
-            $link_paths[] = 'userfiles/modules/google_maps';
-//H
-            $link_paths[] = 'userfiles/modules/help';
-            $link_paths[] = 'userfiles/modules/highlight_code';
-//I
-            $link_paths[] = 'userfiles/modules/ip2country';
-//L
-            $link_paths[] = 'userfiles/modules/layouts';
-// M
-//$link_paths[] = 'userfiles/modules/media';
-//$link_paths[] = 'userfiles/modules/mics';
-            $link_paths[] = 'userfiles/modules/menu';
-            $link_paths[] = 'userfiles/modules/microweber';
-//N
-//$link_paths[] = 'userfiles/modules/nav'.DS;
-// added for v1.0.8
-            $link_paths[] = 'userfiles/modules/newsletter';
-//O
-            $link_paths[] = 'userfiles/modules/options';
-//P
-            $link_paths[] = 'userfiles/modules/picture';
-            $link_paths[] = 'userfiles/modules/pictures';
-            $link_paths[] = 'userfiles/modules/posts';
-            $link_paths[] = 'userfiles/modules/pages';
-// added for v1.0.8
-            $link_paths[] = 'userfiles/modules/pdf';
-            $link_paths[] = 'userfiles/modules/parallax';
-//S
-            $link_paths[] = 'userfiles/modules/settings';
-            $link_paths[] = 'userfiles/modules/shop';
-            $link_paths[] = 'userfiles/modules/search';
-            $link_paths[] = 'userfiles/modules/site_stats';
-// T
-            $link_paths[] = 'userfiles/modules/text';
-            $link_paths[] = 'userfiles/modules/title';
-// added for v1.0.8
-            $link_paths[] = 'userfiles/modules/teamcard';
-            $link_paths[] = 'userfiles/modules/testimonials';
-            $link_paths[] = 'userfiles/modules/tabs';
-// U
-            $link_paths[] = 'userfiles/modules/users';
-            $link_paths[] = 'userfiles/modules/updates';
-//$link_paths[] = 'userfiles/modules/user_profile';
-//$link_paths[] = 'userfiles/modules/user_search';
-//$link_paths[] = 'userfiles/modules/users_list';
-// V
-            $link_paths[] = 'userfiles/modules/video';
-            $link_paths[] = 'userfiles/modules/default.php';
-            $link_paths[] = 'userfiles/modules/default.png';
-            $link_paths[] = 'userfiles/modules/non_existing.php';
-// link templates
-            $link_paths[] = 'userfiles/templates/liteness';
-            $link_paths[] = 'userfiles/templates/default';
-// link new modulules
-            $link_paths[] = 'userfiles/modules/social_links';
-            $link_paths[] = 'userfiles/modules/logo';
-            $link_paths[] = 'userfiles/modules/rating';
-            $link_paths[] = 'userfiles/modules/calendar';
-            $link_paths[] = 'userfiles/modules/beforeafter';
-            $link_paths[] = 'userfiles/modules/editor';
-            $link_paths[] = 'userfiles/modules/bxslider';
-            $link_paths[] = 'userfiles/modules/sharer';
-            $link_paths[] = 'userfiles/modules/slickslider';
-            $link_paths[] = 'userfiles/modules/layouts';
-            $link_paths[] = 'userfiles/modules/parallax';
-            $link_paths[] = 'userfiles/modules/testimonials';
-            $link_paths[] = 'userfiles/modules/pricing_table';
-            $link_paths[] = 'userfiles/modules/tags';
-            $link_paths[] = 'userfiles/modules/magicslider';
-            $link_paths[] = 'userfiles/modules/facebook_page';
-            $link_paths[] = 'userfiles/modules/pdf';
-            $link_paths[] = 'userfiles/modules/twitter_feed';
-            $link_paths = array_unique($link_paths);
-
-
             if (isset($opts['source_folder'])) {
                 $mw_shared_dir = $opts['source_folder']; //add slash
             } else {
                 $mw_shared_dir = '/usr/share/microweber/latest/'; //add slash
             }
+
 
             $config_file = __DIR__ . DIRECTORY_SEPARATOR . 'config.php';
             $config_file_dist = __DIR__ . DIRECTORY_SEPARATOR . 'config.dist.php';
@@ -226,6 +121,16 @@ class MicroweberInstallCommand
                 $user_public_html_folder = $opts['public_html_folder'];
                 $user_public_html_folder .= (substr($user_public_html_folder, -1) == '/' ? '' : '/');
             }
+
+
+            // $user_public_html_folder
+            $mw_shared_dir .= (substr($mw_shared_dir, -1) == '/' ? '' : '/');
+
+
+            $this->log('Source folder ' . $mw_shared_dir);
+            $this->log('Destination folder ' . $user_public_html_folder);
+
+
             $exec = "rsync -a {$mw_shared_dir} {$user_public_html_folder}";
             $message = $message . "\n\n\n" . $exec;
             $output = exec($exec);
@@ -269,6 +174,39 @@ class MicroweberInstallCommand
                     $output = exec($exec);
                 }
             }
+            if ($is_symliked) {
+                $this->log('Linking paths');
+
+                $link_paths_base = array();
+                $link_paths_base[] = 'vendor';
+                $link_paths_base[] = 'database';
+                $link_paths_base[] = 'resources';
+                $link_paths_base[] = 'tests';
+                $link_paths_base[] = 'src';
+                $link_paths_base[] = 'userfiles/modules/*';
+                $link_paths_base[] = 'userfiles/elements/*';
+                $link_paths_base[] = 'userfiles/templates/*';
+                foreach ($link_paths_base as $link) {
+                    $link_src = $mw_shared_dir . $link;
+                    $link_dest = $user_public_html_folder . $link;
+                    $exec = "rm -rvf {$link_dest}";
+                    $output = shell_exec($exec);
+                    $this->log('Linking ' . $link_src . ' to ' . $link_dest);
+                    $this->symlink_recursive($link_src, $link_dest);
+                }
+
+                /* foreach ($link_paths as $link) {
+                     $exec = "rm -rvf {$user_public_html_folder}{$link}";
+                     $message = $message . "\n\n\n" . $exec;
+                     $output = shell_exec($exec);
+                     $message = $message . "\n\n\n" . $output;
+                     $exec = " ln -s  {$mw_shared_dir}{$link} {$user_public_html_folder}{$link}";
+                     $message = $message . "\n\n\n" . $exec;
+                     $output = shell_exec($exec);
+                     $message = $message . "\n\n\n" . $output;
+                 }*/
+            }
+
             $exec = "chown -R {$opts['user']}:{$opts['user']} {$user_public_html_folder}*";
             $message = $message . "\n\n\n" . $exec;
             $output = exec($exec);
@@ -284,9 +222,11 @@ class MicroweberInstallCommand
             } else {
                 $database_host = '127.0.0.1';
             }
+            $this->log('Performing php artisan microweber:install');
+
             $exec = "cd {$user_public_html_folder} ;";
             $exec .= "php artisan microweber:install ";
-            $exec .= $contact_email . " " . $auth_user . " " . escapeshellarg($auth_pass) . " " . $database_host . " " . $database_name . " " . $database_user . " " . escapeshellarg($database_password) ." " . $database_driver . " -p " . $database_prefix;
+            $exec .= $contact_email . " " . $auth_user . " " . escapeshellarg($auth_pass) . " " . $database_host . " " . $database_name . " " . $database_user . " " . escapeshellarg($database_password) . " " . $database_driver . " -p " . $database_prefix;
             $exec .= " -t " . $default_template . " -d 1 ";
             $message = $message . "\n\n\n" . $exec;
             shell_exec($exec);
@@ -309,6 +249,9 @@ class MicroweberInstallCommand
             $output = exec($exec);
             $message = $message . "\n\n\n" . $output;
             $exec = "chown -R {$opts['user']}:{$opts['user']} {$user_public_html_folder}*";
+            $message = $message . "\n\n\n" . $exec;
+            $output = exec($exec);
+            $exec = "chown -R {$opts['user']}:{$opts['user']} {$user_public_html_folder}.[^.]*";
             $message = $message . "\n\n\n" . $exec;
             $output = exec($exec);
             $message = $message . "\n\n\n" . $output;
@@ -339,8 +282,53 @@ class MicroweberInstallCommand
 
         }
 
-//$adminEmail $adminUsername $adminPassword $dbHost $dbName $dbUsername $adminPassword $dbDriver -p $dbPrefix
     }
 
 
+    public function symlink_recursive($source_folder, $dest_folder)
+    {
+        $recuresive = false;
+        if (substr(rtrim($source_folder), -1) == "*") {
+            $recuresive = true;
+        }
+
+        $do_links = array();
+
+        if ($recuresive) {
+            $link_paths = glob($source_folder);
+            $source_folder_base = str_replace('*', '', $source_folder);
+            $dest_folder = str_replace('*', '', $dest_folder);
+            if ($link_paths) {
+                foreach ($link_paths as $link) {
+                    if ($link != '.' and $link != '..') {
+                        $dest_link = str_replace($source_folder_base, '', $link);
+                        $do_links[$link] = $dest_folder . $dest_link;
+                    }
+                }
+            }
+        } else {
+
+            if ((is_file($source_folder) or is_dir($source_folder))) {
+                $do_links[$source_folder] = $dest_folder;
+            }
+        }
+
+
+        if ($do_links) {
+            foreach ($do_links as $link_src => $link_dest) {
+                if (!is_link($link_dest) and (!is_file($link_dest) and !is_dir($link_dest))) {
+                    $exec = " ln -s  $link_src $link_dest";
+                    exec($exec);
+                }
+            }
+        }
+
+    }
+
+    public function log($msg)
+    {
+        if (is_object($this->logger) and method_exists($this->logger, 'log')) {
+            $this->logger->log($msg);
+        }
+    }
 }

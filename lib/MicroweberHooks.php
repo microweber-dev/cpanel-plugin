@@ -4,16 +4,19 @@ include_once(__DIR__ . '/MicroweberStorage.php');
 include_once(__DIR__ . '/MicroweberVersionsManager.php');
 include_once(__DIR__ . '/MicroweberInstallCommand.php');
 include_once(__DIR__ . '/MicroweberCpanelApi.php');
+include_once(__DIR__ . '/MicroweberLogger.php');
 
 class MicroweberHooks
 {
     private $input;
     private $storage;
+    public $logger;
 
     public function __construct($input = false)
     {
         $this->input = $input;
         $this->storage = new MicroweberStorage();
+        $this->logger = new MicroweberLogger();
     }
 
     // Embed hook attribute information.
@@ -52,6 +55,9 @@ class MicroweberHooks
         $adminEmail = $input['data']['contactemail'];
         $adminUsername = $input['data']['user'];
         $adminPassword = $input['data']['pass'];
+
+
+        //@todo check for existing
         $source_path = '/usr/share/microweber/latest/';
 
 
@@ -90,7 +96,7 @@ class MicroweberHooks
             $this->log('Error: Source cannot be downloaded in ' . $source_folder);
             return;
         }
-        $this->log('Source is downloaded in ' . $source_folder);
+        $this->log('Source files to use are in ' . $source_folder);
 
 
         //$dbDriver @todo get from settings ?
@@ -139,6 +145,8 @@ class MicroweberHooks
         $this->log('Running install command');
 
         $do_install = new MicroweberInstallCommand();
+        $do_install->logger = $this->logger;
+
         $do_install = $do_install->install($opts);
 
         $this->log('Install command finished');
@@ -146,11 +154,13 @@ class MicroweberHooks
         return compact('adminEmail', 'adminUsername', 'adminPassword');
     }
 
-
     public function log($msg)
     {
-        echo '[microweber]  ' . $msg . "\n";
+        if (is_object($this->logger) and method_exists($this->logger, 'log')) {
+            $this->logger->log($msg);
+        }
     }
+
 
     private function OOOOLD_install($domain, $installPath, $adminEmail, $adminUsername, $adminPassword, $dbHost = 'localhost', $dbDriver = 'mysql')
     {
@@ -246,6 +256,7 @@ class MicroweberHooks
 
         return compact('adminEmail', 'adminUsername', 'adminPassword');
     }
+
     private function checkIfAutoInstall()
     {
         $config = $this->storage->read();

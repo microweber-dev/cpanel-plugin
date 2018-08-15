@@ -47,12 +47,14 @@ class MicroweberPluginController
         }
 
         $domain = $domainData->domain;
+
+        //@todo fix $sourcepath to be from /usr/share
         $sourcepath = $domainData->homedir;
         $installPath = $domainData->documentroot;
 
 
 
-        $version_manager = new MicroweberVersionsManager($installPath);
+        $version_manager = new MicroweberVersionsManager($sourcepath);
         if (!$version_manager->hasDownloaded()) {
             $version_manager->download();
         }
