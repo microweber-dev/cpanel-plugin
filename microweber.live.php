@@ -53,8 +53,11 @@ $allDomains = array_merge(array($domaindata['main_domain']), $domaindata['addon_
                     </div>
 
                     <div class="col-xs-12 col-md-6 text-md-right text-lg-right pagination-controls">
-                        <a id="btnInstall" class="btn btn-primary" title="Create a new Microweber installation." href="#install">Create new installation</a>
-                        <button id="btnRefresh" class="btn btn-primary outline" title="Refresh the Microweber installations list." onclick="location.reload();">Refresh</button>
+                        <a id="btnInstall" class="btn btn-primary" title="Create a new Microweber installation."
+                           href="#install">Create new installation</a>
+                        <button id="btnRefresh" class="btn btn-primary outline"
+                                title="Refresh the Microweber installations list." onclick="location.reload();">Refresh
+                        </button>
                     </div>
 
                     <div class="col-xs-12">
@@ -63,10 +66,14 @@ $allDomains = array_merge(array($domaindata['main_domain']), $domaindata['addon_
                                 <div class="row input-row">
                                     <div class="col-xs-12">
                                         <div class="input-group filter-controls">
-                                            <input name="search" class="form-control ng-pristine ng-valid ng-touched" placeholder="Search" title="Type in your search filter." value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+                                            <input name="search" class="form-control ng-pristine ng-valid ng-touched"
+                                                   placeholder="Search" title="Type in your search filter."
+                                                   value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
                                             <span class="input-group-btn">
-                                                <button id="search-button" type="submit" class="btn btn-default" ng-click="clearSearch()">
-                                                    <span class="glyphicon glyphicon-search" ng-class="{ 'glyphicon-search': !list.meta.filterValue, 'glyphicon-remove': list.meta.filterValue }"></span>
+                                                <button id="search-button" type="submit" class="btn btn-default"
+                                                        ng-click="clearSearch()">
+                                                    <span class="glyphicon glyphicon-search"
+                                                          ng-class="{ 'glyphicon-search': !list.meta.filterValue, 'glyphicon-remove': list.meta.filterValue }"></span>
                                                 </button>
                                             </span>
                                         </div>
@@ -102,7 +109,8 @@ $allDomains = array_merge(array($domaindata['main_domain']), $domaindata['addon_
                             <tr>
                                 <td>
                                     <a href="//<?php echo $domain['domain']; ?>" target="_blank">
-                                        <img src="./microweber/mw-icon.png" class="mw-icon"> <?php echo $domain['domain']; ?>
+                                        <img src="./microweber/mw-icon.png"
+                                             class="mw-icon"> <?php echo $domain['domain']; ?>
                                     </a>
                                 </td>
                                 <td><?php echo $config['version']; ?></td>
@@ -111,23 +119,32 @@ $allDomains = array_merge(array($domaindata['main_domain']), $domaindata['addon_
                                     <a href="#" class="update">Update</a>
                                     <a href="#" class="login">Login</a>
 
-                                    <button type="button" class="remove" data-toggle="modal" data-target="#removeSite-<?php print $key; ?>"><i class="fa fa-trash"></i></button>
+                                    <button type="button" class="remove" data-toggle="modal"
+                                            data-target="#removeSite-<?php print $key; ?>"><i class="fa fa-trash"></i>
+                                    </button>
 
                                     <!-- Modal Delete Accept -->
-                                    <div class="modal fade" id="removeSite-<?php print $key; ?>" tabindex="-1" role="dialog" aria-labelledby="removeSiteLabel">
+                                    <div class="modal fade" id="removeSite-<?php print $key; ?>" tabindex="-1"
+                                         role="dialog" aria-labelledby="removeSiteLabel">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <form method="POST">
                                                     <div class="modal-body" style="padding: 70px 0;">
-                                                        <h4 class="modal-title text-center">Are you sure you want to delete this website?</h4>
+                                                        <h4 class="modal-title text-center">Are you sure you want to
+                                                            delete this website?</h4>
 
                                                         <input type="hidden" name="_action" value="uninstall">
-                                                        <input type="hidden" name="domain" value="<?php echo htmlspecialchars(json_encode($domain)); ?>">
+                                                        <input type="hidden" name="domain"
+                                                               value="<?php echo htmlspecialchars(json_encode($domain)); ?>">
                                                     </div>
 
                                                     <div class="modal-footer" style="margin: 0;">
-                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
-                                                        <button type="submit" class="btn btn-default">Yes, delete my website</button>
+                                                        <button type="button" class="btn btn-primary"
+                                                                data-dismiss="modal">No
+                                                        </button>
+                                                        <button type="submit" class="btn btn-default">Yes, delete my
+                                                            website
+                                                        </button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -170,7 +187,10 @@ $allDomains = array_merge(array($domaindata['main_domain']), $domaindata['addon_
                         <div class="hidden-xs page-size" id="bottom-page-size" name="">
                             <div ng-hide="autoHide &amp;&amp; options[0].value >= totalItems" class="form-group">
                                 <label for="bottom-page-size_select" class="title ng-binding">Page Size</label>
-                                <select id="bottom-page-size_select" class="form-control ng-pristine ng-untouched ng-valid" ng-options="size.value as size.label for size in options" ng-model="pageSize" name="">
+                                <select id="bottom-page-size_select"
+                                        class="form-control ng-pristine ng-untouched ng-valid"
+                                        ng-options="size.value as size.label for size in options" ng-model="pageSize"
+                                        name="">
                                     <option value="number:10" label="10" selected="selected">10</option>
                                     <option value="number:20" label="20" selected="selected">20</option>
                                     <option value="number:50" label="50">50</option>
@@ -180,28 +200,35 @@ $allDomains = array_merge(array($domaindata['main_domain']), $domaindata['addon_
                         </div>
 
                         <ul class="pagination ng-isolate-scope" aria-label="Pagination" id="bottom-page-selector">
-                            <li ng-if="boundaryLinks" ng-class="{disabled: noPrevious()}" class="ng-scope disabled">
-                                <a id="bottom-page-selector_first" href="" ng-click="selectPage(1)" aria-label="Go to first page." class="ng-binding">
+                            <li ng-if="boundaryLinks">
+                                <a id="bottom-page-selector_first" href="" ng-click="selectPage(1)"
+                                   aria-label="Go to first page." class="ng-binding">
                                     &lt;&lt;
                                 </a>
                             </li>
-                            <li ng-if="directionLinks" ng-class="{disabled: noPrevious()}" class="ng-scope disabled">
-                                <a id="bottom-page-selector_previous" href="" ng-click="selectPage(page - 1)" aria-label="Go to previous page." class="ng-binding">
+                            <li>
+                                <a id="bottom-page-selector_previous" href="" ng-click="selectPage(page - 1)"
+                                   aria-label="Go to previous page." class="ng-binding">
                                     &lt;
                                 </a>
                             </li>
-                            <li ng-repeat="page in pages track by $index" ng-class="{active: page.active}" ng-switch="page.active" class="ng-scope active">
-                                <a id="bottom-page-selector_1" href="" ng-click="selectPage(page.number)" aria-label="Go to page “1”." aria-current="page" ng-switch-when="true" class="ng-binding ng-scope">
+                            <li ng-repeat="page in pages track by $index" ng-class="{active: page.active}"
+                                ng-switch="page.active" class="ng-scope active">
+                                <a id="bottom-page-selector_1" href="" ng-click="selectPage(page.number)"
+                                   aria-label="Go to page “1”." aria-current="page" ng-switch-when="true"
+                                   class="ng-binding ng-scope">
                                     1
                                 </a>
                             </li>
-                            <li ng-if="directionLinks" ng-class="{disabled: noNext()}" class="ng-scope disabled">
-                                <a id="bottom-page-selector_next" href="" ng-click="selectPage(page + 1)" aria-label="Go to next page." class="ng-binding">
+                            <li ng-class="{disabled: noNext()}">
+                                <a id="bottom-page-selector_next" href="" ng-click="selectPage(page + 1)"
+                                   aria-label="Go to next page." class="ng-binding">
                                     &gt;
                                 </a>
                             </li>
-                            <li ng-if="boundaryLinks" ng-class="{disabled: noNext()}" class="ng-scope disabled">
-                                <a id="bottom-page-selector_last" href="" ng-click="selectPage(totalPages)" aria-label="Go to last page." class="ng-binding">
+                            <li ng-if="boundaryLinks" ng-class="{disabled: noNext()}">
+                                <a id="bottom-page-selector_last" href="" ng-click="selectPage(totalPages)"
+                                   aria-label="Go to last page." class="ng-binding">
                                     &gt;&gt;
                                 </a>
                             </li>
@@ -270,7 +297,8 @@ $allDomains = array_merge(array($domaindata['main_domain']), $domaindata['addon_
                             <div class="col-lg-9">
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="express" value="1" onclick="advancedRadioChanged()" checked>
+                                        <input type="radio" name="express" value="1" onclick="advancedRadioChanged()"
+                                               checked>
                                         Use automatic database settings
                                     </label>
                                 </div>
@@ -306,14 +334,16 @@ $allDomains = array_merge(array($domaindata['main_domain']), $domaindata['addon_
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Database Name</label>
                                 <div class="col-lg-9">
-                                    <input type="text" class="form-control" name="db_name" value="<?php echo $controller->makeDBPrefix(); ?>">
+                                    <input type="text" class="form-control" name="db_name"
+                                           value="<?php echo $controller->makeDBPrefix(); ?>">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Database Username</label>
                                 <div class="col-lg-9">
-                                    <input type="text" class="form-control" name="db_username" value="<?php echo $controller->makeDBPrefix(); ?>">
+                                    <input type="text" class="form-control" name="db_username"
+                                           value="<?php echo $controller->makeDBPrefix(); ?>">
                                 </div>
                             </div>
 
