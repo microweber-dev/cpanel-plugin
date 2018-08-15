@@ -1,14 +1,16 @@
 <?php
 include_once(__DIR__ . '/MicroweberHooks.php');
 include_once(__DIR__ . '/MicroweberCpanelApi.php');
+include_once(__DIR__ . '/MicroweberLogger.php');
 
 class MicroweberPluginController
 {
-    private $cpanel;
-
+    public $logger = null;
     public function __construct($cpanel)
     {
         $this->cpanel = $cpanel;
+        $this->logger = new MicroweberLogger();
+
     }
 
     public function install()
@@ -66,8 +68,6 @@ class MicroweberPluginController
         $cpapi = new MicroweberCpanelApi();
 
 
-
-
         $dbNameLength = 15;
         $dbPrefix = $cpapi->makeDbPrefixFromUsername($user);
 
@@ -93,6 +93,7 @@ class MicroweberPluginController
         $opts = array();
         $opts['source_folder'] = $sourcepath;
         $opts['public_html_folder'] = $installPath;
+        $opts['chown_user'] = $user;
         $opts['user'] = $adminUsername;
         $opts['pass'] = $adminPassword;
         $opts['email'] = $adminEmail;
@@ -144,79 +145,12 @@ class MicroweberPluginController
 
     public function log($msg)
     {
-       // echo '[debug]  ' . $msg . "\n";
-    }
-    public function OOOOLD___install()
-    {
-        $installPath = '/var/www/microweber';
-        $zipInstallUrl = 'http://download.microweberapi.com/ready/core/microweber-latest.zip';
-        $zipInstallPath = '/tmp/microweber-latest.zip';
-        $zipUserfilesUrl = 'https://members.microweber.com/_partners/csigma/userfiles.zip';
-        $zipUserfilesPath = '/tmp/userfiles.zip';
-        $adminEmail = $_POST['admin_email'];
-        $adminUsername = $_POST['admin_username'];
-        $adminPassword = $_POST['admin_password'];
-        $dbDriver = 'mysql';
-        $dbHost = 'localhost';
-        $dbName = '';
-        $dbUsername = '';
-        $dbPassword = $this->randomPassword();
-        $dbPrefix = '';
-
-        // Prepare data
-        $domainData = json_decode($_POST['domain']);
-        $installPath = $domainData->documentroot;
-        $domainData = json_decode($_POST['domain']);
-        $dbUsername = $this->getUsername();
-        $dbPrefix = $this->getDBPrefix();
-        $dbNameLength = 16 - strlen($dbPrefix);
-        $dbName = str_replace('.', '_', $domainData->domain);
-        $dbName = $dbPrefix . substr($dbName, 0, $dbNameLength);
-        $dbUsername = $dbName;
-        $dbHost = $this->cpanel->uapi('Mysql', 'locate_server');
-        $dbHost = $dbHost['cpanelresult']['result']['data']['remote_host'];
-        if ($_POST['express'] == '0') {
-            $dbDriver = $_POST['db_driver'];
-            $dbHost = $_POST['db_host'];
-            $dbName = $_POST['db_name'];
-            $dbUsername = $_POST['db_username'];
-            $dbPassword = $_POST['db_password'];
+        if (is_object($this->logger) and method_exists($this->logger, 'log')) {
+            $this->logger->log($msg);
         }
-
-
-
-        // Create database
-        $this->cpanel->uapi('Mysql', 'create_database', array('name' => $dbName));
-        $this->cpanel->uapi('Mysql', 'create_user', array('name' => $dbUsername, 'password' => $dbPassword));
-        $this->cpanel->uapi('Mysql', 'set_privileges_on_database', array('user' => $dbUsername, 'database' => $dbName, 'privileges' => 'ALL PRIVILEGES'));
-
-
-
-        // Create empty install directory
-        exec("rm -rf $installPath");
-        mkdir($installPath);
-
-        // Download install zip
-        copy($zipInstallUrl, $zipInstallPath);
-        exec("unzip $zipInstallPath -d $installPath");
-
-        // Download userfiles zip
-        copy($zipUserfilesUrl, $zipUserfilesPath);
-        exec("unzip $zipUserfilesPath -d $installPath");
-
-        // Permissions
-        exec("chmod -R 755 $installPath");
-
-        // Clear cache
-        exec("php $installPath/artisan cache:clear");
-
-        // Install Microweber
-        $installCommand = "php $installPath/artisan microweber:install $adminEmail $adminUsername $adminPassword $dbHost $dbName $dbUsername $dbPassword $dbDriver -p $dbPrefix -t dream -d 1 -c 1";
-        file_put_contents('/tmp/install_command', $installCommand);
-        exec($installCommand);
-
-        return compact('adminEmail', 'adminUsername', 'adminPassword');
     }
+
+
 
     public function uninstall()
     {

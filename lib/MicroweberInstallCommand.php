@@ -3,8 +3,8 @@
 class MicroweberInstallCommand
 {
 
-    public $logger = null;
 
+    public $logger = null;
     // $opts['user'];
     // $opts['pass'];
     // $opts['email'];
@@ -33,18 +33,6 @@ class MicroweberInstallCommand
 
 
         if (true) {
-
-            $remove_paths = array();
-            $remove_paths[] = 'config.php';
-            $remove_paths[] = 'bootstrap.php';
-            $remove_paths[] = 'index.php';
-            $remove_paths[] = 'src';
-            $remove_paths[] = 'cpanel';
-            $remove_paths[] = 'userfiles/modules/';
-            $remove_paths[] = 'userfiles/removed_modules';
-            $remove_paths[] = 'userfiles/templates/';
-            $remove_paths[] = 'userfiles/elements/';
-
 
             $mkdirs = array();
             $mkdirs[] = 'storage';
@@ -80,7 +68,6 @@ class MicroweberInstallCommand
             } else {
                 $mw_shared_dir = '/usr/share/microweber/latest/'; //add slash
             }
-
 
             $config_file = __DIR__ . DIRECTORY_SEPARATOR . 'config.php';
             $config_file_dist = __DIR__ . DIRECTORY_SEPARATOR . 'config.dist.php';
@@ -123,9 +110,7 @@ class MicroweberInstallCommand
             }
 
 
-            // $user_public_html_folder
             $mw_shared_dir .= (substr($mw_shared_dir, -1) == '/' ? '' : '/');
-
 
             $this->log('Source folder ' . $mw_shared_dir);
             $this->log('Destination folder ' . $user_public_html_folder);
@@ -142,8 +127,9 @@ class MicroweberInstallCommand
             if (isset($copy_files) and is_array($copy_files) and !empty($copy_files)) {
                 foreach ($copy_files as $file) {
                     $file = str_replace('..', '', $file);
+                    $file_dest = $file;
                     $file = $mw_shared_dir . $file;
-                    $newfile = "{$user_public_html_folder}{$file}";
+                    $newfile = "{$user_public_html_folder}{$file_dest}";
                     if (is_file($file)) {
                         $exec = "cp -f $file $newfile";
                         $output = exec($exec);
@@ -166,6 +152,13 @@ class MicroweberInstallCommand
                     }
                 }
             }
+
+
+            $chown_user =  $opts['user'];
+            if(isset($opts['chown_user'])){
+                $chown_user = $opts['chown_user'];
+            }
+
             if (isset($remove_files) and is_array($remove_files) and !empty($remove_files)) {
                 foreach ($remove_files as $dest) {
                     $dest = str_replace('..', '', $dest);
@@ -174,6 +167,10 @@ class MicroweberInstallCommand
                     $output = exec($exec);
                 }
             }
+
+
+
+
             if ($is_symliked) {
                 $this->log('Linking paths');
 
@@ -195,19 +192,10 @@ class MicroweberInstallCommand
                     $this->symlink_recursive($link_src, $link_dest);
                 }
 
-                /* foreach ($link_paths as $link) {
-                     $exec = "rm -rvf {$user_public_html_folder}{$link}";
-                     $message = $message . "\n\n\n" . $exec;
-                     $output = shell_exec($exec);
-                     $message = $message . "\n\n\n" . $output;
-                     $exec = " ln -s  {$mw_shared_dir}{$link} {$user_public_html_folder}{$link}";
-                     $message = $message . "\n\n\n" . $exec;
-                     $output = shell_exec($exec);
-                     $message = $message . "\n\n\n" . $output;
-                 }*/
+
             }
 
-            $exec = "chown -R {$opts['user']}:{$opts['user']} {$user_public_html_folder}*";
+            $exec = "chown -R {$chown_user}:{$chown_user} {$user_public_html_folder}*";
             $message = $message . "\n\n\n" . $exec;
             $output = exec($exec);
             $message = $message . "\n\n\n" . $output;
@@ -244,22 +232,23 @@ class MicroweberInstallCommand
                     }
                 }
             }
-            $exec = "chown -R {$opts['user']}:{$opts['user']} {$user_public_html_folder}.htaccess";
+
+
+
+            $exec = "chown -R {$chown_user}:{$chown_user} {$user_public_html_folder}.htaccess";
             $message = $message . "\n\n\n" . $exec;
             $output = exec($exec);
             $message = $message . "\n\n\n" . $output;
-            $exec = "chown -R {$opts['user']}:{$opts['user']} {$user_public_html_folder}*";
+            $exec = "chown -R {$chown_user}:{$chown_user} {$user_public_html_folder}*";
             $message = $message . "\n\n\n" . $exec;
             $output = exec($exec);
-            $exec = "chown -R {$opts['user']}:{$opts['user']} {$user_public_html_folder}.[^.]*";
-            $message = $message . "\n\n\n" . $exec;
-            $output = exec($exec);
-            $message = $message . "\n\n\n" . $output;
-            $exec = "chmod 755 {$opts['user']}:{$opts['user']} {$user_public_html_folder}index.php";
+            $exec = "chown -R {$chown_user}:{$chown_user} {$user_public_html_folder}.[^.]*";
             $message = $message . "\n\n\n" . $exec;
             $output = exec($exec);
             $message = $message . "\n\n\n" . $output;
-            $exec = "chmod 755 {$opts['user']}:{$opts['user']} {$user_public_html_folder}";
+
+            $message = $message . "\n\n\n" . $output;
+            $exec = "chmod 755 -R {$user_public_html_folder}";
             $message = $message . "\n\n\n" . $exec;
             $output = exec($exec);
             $message = $message . "\n\n\n" . $output;
@@ -317,6 +306,9 @@ class MicroweberInstallCommand
         if ($do_links) {
             foreach ($do_links as $link_src => $link_dest) {
                 if (!is_link($link_dest) and (!is_file($link_dest) and !is_dir($link_dest))) {
+
+                    $link_src = escapeshellarg($link_src);
+                    $link_dest = escapeshellarg($link_dest);
                     $exec = " ln -s  $link_src $link_dest";
                     exec($exec);
                 }
