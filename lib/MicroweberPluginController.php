@@ -163,7 +163,7 @@ class MicroweberPluginController
         $domainData = json_decode($_POST['domain']);
         $installPath = $domainData->documentroot;
         $dbUsername = $this->getUsername();
-        $dbPrefix = $this->getDBPrefix();
+        $dbPrefix = $this->makeDBPrefix();
         $dbNameLength = 16 - strlen($dbPrefix);
         $dbName = str_replace('.', '_', $domainData->domain);
         $dbName = $dbPrefix . substr($dbName, 0, $dbNameLength);

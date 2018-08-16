@@ -1,8 +1,12 @@
 <?php
 require_once('/usr/local/cpanel/php/WHM.php');
 require_once(__DIR__ . '/../lib/MicroweberStorage.php');
+require_once(__DIR__ . '/../lib/MicroweberView.php');
 require_once(__DIR__ . '/../lib/MicroweberVersionsManager.php');
+require_once(__DIR__ . '/../lib/MicroweberAdminController.php');
 
+
+$controller = new MicroweberAdminController();
 $versions = new MicroweberVersionsManager();
 $storage = new MicroweberStorage();
 $keyData = array();
@@ -23,8 +27,14 @@ if($whiteLabelKey) {
     $keyData = $data[$relType];
 }
 
+
+$domains = $controller->get_installations_across_server();
+
+
+
 WHM::header('Microweber Settings', 0, 0);
 ?>
+<link rel="stylesheet" type="text/css" href="./microweber/index.css">
 
 <style>
 label {
@@ -146,6 +156,18 @@ h2 {
     </div>
 </form>
 
+
+
+
+<h2>Installations</h2>
+<?php
+
+$view = new MicroweberView(__DIR__ . '/../views/domains.php');
+$view->assign('domains', $domains);
+$view->display();
+
+
+?>
 <?php
 WHM::footer();
 ?>
