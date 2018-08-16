@@ -7,6 +7,7 @@ class MicroweberVersionsManager
 {
     private $sharedDir = '/usr/share/microweber/latest';
     private $tempZipFile = null;
+    private $tempZipFileExtra= null;
 
     public function __construct($sharedDir = null)
     {
@@ -16,6 +17,7 @@ class MicroweberVersionsManager
 
 
         $this->tempZipFile = $this->sharedDir . '/mw-download.zip';
+        $this->tempZipFileExtra = $this->sharedDir . '/mw-extra.zip';
 
     }
 
@@ -34,11 +36,12 @@ class MicroweberVersionsManager
 
     public function getLatestVersion($force_check = false)
     {
-        $data =  $this->getLatestVersionData($force_check);
-        if(isset($data['version'])){
+        $data = $this->getLatestVersionData($force_check);
+        if (isset($data['version'])) {
             return $data['version'];
         }
     }
+
     public function getLatestVersionData($force_check = false)
     {
         $cache_file = realpath(__DIR__ . '/../storage/version_check.txt');
@@ -77,7 +80,7 @@ class MicroweberVersionsManager
         if (!$data) return false;
 
 
-        $data = @json_decode($data,true);
+        $data = @json_decode($data, true);
 
         return $data;
     }
@@ -95,11 +98,11 @@ class MicroweberVersionsManager
 
 
         $latest = $this->getLatestVersionData();
-        if(!isset($latest['url'])){
+        if (!isset($latest['url'])) {
             return;
         }
 
-        copy($latest['url'], $this->tempZipFile);
+        MicroweberHelpers::download($latest['url'], $this->tempZipFile);
         //$cmd = "wget -O $this->tempZipFile {$latest->url}";
         // exec($cmd);
         exec("unzip -o {$this->tempZipFile} -d {$this->sharedDir}");
@@ -113,6 +116,23 @@ class MicroweberVersionsManager
 
     public function downloadExtraContent($key)
     {
+        if(!$key){
+            return;
+        }
+
+        $url = 'http://update.microweberapi.com/?api_function=get_download_link&get_extra_content=1&license_key=' . urlencode($key);
+
+        $data = @file_get_contents($url);
+        if($data){
+            $data = @json_decode($data,true);
+            if(isset($data['url'])){
+
+                MicroweberHelpers::download($data['url'], $this->tempZipFileExtra);
+                exec("unzip -o {$this->tempZipFileExtra} -d {$this->sharedDir}");
+                unlink($this->tempZipFileExtra);
+
+            }
+        }
 
 
     }

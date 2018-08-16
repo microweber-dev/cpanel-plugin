@@ -10,33 +10,37 @@ $controller = new MicroweberAdminController();
 $versions = new MicroweberVersionsManager();
 $storage = new MicroweberStorage();
 $keyData = array();
+$settings = $storage->read();
+
+$user_key = isset($settings['key']) ? $settings['key'] : '';
+// Check white label key
+
+
 if (isset($_POST['key'])) {
     $storage->save($_POST);
 }
+if ($user_key) {
+    $keyData = $controller->getLicenseData($user_key);
+}
+
 
 if (isset($_POST['download_cms'])) {
     $versions->download();
 }
+if (isset($_POST['download_userfiles'])) {
+    $versions->downloadExtraContent($user_key);
+}
+
+
 $current_version = $versions->getCurrentVersion();
 $latest_version = $versions->getLatestVersion();
- 
-$settings = $storage->read();
+
 
 
 //$autoInstall = isset($storedData->auto_install) && $storedData->auto_install == '1';
 //$install_type = isset($storedData->install_type) && $storedData->install_type == 'symlinked';
-//$whiteLabelKey = isset($storedData->key) ? $storedData->key : '';
-$whiteLabelKey = isset($settings['key']) ? $settings['key'] : '';
-// Check white label key
-if ($whiteLabelKey) {
-    $keyData = $controller->getLicenseData($whiteLabelKey);
+//$user_key = isset($storedData->key) ? $storedData->key : '';
 
-//    $relType = 'modules/white_label';
-//    $check_url = "https://update.microweberapi.com/?api_function=validate_licenses&local_key=$whiteLabelKey&rel_type=$relType";
-//    $data = file_get_contents($check_url);
-//    $data = @json_decode($data, true);
-//    $keyData = $data[$relType];
-}
 
 
 $domains = $controller->get_installations_across_server();
@@ -77,7 +81,7 @@ $view->display();
 <?php
 
 $view = new MicroweberView(__DIR__ . '/../views/download.php');
-$view->assign('key', $whiteLabelKey);
+$view->assign('key', $user_key);
 $view->assign('key_data', $keyData);
 $view->assign('current_version', $current_version);
 $view->assign('latest_version', $latest_version);
