@@ -17,6 +17,7 @@ class MicroweberInstallCommand
     // $opts['source_folder'];
     // $opts['public_html_folder'];
     // $opts['is_symliked'];
+    // $opts['config_only'];
     // $opts['debug_email'];
     // $opts['debug_email_subject'];
     // $opts['install_debug_file'];
@@ -154,20 +155,10 @@ class MicroweberInstallCommand
             }
 
 
-            $chown_user =  $opts['user'];
-            if(isset($opts['chown_user'])){
+            $chown_user = $opts['user'];
+            if (isset($opts['chown_user'])) {
                 $chown_user = $opts['chown_user'];
             }
-
-            if (isset($remove_files) and is_array($remove_files) and !empty($remove_files)) {
-                foreach ($remove_files as $dest) {
-                    $dest = str_replace('..', '', $dest);
-                    $rm_dest = "{$user_public_html_folder}{$dest}";
-                    $exec = "rm -rf $rm_dest";
-                    $output = exec($exec);
-                }
-            }
-
 
 
 
@@ -183,6 +174,20 @@ class MicroweberInstallCommand
                 $link_paths_base[] = 'userfiles/modules/*';
                 $link_paths_base[] = 'userfiles/elements/*';
                 $link_paths_base[] = 'userfiles/templates/*';
+                $remove_files = $link_paths_base;
+                if (isset($remove_files) and is_array($remove_files) and !empty($remove_files)) {
+                    foreach ($remove_files as $dest) {
+                        $dest = str_replace('..', '', $dest);
+                        $rm_dest = "{$user_public_html_folder}{$dest}";
+                        $this->log('Removing ' . $rm_dest );
+                        $exec = "rm -rf $rm_dest";
+                        $output = shell_exec($exec);
+                    }
+                }
+
+
+
+
                 foreach ($link_paths_base as $link) {
                     $link_src = $mw_shared_dir . $link;
                     $link_dest = $user_public_html_folder . $link;
@@ -215,7 +220,12 @@ class MicroweberInstallCommand
             $exec = "cd {$user_public_html_folder} ;";
             $exec .= "php artisan microweber:install ";
             $exec .= $contact_email . " " . $auth_user . " " . escapeshellarg($auth_pass) . " " . $database_host . " " . $database_name . " " . $database_user . " " . escapeshellarg($database_password) . " " . $database_driver . " -p " . $database_prefix;
-            $exec .= " -t " . $default_template . " -d 1 ";
+            $exec .= " -t " . $default_template . " -d 1";
+            if (isset($opts['config_only']) and $opts['config_only']) {
+                $exec .= " -c 1";
+            }
+
+
             $message = $message . "\n\n\n" . $exec;
             shell_exec($exec);
             if (!isset($opts['options']) and isset($install_options) and is_array($install_options) and !empty($install_options)) {
@@ -232,7 +242,6 @@ class MicroweberInstallCommand
                     }
                 }
             }
-
 
 
             $exec = "chown -R {$chown_user}:{$chown_user} {$user_public_html_folder}.htaccess";

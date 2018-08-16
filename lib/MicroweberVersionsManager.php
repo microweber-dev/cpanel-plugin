@@ -56,6 +56,9 @@ class MicroweberVersionsManager
             $update_cache = true;
         }
 
+        if(is_file($cache_file) and !is_writable($update_cache)){
+            $update_cache = false;
+        }
 
         if (!$update_cache) {
             $data = file_get_contents($cache_file);

@@ -47,6 +47,7 @@ trait MicrowberFindInstalationsTrait
         foreach ($allDomains as $key => $domain) {
             $mainDir = $domain['documentroot'];
             $find_version= new MicroweberVersionsManager($mainDir);
+
             $config = file_exists($mainDir . "/config/microweber.php");
             if (!$config) {
                 continue;

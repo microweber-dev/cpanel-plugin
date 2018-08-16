@@ -57,6 +57,9 @@ class MicroweberPluginController
 
         //@todo fix $sourcepath to be from /usr/share
         $sourcepath = $domainData->homedir;
+        $sourcepath = $domainData->homedir;
+        $sourcepath = '/usr/share/microweber/latest';
+
         $installPath = $domainData->documentroot;
 
 
@@ -109,6 +112,8 @@ class MicroweberPluginController
         $opts['database_name'] = $dbName;
         $opts['database_host'] = $dbHost;
         $opts['default_template'] = 'dream'; //@todo get from settings
+        $opts['config_only'] = 1; //@todo get from settings
+        $opts['is_symlink'] = 1; //@todo get from settings
 
 
 //        $install_opts = array();

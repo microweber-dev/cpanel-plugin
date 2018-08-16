@@ -26,13 +26,12 @@ if ($_POST) {
 if (isset($_GET['search']) && !$_GET['search']) {
     unset($_GET['search']);
 }
-//
-// $domaindata = $cpanel->uapi('DomainInfo', 'domains_data', array('format' => 'hash'));
-// $domaindata = $domaindata['cpanelresult']['result']['data'];
-// $allDomains = array_merge(array($domaindata['main_domain']), $domaindata['addon_domains'], $domaindata['sub_domains']);
- $allDomains = $controller->findInstalations();
 
-?>
+ $domaindata = $cpanel->uapi('DomainInfo', 'domains_data', array('format' => 'hash'));
+ $domaindata = $domaindata['cpanelresult']['result']['data'];
+ $allDomains = array_merge(array($domaindata['main_domain']), $domaindata['addon_domains'], $domaindata['sub_domains']);
+$existing_installs = $controller->findInstalations();
+ ?>
 
     <link rel="stylesheet" type="text/css" href="./microweber/index.css">
 
@@ -95,7 +94,7 @@ if (isset($_GET['search']) && !$_GET['search']) {
                 <?php
 
                 $view = new MicroweberView(__DIR__ . '/views/domains.php');
-                $view->assign('domains', $allDomains);
+                $view->assign('domains', $existing_installs);
                 $view->display();
 
 

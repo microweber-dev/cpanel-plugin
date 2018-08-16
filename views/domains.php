@@ -30,7 +30,7 @@ if (!isset($domains)) {
                 ?>
                 <tr>
                     <td>
-                        <a href="//<?php echo $domain['domain']; ?>" target="_blank">
+                        <a href="http://<?php echo $domain['domain']; ?>" target="_blank">
                             <img src="./microweber/mw-icon.png"
                                  class="mw-icon"> <?php echo $domain['domain']; ?>
                         </a>
