@@ -19,14 +19,69 @@ class MicroweberVersionsManager
 
     }
 
-    public function getLatestVersion()
+    public function getCurrentVersion()
     {
-        $url = 'http://update.microweberapi.com/?api_function=get_download_link&get_last_version=1';
-        $data = file_get_contents($url);
-        $data = json_decode($data);
+
+
+        $version_file = file_exists($this->sharedDir . "/version.txt");
+        $version = 'unknown';
+        if ($version_file) {
+            $version = file_get_contents($this->sharedDir . "/version.txt");
+            $version = strip_tags($version);
+        }
+        return $version;
+    }
+
+    public function getLatestVersion($force_check = false)
+    {
+        $data =  $this->getLatestVersionData($force_check);
+        if(isset($data['version'])){
+            return $data['version'];
+        }
+    }
+    public function getLatestVersionData($force_check = false)
+    {
+        $cache_file = realpath(__DIR__ . '/../storage/version_check.txt');
+        $current_time = time();
+
+        $update_cache = false;
+        if ($force_check) {
+            $update_cache = true;
+        } elseif (!is_file($cache_file)) {
+            $update_cache = true;
+        } else if (filemtime($cache_file) and (filemtime($cache_file) < $current_time - 3600)) {
+            $update_cache = true;
+        }
+
+
+        if (!$update_cache) {
+            $data = file_get_contents($cache_file);
+
+            if (!$data) {
+                $update_cache = true;
+            }
+        }
+
+        if ($update_cache) {
+            $url = 'http://update.microweberapi.com/?api_function=get_download_link&get_last_version=1';
+            $data = file_get_contents($url);
+            if (!$data) return false;
+            if ($data) {
+                $fp = fopen($cache_file, 'w+');
+                fwrite($fp, $data);
+                fclose($fp);
+            }
+        }
+
+
         if (!$data) return false;
+
+
+        $data = @json_decode($data,true);
+
         return $data;
     }
+
 
     public function download()
     {
@@ -39,13 +94,15 @@ class MicroweberVersionsManager
         }
 
 
-        $latest = $this->getLatestVersion();
+        $latest = $this->getLatestVersionData();
+        if(!isset($latest['url'])){
+            return;
+        }
 
-
-        copy($latest->url, $this->tempZipFile);
+        copy($latest['url'], $this->tempZipFile);
         //$cmd = "wget -O $this->tempZipFile {$latest->url}";
         // exec($cmd);
-        exec("unzip {$this->tempZipFile} -d {$this->sharedDir}");
+        exec("unzip -o {$this->tempZipFile} -d {$this->sharedDir}");
         unlink($this->tempZipFile);
     }
 
@@ -54,22 +111,9 @@ class MicroweberVersionsManager
         return is_dir($this->sharedDir) && file_exists("{$this->sharedDir}/version.txt");
     }
 
-    public function getLicenseData($whiteLabelKey = false)
+    public function downloadExtraContent($key)
     {
 
-        if ($whiteLabelKey) {
-            $relType = 'modules/white_label';
-            $check_url = "https://update.microweberapi.com/?api_function=validate_licenses&local_key=$whiteLabelKey&rel_type=$relType";
-            $data = file_get_contents($check_url);
-            $data = @json_decode($data, true);
-            if ($data and isset($data[$relType])) {
-                $keyData = $data[$relType];
-                return $keyData;
-            }
-        }
 
     }
-
-
-
 }

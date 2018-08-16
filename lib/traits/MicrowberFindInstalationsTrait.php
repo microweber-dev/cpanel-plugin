@@ -45,21 +45,19 @@ trait MicrowberFindInstalationsTrait
 
         $return = array();
         foreach ($allDomains as $key => $domain) {
-
             $mainDir = $domain['documentroot'];
-            $config = file_exists("$mainDir/config/microweber.php");
-            $version_file = file_exists("$mainDir/version.txt");
+            $find_version= new MicroweberVersionsManager($mainDir);
+            $config = file_exists($mainDir . "/config/microweber.php");
             if (!$config) {
                 continue;
             }
-            if (!$version_file) {
-                $version = 'unknown';
-            } else {
-                $version = file_get_contents("$mainDir/version.txt");
 
-            }
-            $domain['version'] = strip_tags($version);
+
+            $version = $find_version->getCurrentVersion();
+            if($version){
+            $domain['version'] = $version;
             $return[$key] = $domain;
+            }
         }
         return $return;
     }

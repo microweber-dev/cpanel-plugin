@@ -3,16 +3,38 @@
 if (!isset($key)) {
     $key = '';
 }
+if (!isset($current_version)) {
+    $current_version = '';
+
+}if (!isset($latest_version)) {
+    $latest_version = '';
+}
 ?>
 <form method="POST">
     <div>
         <h2>Download Microweber</h2>
 
+        <?php if (!$current_version): ?>
+            <h5>You dont have any downloaded version</h5>
+        <?php else: ?>
+            <h5>Your version is <?php print  $current_version ?></h5>
+        <?php endif; ?>
+
+
+
+        <?php if ($latest_version): ?>
+            <h5>Latest version is <?php print  $latest_version ?></h5>
+        <?php endif; ?>
+
+
+
         <div>
-            <button class="btn">Download Microweber CMS Latest Version</button>
+
+            <button name="download_cms" value="download_cms" class="btn">Download Microweber CMS Latest Version</button>
         </div>
     </div>
-
+</form>
+<form method="POST">
     <div>
         <h2>White Label Key</h2>
 
@@ -23,7 +45,9 @@ if (!isset($key)) {
             </label>
 
             <div>
-                <input type="submit" value="Save" class="btn btn-primary">
+                <input name="action" type="submit" value="Save" class="btn btn-primary">
+
+
             </div>
         </div>
 
@@ -42,7 +66,7 @@ if (!isset($key)) {
                         <b><?php echo date('d M Y', strtotime($key_data['due_on'])); ?></b>
                     </p>
                     <p>Billing cycle: <?php echo $key_data['billing_cycle']; ?></p>
-                    <button class="btn">Download Userfiles</button>
+                    <button name="download_userfiles" value="download_userfiles" class="btn">Download Userfiles</button>
                 <?php else: ?>
                     <b>
                         Your White Label key is invalid.

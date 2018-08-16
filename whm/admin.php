@@ -10,20 +10,25 @@ $controller = new MicroweberAdminController();
 $versions = new MicroweberVersionsManager();
 $storage = new MicroweberStorage();
 $keyData = array();
-if ($_POST) {
+if (isset($_POST['key'])) {
     $storage->save($_POST);
 }
-$storedData = $storage->read();
-$settings = $storage->read();
 
+if (isset($_POST['download_cms'])) {
+    $versions->download();
+}
+$current_version = $versions->getCurrentVersion();
+$latest_version = $versions->getLatestVersion();
+ 
+$settings = $storage->read();
 
 
 //$autoInstall = isset($storedData->auto_install) && $storedData->auto_install == '1';
 //$install_type = isset($storedData->install_type) && $storedData->install_type == 'symlinked';
 //$whiteLabelKey = isset($storedData->key) ? $storedData->key : '';
 $whiteLabelKey = isset($settings['key']) ? $settings['key'] : '';
- // Check white label key
-if($whiteLabelKey) {
+// Check white label key
+if ($whiteLabelKey) {
     $keyData = $controller->getLicenseData($whiteLabelKey);
 
 //    $relType = 'modules/white_label';
@@ -37,23 +42,23 @@ if($whiteLabelKey) {
 $domains = $controller->get_installations_across_server();
 
 
-
-
 WHM::header('Microweber Settings', 0, 0);
 ?>
 <link rel="stylesheet" type="text/css" href="./microweber/index.css">
 
 <style>
-label {
-    font-weight: normal !important;
-}
-h2 {
-    font-weight: bold !important;
-}
-.btn {
-    background-color: #0086db !important;
-    color: #fff !important;
-}
+    label {
+        font-weight: normal !important;
+    }
+
+    h2 {
+        font-weight: bold !important;
+    }
+
+    .btn {
+        background-color: #0086db !important;
+        color: #fff !important;
+    }
 </style>
 
 <hr>
@@ -74,14 +79,15 @@ $view->display();
 $view = new MicroweberView(__DIR__ . '/../views/download.php');
 $view->assign('key', $whiteLabelKey);
 $view->assign('key_data', $keyData);
+$view->assign('current_version', $current_version);
+$view->assign('latest_version', $latest_version);
 $view->display();
 
 
 ?>
 
 
- <hr>
-
+<hr>
 
 
 <h1>Installations</h1>
