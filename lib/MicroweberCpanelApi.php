@@ -1,12 +1,21 @@
 <?php
 
+require_once(__DIR__ . '/traits/MicrowberFindInstalationsTrait.php');
 
 class MicroweberCpanelApi
 {
+
+
+    use MicrowberFindInstalationsTrait;
+
+
+
     public function checkIfFeatureEnabled($user)
     {
         //$user = $this->input->data->user;
         $account = $this->execApi1('accountsummary', compact('user'));
+        $account = json_decode(json_encode($account, JSON_FORCE_OBJECT));
+
         $account = $account->data->acct[0];
         $pkg = $account->plan;
         $package = $this->execApi1('getpkginfo', compact('pkg'));
@@ -39,7 +48,7 @@ class MicroweberCpanelApi
 
         }
         $json = shell_exec($command);
-        return json_decode($json);
+        return @json_decode($json, true);
     }
 
     public function execApi1($function, $args)
@@ -51,7 +60,7 @@ class MicroweberCpanelApi
         //$command = "whmapi1 --output=json $function $argsString";
         $command = "/usr/sbin/whmapi1 --output=json $function $argsString";
         $json = shell_exec($command);
-        return json_decode($json);
+        return @json_decode($json, true);
     }
 
 
@@ -72,4 +81,49 @@ class MicroweberCpanelApi
         }
         return implode($pass);
     }
+
+
+//    public function findInstalations($username = false)
+//    {
+//
+//        $allDomains = array();
+//        $domaindata = $this->execUapi($username, 'DomainInfo', 'domains_data', array('format' => 'hash'));
+//        if ($domaindata) {
+//            $domaindata = $domaindata['cpanelresult']['result']['data'];
+//            if (isset($domaindata['main_domain'])) {
+//                $allDomains = array_merge($allDomains, $domaindata['main_domain']);
+//            }
+//            if (isset($domaindata['addon_domains'])) {
+//                $allDomains = array_merge($allDomains, $domaindata['addon_domains']);
+//            }
+//            if (isset($domaindata['sub_domains'])) {
+//                $allDomains = array_merge($allDomains, $domaindata['sub_domains']);
+//            }
+//        }
+//
+//
+//        $return = array();
+//        foreach ($allDomains as $key => $domain) {
+//
+//            $mainDir = $domain['documentroot'];
+//            $config = file_exists("$mainDir/config/microweber.php");
+//            $version_file = file_exists("$mainDir/version.txt");
+//            if (!$config) {
+//                continue;
+//            }
+//            if (!$version_file) {
+//                $version = 'unknown';
+//            } else {
+//                $version = file_get_contents("$mainDir/version.txt");
+//
+//            }
+//            $domain['version'] = $version;
+//            $return[$key] = $domain;
+//        }
+//        return $return;
+//    }
+
+
+
+
 }

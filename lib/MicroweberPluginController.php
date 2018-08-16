@@ -2,9 +2,14 @@
 include_once(__DIR__ . '/MicroweberHooks.php');
 include_once(__DIR__ . '/MicroweberCpanelApi.php');
 include_once(__DIR__ . '/MicroweberLogger.php');
+require_once(__DIR__ . '/traits/MicrowberFindInstalationsTrait.php');
+
+
 
 class MicroweberPluginController
 {
+    use MicrowberFindInstalationsTrait;
+
     public $logger = null;
     public function __construct($cpanel)
     {

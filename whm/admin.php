@@ -1,7 +1,9 @@
 <?php
 require_once('/usr/local/cpanel/php/WHM.php');
 require_once(__DIR__ . '/../lib/MicroweberStorage.php');
+require_once(__DIR__ . '/../lib/MicroweberVersionsManager.php');
 
+$versions = new MicroweberVersionsManager();
 $storage = new MicroweberStorage();
 $keyData = array();
 if ($_POST) {
@@ -17,7 +19,7 @@ if($whiteLabelKey) {
     $relType = 'modules/white_label';
     $check_url = "https://update.microweberapi.com/?api_function=validate_licenses&local_key=$whiteLabelKey&rel_type=$relType";
     $data = file_get_contents($check_url);
-    $data = json_decode($data, true);
+    $data = @json_decode($data, true);
     $keyData = $data[$relType];
 }
 
@@ -110,7 +112,7 @@ h2 {
                 </label>
             </div>
 
-            <?php if(count($keyData)): ?>
+            <?php if($keyData): ?>
             <div class="callout callout-cpanel">
                 <?php if($keyData['status'] == 'active'): ?>
                     <p><b><?php echo $keyData['rel_name']; ?></b></p>

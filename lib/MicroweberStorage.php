@@ -10,7 +10,7 @@ class MicroweberStorage
 
     public function read() {
         $data = file_get_contents($this->file);
-        return json_decode($data);
+        return @json_decode($data);
     }
     
     public function save($data) {

@@ -31,10 +31,10 @@ class MicroweberVersionsManager
     public function download()
     {
         if ($this->hasDownloaded()) {
-           // exec("rm -rf {$this->sharedDir}");
+            // exec("rm -rf {$this->sharedDir}");
         }
 
-        if(!is_dir($this->sharedDir)){
+        if (!is_dir($this->sharedDir)) {
             MicroweberHelpers::mkdirRecursive($this->sharedDir);
         }
 
@@ -44,7 +44,7 @@ class MicroweberVersionsManager
 
         copy($latest->url, $this->tempZipFile);
         //$cmd = "wget -O $this->tempZipFile {$latest->url}";
-       // exec($cmd);
+        // exec($cmd);
         exec("unzip {$this->tempZipFile} -d {$this->sharedDir}");
         unlink($this->tempZipFile);
     }
@@ -53,4 +53,23 @@ class MicroweberVersionsManager
     {
         return is_dir($this->sharedDir) && file_exists("{$this->sharedDir}/version.txt");
     }
+
+    public function getLicenseData($whiteLabelKey = false)
+    {
+
+        if ($whiteLabelKey) {
+            $relType = 'modules/white_label';
+            $check_url = "https://update.microweberapi.com/?api_function=validate_licenses&local_key=$whiteLabelKey&rel_type=$relType";
+            $data = file_get_contents($check_url);
+            $data = @json_decode($data, true);
+            if ($data and isset($data[$relType])) {
+                $keyData = $data[$relType];
+                return $keyData;
+            }
+        }
+
+    }
+
+
+
 }

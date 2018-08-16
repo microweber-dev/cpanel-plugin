@@ -2,9 +2,12 @@
 include('/usr/local/cpanel/php/cpanel.php');
 
 require_once(__DIR__ . '/lib/MicroweberPluginController.php');
+require_once(__DIR__ . '/lib/MicroweberCpanelApi.php');
+$cpapi = new MicroweberCpanelApi();
 
 $cpanel = new CPANEL();
 $controller = new MicroweberPluginController($cpanel);
+$username = $controller->getUsername();
 echo $cpanel->header();
 
 if ($_POST) {
@@ -22,10 +25,12 @@ if ($_POST) {
 if (isset($_GET['search']) && !$_GET['search']) {
     unset($_GET['search']);
 }
+//
+// $domaindata = $cpanel->uapi('DomainInfo', 'domains_data', array('format' => 'hash'));
+// $domaindata = $domaindata['cpanelresult']['result']['data'];
+// $allDomains = array_merge(array($domaindata['main_domain']), $domaindata['addon_domains'], $domaindata['sub_domains']);
+ $allDomains = $controller->findInstalations();
 
-$domaindata = $cpanel->uapi('DomainInfo', 'domains_data', array('format' => 'hash'));
-$domaindata = $domaindata['cpanelresult']['result']['data'];
-$allDomains = array_merge(array($domaindata['main_domain']), $domaindata['addon_domains'], $domaindata['sub_domains']);
 ?>
 
     <link rel="stylesheet" type="text/css" href="./microweber/index.css">
@@ -99,8 +104,8 @@ $allDomains = array_merge(array($domaindata['main_domain']), $domaindata['addon_
                         <?php foreach ($allDomains as $key => $domain): ?>
                             <?php
                             $mainDir = $domain['documentroot'];
-                            $config = @include("$mainDir/config/microweber.php");
-                            if (!$config) continue;
+
+                         
                             if (isset($_GET['search'])) {
                                 if (strpos($domain['domain'], $_GET['search']) === false) continue;
                             }
@@ -113,7 +118,7 @@ $allDomains = array_merge(array($domaindata['main_domain']), $domaindata['addon_
                                              class="mw-icon"> <?php echo $domain['domain']; ?>
                                     </a>
                                 </td>
-                                <td><?php echo $config['version']; ?></td>
+                                <td><?php echo $domain['version']; ?></td>
                                 <td><?php echo $domain['documentroot']; ?></td>
                                 <td class="action">
                                     <a href="#" class="update">Update</a>
@@ -184,55 +189,7 @@ $allDomains = array_merge(array($domaindata['main_domain']), $domaindata['addon_
                 <div class="row ng-scope" style="margin-top:20px;">
                     <div class="col-xs-12 text-md-right text-lg-right pagination-controls">
 
-                        <div class="hidden-xs page-size" id="bottom-page-size" name="">
-                            <div ng-hide="autoHide &amp;&amp; options[0].value >= totalItems" class="form-group">
-                                <label for="bottom-page-size_select" class="title ng-binding">Page Size</label>
-                                <select id="bottom-page-size_select"
-                                        class="form-control ng-pristine ng-untouched ng-valid"
-                                        ng-options="size.value as size.label for size in options" ng-model="pageSize"
-                                        name="">
-                                    <option value="number:10" label="10" selected="selected">10</option>
-                                    <option value="number:20" label="20" selected="selected">20</option>
-                                    <option value="number:50" label="50">50</option>
-                                    <option value="number:100" label="100">100</option>
-                                </select>
-                            </div>
-                        </div>
 
-                        <ul class="pagination ng-isolate-scope" aria-label="Pagination" id="bottom-page-selector">
-                            <li ng-if="boundaryLinks">
-                                <a id="bottom-page-selector_first" href="" ng-click="selectPage(1)"
-                                   aria-label="Go to first page." class="ng-binding">
-                                    &lt;&lt;
-                                </a>
-                            </li>
-                            <li>
-                                <a id="bottom-page-selector_previous" href="" ng-click="selectPage(page - 1)"
-                                   aria-label="Go to previous page." class="ng-binding">
-                                    &lt;
-                                </a>
-                            </li>
-                            <li ng-repeat="page in pages track by $index" ng-class="{active: page.active}"
-                                ng-switch="page.active" class="ng-scope active">
-                                <a id="bottom-page-selector_1" href="" ng-click="selectPage(page.number)"
-                                   aria-label="Go to page “1”." aria-current="page" ng-switch-when="true"
-                                   class="ng-binding ng-scope">
-                                    1
-                                </a>
-                            </li>
-                            <li ng-class="{disabled: noNext()}">
-                                <a id="bottom-page-selector_next" href="" ng-click="selectPage(page + 1)"
-                                   aria-label="Go to next page." class="ng-binding">
-                                    &gt;
-                                </a>
-                            </li>
-                            <li ng-if="boundaryLinks" ng-class="{disabled: noNext()}">
-                                <a id="bottom-page-selector_last" href="" ng-click="selectPage(totalPages)"
-                                   aria-label="Go to last page." class="ng-binding">
-                                    &gt;&gt;
-                                </a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>

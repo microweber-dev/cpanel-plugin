@@ -25,4 +25,30 @@ class MicroweberHelpers
         }
         return round($size, 2) . ' ' . $units[$i];
     }
+
+    public static function download($url, $file)
+    {
+        set_time_limit(0);
+        $fp = fopen($file, 'w+');
+        $ch = curl_init(str_replace(" ", "%20", $url));
+        curl_setopt($ch, CURLOPT_TIMEOUT, 300);
+        curl_setopt($ch, CURLOPT_FILE, $fp);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_exec($ch);
+        curl_close($ch);
+        fclose($fp);
+    }
+
+    public static function rglob($pattern, $flags = 0)
+    {
+        $files = glob($pattern, $flags);
+
+        foreach (glob(dirname($pattern) . '/*', GLOB_ONLYDIR | GLOB_NOSORT) as $dir) {
+            $files = array_merge($files, self::rglob($dir . '/' . basename($pattern), $flags));
+        }
+
+        return $files;
+    }
+
+
 }
