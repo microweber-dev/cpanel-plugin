@@ -179,13 +179,13 @@ class MicroweberHooks
     private function checkIfAutoInstall()
     {
         $config = $this->storage->read();
-        return isset($config->auto_install) && $config->auto_install;
+        return isset($config['auto_install']) and $config['auto_install'];
     }
 
     private function checkIfSymlinkInstall()
     {
         $config = $this->storage->read();
-        return isset($config->install_type) && $config->install_type == 'symlinked';
+        return isset($config['install_type']) and $config['install_type'] == 'symlinked';
     }
 
 

@@ -58,7 +58,7 @@ trait MicrowberFindInstalationsTrait
                 $version = file_get_contents("$mainDir/version.txt");
 
             }
-            $domain['version'] = $version;
+            $domain['version'] = strip_tags($version);
             $return[$key] = $domain;
         }
         return $return;

@@ -3,11 +3,13 @@ include_once(__DIR__ . '/MicroweberHooks.php');
 include_once(__DIR__ . '/MicroweberCpanelApi.php');
 include_once(__DIR__ . '/MicroweberLogger.php');
 require_once(__DIR__ . '/traits/MicrowberFindInstalationsTrait.php');
+require_once(__DIR__ . '/traits/MicrowberLicenseDataTrait.php');
 
 
 class MicroweberAdminController
 {
     use MicrowberFindInstalationsTrait;
+    use MicrowberLicenseDataTrait;
 
     public $logger = null;
     public $cpapi = null;
