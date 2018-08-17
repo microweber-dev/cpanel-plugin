@@ -10,6 +10,23 @@ if [ "$username" != "root" ]; then
     exit 1
 fi
 
+## Create symlinks
+
+echo "Creating dirs...";
+
+step1=`mkdir -p /usr/local/cpanel/whostmgr/docroot/cgi/3rdparty/microweber/`
+if [ -n "$step1" ]; then
+    echo "Unable to complete step mkdir /usr/local/cpanel/whostmgr/docroot/cgi/3rdparty/microweber/"
+    echo "$step1"
+fi
+
+step12=`mkdir -p /usr/local/cpanel/microweber/`
+if [ -n "$step12" ]; then
+    echo "Unable to complete step mkdir /usr/local/cpanel/microweber/"
+    echo "$step1"
+fi
+
+
 chmod_files=`chmod +x -R /usr/local/cpanel/microweber`
 
 if [ -n "$chmod_files" ]; then
@@ -30,21 +47,7 @@ if [ -z "$register_whm" ]; then
     exit 1
 fi
 
-## Create symlinks
 
-echo "Creating dirs...";
-
-step1=`mkdir -p /usr/local/cpanel/whostmgr/docroot/cgi/3rdparty/microweber/`
-if [ -n "$step1" ]; then
-    echo "Unable to complete step mkdir /usr/local/cpanel/whostmgr/docroot/cgi/3rdparty/microweber/"
-    echo "$step1"
-fi
-
-step12=`mkdir -p /usr/local/cpanel/microweber/`
-if [ -n "$step12" ]; then
-    echo "Unable to complete step mkdir /usr/local/cpanel/microweber/"
-    echo "$step1"
-fi
 
 
 step2=`ln -s /usr/local/cpanel/microweber/whm/index.cgi /usr/local/cpanel/whostmgr/docroot/cgi/3rdparty/microweber/index.cgi`
