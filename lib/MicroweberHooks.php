@@ -156,6 +156,7 @@ class MicroweberHooks
         $opts['source_folder'] = $source_folder;
         $opts['public_html_folder'] = $installPath;
 
+        $opts['config_only'] = true;
 
         $opts['default_template'] = 'dream'; //@todo get from settings
         $opts['is_symliked'] = $is_symlink; //@todo get from settings

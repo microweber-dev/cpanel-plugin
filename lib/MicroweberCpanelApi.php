@@ -9,25 +9,31 @@ class MicroweberCpanelApi
     use MicrowberFindInstalationsTrait;
 
 
-
     public function checkIfFeatureEnabled($user)
     {
         //$user = $this->input->data->user;
         $account = $this->execApi1('accountsummary', compact('user'));
-        $account = json_decode(json_encode($account, JSON_FORCE_OBJECT));
+        // $account = json_decode(json_encode($account, JSON_FORCE_OBJECT));
 
-        $account = $account->data->acct[0];
-        $pkg = $account->plan;
+        //    var_dump($account);
+        //   exit;
+
+        $account = $account['data']['acct'][0];
+        $pkg = $account['plan'];
         $package = $this->execApi1('getpkginfo', compact('pkg'));
-        $package = $package->data->pkg;
-        $featurelist = $package->FEATURELIST;
-        $featurelistData = $this->execApi1('get_featurelist_data', compact('featurelist'));
-        $featureHash = $featurelistData->data->features;
 
+
+        $package = $package['data']['pkg'];
+        $featurelist = $package['FEATURELIST'];
+        $featurelistData = $this->execApi1('get_featurelist_data', compact('featurelist'));
+        $featureHash = $featurelistData['data']['features'];
+        if (!$featureHash) {
+            return false;
+        }
 
         foreach ($featureHash as $hash) {
-            if ($hash->id == 'microweber') {
-                return $hash->is_disabled == '0';
+            if ($hash['id'] == 'microweber') {
+                return $hash['is_disabled'] == '0';
             }
         }
         return false;
@@ -122,8 +128,6 @@ class MicroweberCpanelApi
 //        }
 //        return $return;
 //    }
-
-
 
 
 }

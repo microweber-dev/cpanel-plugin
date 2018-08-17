@@ -26,6 +26,11 @@ if [ -n "$step12" ]; then
     echo "$step1"
 fi
 
+step13=`mkdir -p /usr/local/cpanel/microweber/storage`
+if [ -n "$step12" ]; then
+    echo "Unable to complete step mkdir /usr/local/cpanel/microweber/storage"
+    echo "$step1"
+fi
 
 chmod_files=`chmod +x -R /usr/local/cpanel/microweber`
 
