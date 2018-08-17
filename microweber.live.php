@@ -186,8 +186,7 @@ $existing_installs = $controller->findInstalations();
                                     <select name="db_driver" class="form-control">
                                         <option value="mysql">MySQL</option>
                                         <option value="sqlite">SQLite</option>
-                                        <option value="pgsql">PostgreSQL</option>
-                                        <option value="mssql">Microsoft SQL Server</option>
+
                                     </select>
                                 </div>
                             </div>

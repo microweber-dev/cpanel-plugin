@@ -12,13 +12,16 @@ $storage = new MicroweberStorage();
 $keyData = array();
 $settings = $storage->read();
 
-$user_key = isset($settings['key']) ? $settings['key'] : '';
 // Check white label key
 
 
-if (isset($_POST['key'])) {
+if (isset($_POST['key']) or isset($_POST['save_settings'])) {
     $storage->save($_POST);
+    $settings = $storage->read();
 }
+
+$user_key = isset($settings['key']) ? $settings['key'] : '';
+
 if ($user_key) {
     $keyData = $controller->getLicenseData($user_key);
 }
@@ -36,11 +39,9 @@ $current_version = $versions->getCurrentVersion();
 $latest_version = $versions->getLatestVersion();
 
 
-
 //$autoInstall = isset($storedData->auto_install) && $storedData->auto_install == '1';
 //$install_type = isset($storedData->install_type) && $storedData->install_type == 'symlinked';
 //$user_key = isset($storedData->key) ? $storedData->key : '';
-
 
 
 $domains = $controller->get_installations_across_server();

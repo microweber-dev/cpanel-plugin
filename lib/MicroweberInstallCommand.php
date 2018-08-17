@@ -10,6 +10,7 @@ class MicroweberInstallCommand
     // $opts['email'];
     // $opts['database_driver'];
     // $opts['database_name'];
+    // $opts['database_host'];
     // $opts['database_user'];
     // $opts['database_password'];
     // $opts['database_table_prefix'];

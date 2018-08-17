@@ -17,7 +17,7 @@ class MicroweberStorage
     
     public function save($data) {
         if($this->storage and is_array($this->storage)){
-            $data = array_merge($data,$this->storage);
+            $data = array_merge($this->storage,$data);
         }
         $data = json_encode($data);
         return file_put_contents($this->file, $data);

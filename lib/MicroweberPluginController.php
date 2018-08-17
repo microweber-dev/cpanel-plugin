@@ -27,6 +27,9 @@ class MicroweberPluginController
         $dbDriver = 'mysql';
         $dbHost = 'localhost';
 
+
+
+
         // Prepare data
         $domainData = json_decode($_POST['domain']);
         $installPath = $domainData->documentroot;
@@ -98,6 +101,9 @@ class MicroweberPluginController
 
 
 
+        //php artisan microweber:install admin@site.com admin password storage/database1.sqlite microweber microweber nopass sqlite -p site_ -t liteness -d 1
+
+
         $opts = array();
         $opts['source_folder'] = $sourcepath;
         $opts['public_html_folder'] = $installPath;
@@ -111,6 +117,10 @@ class MicroweberPluginController
         $opts['database_table_prefix'] = $dbPrefix;
         $opts['database_name'] = $dbName;
         $opts['database_host'] = $dbHost;
+
+
+
+
         $opts['default_template'] = 'dream'; //@todo get from settings
         $opts['config_only'] = 1; //@todo get from settings
         $opts['is_symlink'] = 1; //@todo get from settings

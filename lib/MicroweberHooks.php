@@ -79,17 +79,24 @@ class MicroweberHooks
             return;
         }
 
+
+        $dbDriver = $this->getDbTypeForInstall();
+
         $this->log('Adding website to account');
-
-
+        $dbHost = 'localhost';
         $installPath = $installPath . '/public_html/';
-        $this->install($domain, $source_path, $installPath, $adminEmail, $adminUsername, $adminPassword);
+
+
+        $isSym = $this->checkIfSymlinkInstall();
+
+
+        $this->install($domain, $source_path, $installPath, $adminEmail, $adminUsername, $adminPassword, $dbHost, $dbDriver, $is_symlink = $isSym);
     }
 
 
     // ----------------------
 
-    public function install($domain, $source_path, $installPath, $adminEmail, $adminUsername, $adminPassword, $dbHost = 'localhost', $dbDriver = 'mysql')
+    public function install($domain, $source_path, $installPath, $adminEmail, $adminUsername, $adminPassword, $dbHost = 'localhost', $dbDriver = 'mysql', $is_symlink = false)
     {
         $cpapi = new MicroweberCpanelApi();
 
@@ -106,9 +113,6 @@ class MicroweberHooks
         }
         $this->log('Source files to use are in ' . $source_folder);
 
-
-        //$dbDriver @todo get from settings ?
-
         $dbNameLength = 15;
         $dbPrefix = $cpapi->makeDbPrefixFromUsername($adminUsername);
         $dbName = $dbPrefix . str_replace('.', '', $domain);
@@ -118,16 +122,26 @@ class MicroweberHooks
         $dbPass = $cpapi->randomPassword(12);
 
 
-        $this->log('Creating database user ' . $dbUsername);
-        $cpapi->execUapi($adminUsername, 'Mysql', 'create_user', array('name' => $dbUsername, 'password' => $dbPass));
+        if ($dbDriver == 'sqlite') {
+            $this->log('Using sqlite for ' . $dbUsername);
+            $dbHost = 'storage/database.sqlite';
+
+        } else {
 
 
-        $this->log('Creating database ' . $dbName);
-        $cpapi->execUapi($adminUsername, 'Mysql', 'create_database', array('name' => $dbName));
+            $this->log('Creating database user ' . $dbUsername);
+            $cpapi->execUapi($adminUsername, 'Mysql', 'create_user', array('name' => $dbUsername, 'password' => $dbPass));
 
-        $this->log('Setting privileges ' . $dbUsername);
-        $cpapi->execUapi($adminUsername, 'Mysql', 'set_privileges_on_database', array('user' => $dbUsername, 'database' => $dbName, 'privileges' => 'ALL PRIVILEGES'));
 
+            $this->log('Creating database ' . $dbName);
+            $cpapi->execUapi($adminUsername, 'Mysql', 'create_database', array('name' => $dbName));
+
+            $this->log('Setting privileges ' . $dbUsername);
+            $cpapi->execUapi($adminUsername, 'Mysql', 'set_privileges_on_database', array('user' => $dbUsername, 'database' => $dbName, 'privileges' => 'ALL PRIVILEGES'));
+
+        }
+
+        //         //php artisan microweber:install admin@site.com admin password storage/database1.sqlite microweber microweber nopass sqlite -p site_ -t liteness -d 1
 
         $opts = array();
         $opts['user'] = $adminUsername;
@@ -135,6 +149,7 @@ class MicroweberHooks
         $opts['email'] = $adminEmail;
         $opts['database_driver'] = $dbDriver;
         $opts['database_user'] = $dbUsername;
+        $opts['database_host'] = $dbHost;
         $opts['database_password'] = $dbPass;
         $opts['database_table_prefix'] = $dbPrefix;
         $opts['database_name'] = $dbName;
@@ -143,8 +158,8 @@ class MicroweberHooks
 
 
         $opts['default_template'] = 'dream'; //@todo get from settings
-        $opts['is_symliked'] = true; //@todo get from settings
-        $opts['debug_email'] = 'boksiora@gmail.com'; //@todo get from settings
+        $opts['is_symliked'] = $is_symlink; //@todo get from settings
+        //  $opts['debug_email'] = 'boksiora@gmail.com'; //@todo get from settings
 
 
 //        $install_opts = array();
@@ -158,7 +173,6 @@ class MicroweberHooks
         $do_install = $do_install->install($opts);
 
 
-
         $result = 1;
         $message = "Install command finished.";   // This string is a reason for $result.
         $this->log($message);
@@ -166,7 +180,7 @@ class MicroweberHooks
         // Return the hook result and message.
         return array($result, $message);
 
-     }
+    }
 
     public function log($msg)
     {
@@ -175,6 +189,13 @@ class MicroweberHooks
         }
     }
 
+
+    private function getDbTypeForInstall()
+    {
+        $config = $this->storage->read();
+        $db_driver = isset($config['db_driver']) ? $config['db_driver'] : 'mysql';
+        return $db_driver;
+    }
 
     private function checkIfAutoInstall()
     {
