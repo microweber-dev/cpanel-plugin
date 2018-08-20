@@ -78,6 +78,7 @@ class MicroweberHooks
             $this->log('Website feature is not enabled for user ' . $adminUsername);
             return;
         }
+        $this->log('Website will be installed for user ' . $adminUsername);
 
 
         $dbDriver = $this->getDbTypeForInstall();

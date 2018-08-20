@@ -10,6 +10,9 @@ require_once(__DIR__ . '/lib/MicroweberView.php');
 $cpapi = new MicroweberCpanelApi();
 
 $cpanel = new CPANEL();
+
+
+
 $controller = new MicroweberPluginController($cpanel);
 $username = $controller->getUsername();
 echo $cpanel->header();
@@ -30,13 +33,16 @@ if (isset($_GET['search']) && !$_GET['search']) {
     unset($_GET['search']);
 }
 
+
  $domaindata = $cpanel->uapi('DomainInfo', 'domains_data', array('format' => 'hash'));
  $domaindata = $domaindata['cpanelresult']['result']['data'];
  $allDomains = array_merge(array($domaindata['main_domain']), $domaindata['addon_domains'], $domaindata['sub_domains']);
 $existing_installs = $controller->findInstalations();
+
+
  ?>
 
-    <link rel="stylesheet" type="text/css" href="./microweber/index.css">
+
 
     <script>
         function advancedRadioChanged() {
@@ -50,7 +56,7 @@ $existing_installs = $controller->findInstalations();
 
     <div class="microweber-plugin">
         <h1 class="page-header">
-            <span class="page-icon"><img src="./microweber/logo.svg"></span>
+            <span class="page-icon"> </span>
             <span id="pageHeading">Manager</span>
         </h1>
         <div class="body-content">
@@ -245,5 +251,4 @@ $existing_installs = $controller->findInstalations();
 
 <?php
 echo $cpanel->footer();
-$cpanel->end();
-?>
+ $cpanel->end();

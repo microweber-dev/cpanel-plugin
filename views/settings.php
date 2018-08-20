@@ -9,7 +9,6 @@ $auto_install = isset($settings['auto_install']) ? $settings['auto_install'] : '
 $install_type = isset($settings['install_type']) ? $settings['install_type'] : '' ;
 $db_driver = isset($settings['db_driver'])  ? $settings['db_driver'] : '';
 
-var_dump($settings);
 
 ?>
 
@@ -21,23 +20,23 @@ var_dump($settings);
 
             <div>
                 <label>
-                    <input type="radio" name="auto_install" value="1" <?php echo $auto_install ? 'checked' : ''; ?>>
+                    <input type="radio" name="auto_install" value="1" <?php echo $auto_install == '1' ? 'checked' : ''; ?>>
                     Automatically install Microweber on new domains and subdomains creation.
                 </label>
 
                 <br>
+
                 <label>
-                    <input type="radio"
-                           name="auto_install" <?php echo !isset($settings['auto_install']) ? 'checked' : ''; ?>>
-                    Default
-                </label>
-                <br>
-                <label>
-                    <input type="radio" name="auto_install" value="0" <?php echo !$auto_install ? 'checked' : ''; ?>>
+                    <input type="radio" name="auto_install" value="0" <?php echo $auto_install == '0' ? 'checked' : ''; ?>>
                     Manually install Microweber from cPanel.
                 </label>
                 <br>
-
+                <label>
+                    <input type="radio"
+                           name="auto_install" <?php echo $auto_install == 'disabled' ? 'checked' : ''; ?> value="disabled">
+                    Disabled
+                </label>
+                <br>
 
             </div>
 

@@ -31,8 +31,9 @@ if (!isset($domains)) {
                 <tr>
                     <td>
                         <a href="http://<?php echo $domain['domain']; ?>" target="_blank">
-                            <img src="./microweber/mw-icon.png"
-                                 class="mw-icon"> <?php echo $domain['domain']; ?>
+<!--                            <img src="./microweber/mw-icon.png"       class="mw-icon" /> -->
+
+                            <?php echo $domain['domain']; ?>
                         </a>
                     </td>
                     <td><?php echo $domain['version']; ?></td>

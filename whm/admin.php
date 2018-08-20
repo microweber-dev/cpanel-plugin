@@ -49,7 +49,6 @@ $domains = $controller->get_installations_across_server();
 
 WHM::header('Microweber Settings', 0, 0);
 ?>
-<link rel="stylesheet" type="text/css" href="./microweber/index.css">
 
 <style>
     label {

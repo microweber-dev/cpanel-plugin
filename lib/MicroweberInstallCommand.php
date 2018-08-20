@@ -205,6 +205,13 @@ class MicroweberInstallCommand
             $message = $message . "\n\n\n" . $exec;
             $output = exec($exec);
             $message = $message . "\n\n\n" . $output;
+
+            $exec = "chown -R {$chown_user}:{$chown_user} {$user_public_html_folder}";
+            $message = $message . "\n\n\n" . $exec;
+            $output = exec($exec);
+
+
+
             $conf = array();
             if (isset($opts['database_table_prefix'])) {
                 $database_prefix = $opts['database_table_prefix'];
