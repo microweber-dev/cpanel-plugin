@@ -1,4 +1,7 @@
 <?php
+
+
+
 include('/usr/local/cpanel/php/cpanel.php');
 
 require_once(__DIR__ . '/lib/MicroweberPluginController.php');

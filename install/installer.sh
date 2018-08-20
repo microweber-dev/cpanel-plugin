@@ -61,6 +61,12 @@ if [ -n "$step2" ]; then
     echo "Unable to complete step 2"
 fi
 
+step21=`ln -s /usr/local/cpanel/microweber/microweber.live.php /usr/local/cpanel/base/frontend/paper_lantern/microweber.live.php`
+
+if [ -n "$step21" ]; then
+    echo "Unable to complete step 2-1"
+fi
+
 step3=`mkdir /usr/local/cpanel/whostmgr/docroot/3rdparty/microweber`
 
 if [ -n "$step3" ]; then

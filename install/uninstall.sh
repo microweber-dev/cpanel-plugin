@@ -41,6 +41,11 @@ if [ -n "$step1" ]; then
     echo "Unable to complete step 1"
 fi
 
+step11=`rm -rf /usr/local/cpanel/base/frontend/paper_lantern/microweber.live.php`
+
+if [ -n "$step11" ]; then
+    echo "Unable to complete step 1-1"
+fi
 step2=`rm -rf /usr/local/cpanel/whostmgr/docroot/3rdparty/microweber`
 
 if [ -n "$step2" ]; then

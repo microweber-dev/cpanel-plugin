@@ -7,7 +7,7 @@ class MicroweberVersionsManager
 {
     private $sharedDir = '/usr/share/microweber/latest';
     private $tempZipFile = null;
-    private $tempZipFileExtra= null;
+    private $tempZipFileExtra = null;
 
     public function __construct($sharedDir = null)
     {
@@ -56,15 +56,18 @@ class MicroweberVersionsManager
             $update_cache = true;
         }
 
-        if(is_file($cache_file) and !is_writable($update_cache)){
-            $update_cache = false;
-        }
 
         if (!$update_cache) {
-            $data = file_get_contents($cache_file);
 
-            if (!$data) {
-                $update_cache = true;
+            if (is_file($cache_file) and !is_writable($update_cache)) {
+                $update_cache = false;
+            } else {
+
+                $data = file_get_contents($cache_file);
+
+                if (!$data) {
+                    $update_cache = true;
+                }
             }
         }
 
@@ -72,7 +75,7 @@ class MicroweberVersionsManager
             $url = 'http://update.microweberapi.com/?api_function=get_download_link&get_last_version=1';
             $data = file_get_contents($url);
             if (!$data) return false;
-            if ($data) {
+            if ($cache_file and $data) {
                 $fp = fopen($cache_file, 'w+');
                 fwrite($fp, $data);
                 fclose($fp);
@@ -119,16 +122,16 @@ class MicroweberVersionsManager
 
     public function downloadExtraContent($key)
     {
-        if(!$key){
+        if (!$key) {
             return;
         }
 
         $url = 'http://update.microweberapi.com/?api_function=get_download_link&get_extra_content=1&license_key=' . urlencode($key);
 
         $data = @file_get_contents($url);
-        if($data){
-            $data = @json_decode($data,true);
-            if(isset($data['url'])){
+        if ($data) {
+            $data = @json_decode($data, true);
+            if (isset($data['url'])) {
 
                 MicroweberHelpers::download($data['url'], $this->tempZipFileExtra);
                 exec("unzip -o {$this->tempZipFileExtra} -d {$this->sharedDir}");
