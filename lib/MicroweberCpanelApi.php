@@ -27,14 +27,23 @@ class MicroweberCpanelApi
         $featurelist = $package['FEATURELIST'];
         $featurelistData = $this->execApi1('get_featurelist_data', compact('featurelist'));
         $featureHash = $featurelistData['data']['features'];
+
+
         if (!$featureHash) {
             return false;
         }
 
         foreach ($featureHash as $hash) {
             if ($hash['id'] == 'microweber') {
-                return $hash['is_disabled'] == '0';
-            }
+                $disabled = intval($hash['is_disabled']);
+                $enabled = intval($hash['value']);
+                if($disabled == 1){
+                    return false;
+                }
+                if($enabled == 1){
+                    return true;
+                }
+             }
         }
         return false;
     }
