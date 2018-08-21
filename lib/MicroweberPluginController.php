@@ -24,7 +24,8 @@ class MicroweberPluginController
         $adminEmail = $_POST['admin_email'];
         $adminUsername = $_POST['admin_username'];
         $adminPassword = $_POST['admin_password'];
-        $dbDriver = 'mysql';
+        $dbDriver = $_POST['db_driver'];
+        //$dbDriver = 'mysql';
         $dbHost = 'localhost';
 
 
@@ -79,24 +80,41 @@ class MicroweberPluginController
         $cpapi = new MicroweberCpanelApi();
 
 
-        $dbNameLength = 15;
-        $dbPrefix = $cpapi->makeDbPrefixFromUsername($user);
-
-        $dbName = $dbPrefix . str_replace('.', '', $domain);
-        $dbName = substr($dbName, 0, $dbNameLength);
-
-        $dbUsername = $dbName;
-        $dbPassword = $dbPass = $cpapi->randomPassword(12);
-
-        $this->log('Creating database user ' . $dbUsername);
-        $cpapi->execUapi(false, 'Mysql', 'create_user', array('name' => $dbUsername, 'password' => $dbPass));
 
 
-        $this->log('Creating database ' . $dbName);
-        $cpapi->execUapi(false, 'Mysql', 'create_database', array('name' => $dbName));
+        if ($dbDriver == 'sqlite') {
+            $this->log('Using sqlite for ' . $dbUsername);
+            $dbHost = 'storage/database.sqlite';
 
-        $this->log('Setting privileges ' . $dbUsername);
-        $cpapi->execUapi(false, 'Mysql', 'set_privileges_on_database', array('user' => $dbUsername, 'database' => $dbName, 'privileges' => 'ALL PRIVILEGES'));
+        } else {
+
+
+            $dbNameLength = 15;
+            $dbPrefix = $cpapi->makeDbPrefixFromUsername($user);
+
+            $dbName = $dbPrefix . str_replace('.', '', $domain);
+            $dbName = substr($dbName, 0, $dbNameLength);
+
+            $dbUsername = $dbName;
+            $dbPassword = $dbPass = $cpapi->randomPassword(12);
+
+            $this->log('Creating database user ' . $dbUsername);
+            $cpapi->execUapi(false, 'Mysql', 'create_user', array('name' => $dbUsername, 'password' => $dbPass));
+
+
+            $this->log('Creating database ' . $dbName);
+            $cpapi->execUapi(false, 'Mysql', 'create_database', array('name' => $dbName));
+
+            $this->log('Setting privileges ' . $dbUsername);
+            $cpapi->execUapi(false, 'Mysql', 'set_privileges_on_database', array('user' => $dbUsername, 'database' => $dbName, 'privileges' => 'ALL PRIVILEGES'));
+        }
+
+
+
+
+
+
+
 
 
 
