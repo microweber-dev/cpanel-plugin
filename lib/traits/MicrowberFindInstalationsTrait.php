@@ -27,9 +27,9 @@ trait MicrowberFindInstalationsTrait
             $domaindata = $this->execUapi($username, 'DomainInfo', 'domains_data', array('format' => 'hash'));
         }
         if ($domaindata) {
-            if(isset( $domaindata['cpanelresult'])){
+            if (isset($domaindata['cpanelresult'])) {
                 $domaindata = $domaindata['cpanelresult']['result']['data'];
-            }  elseif(isset( $domaindata['result'])){
+            } elseif (isset($domaindata['result'])) {
                 $domaindata = $domaindata['result']['data'];
             }
             if (isset($domaindata['main_domain'])) {
@@ -46,18 +46,35 @@ trait MicrowberFindInstalationsTrait
         $return = array();
         foreach ($allDomains as $key => $domain) {
             $mainDir = $domain['documentroot'];
-            $find_version= new MicroweberVersionsManager($mainDir);
-
-            $config = file_exists($mainDir . "/config/microweber.php");
+            $find_version = new MicroweberVersionsManager($mainDir);
+            $config_file = $mainDir . "/config/microweber.php";
+            $config = file_exists($config_file);
+            $is_symlink = is_link($mainDir . "/src");
+            $symlink_target = readlink($mainDir . "/src");
+            $symlink_target = dirname($symlink_target);
             if (!$config) {
                 continue;
             }
 
 
+            //  echo $stat['ctime'];
+
+
             $version = $find_version->getCurrentVersion();
-            if($version){
-            $domain['version'] = $version;
-            $return[$key] = $domain;
+            if ($version) {
+                $filectime = filectime($config_file);
+                $format = "Y-m-d H:i:s";
+                $domain['created_at'] = date($format, $filectime);
+                $domain['version'] = $version;
+                if ($is_symlink) {
+                    $domain['is_symlink'] = 1;
+                    $domain['symlink_target'] = $symlink_target;
+                } else {
+                    $domain['is_symlink'] = 0;
+                    $domain['symlink_target'] = false;
+
+                }
+                $return[$key] = $domain;
             }
         }
         return $return;

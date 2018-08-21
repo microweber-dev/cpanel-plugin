@@ -99,6 +99,8 @@ $view->display();
 
 $view = new MicroweberView(__DIR__ . '/../views/domains.php');
 $view->assign('domains', $domains);
+$view->assign('admin_view', true);
+
 $view->display();
 
 

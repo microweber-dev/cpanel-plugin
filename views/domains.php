@@ -3,6 +3,12 @@
 if (!isset($domains)) {
     return;
 }
+if (!isset($admin_view)) {
+    $admin_view = false;
+}
+
+
+ 
 ?>
 
 <div class="instance-list">
@@ -10,7 +16,12 @@ if (!isset($domains)) {
         <thead>
         <tr>
             <th>Domain</th>
+
+            <?php if ($admin_view): ?>
+                <th>User</th>
+            <?php endif; ?>
             <th>Version</th>
+            <th>Created at</th>
             <th>File Path</th>
             <th class="text-right">Actions</th>
         </tr>
@@ -31,13 +42,35 @@ if (!isset($domains)) {
                 <tr>
                     <td>
                         <a href="http://<?php echo $domain['domain']; ?>" target="_blank">
-<!--                            <img src="./microweber/mw-icon.png"       class="mw-icon" /> -->
+                            <!--                            <img src="./microweber/mw-icon.png"       class="mw-icon" /> -->
 
                             <?php echo $domain['domain']; ?>
                         </a>
+
+                        <?php if (isset($domain['type']) and $domain['type']): ?>
+                            <span class="label label-default"
+                                  title="<?php echo $domain['type']; ?>"><?php echo MicroweberHelpers::titlelize($domain['type']); ?></span>
+                        <?php endif; ?>
+
+
                     </td>
+                    <?php if ($admin_view): ?>
+                        <td><?php echo $domain['user']; ?></td>
+                    <?php endif; ?>
+
                     <td><?php echo $domain['version']; ?></td>
-                    <td><?php echo $domain['documentroot']; ?></td>
+                    <td><?php echo date('Y M d', strtotime($domain['created_at'])); ?></td>
+                    <td>
+
+                        <?php echo $domain['documentroot']; ?>
+
+                        <?php if ($admin_view and isset($domain['is_symlink']) and $domain['is_symlink']): ?>
+                            <span class="label label-default"
+                                  title="<?php echo $domain['symlink_target']; ?>">symlink</span>
+                        <?php endif; ?>
+
+
+                    </td>
                     <td class="action">
                         <a href="#" class="update">Update</a>
                         <a href="#" class="login">Login</a>
@@ -83,7 +116,7 @@ if (!isset($domains)) {
     <?php if (!isset($_GET['search']) && $siteCount == 0): ?>
         <div id="row-no-instances" class="instance-list-callout callout callout-info">
             <i class="fa fa-exclamation-circle"></i>
-                            <span id="no-installation-msg" class="callout-message">
+            <span id="no-installation-msg" class="callout-message">
                             There is no Microweber installations yet.
                             <a id="addinstall" href="#install" title="Create a new Microweber installation.">Create an
                                 installation.</a>
