@@ -105,6 +105,16 @@ $view->display();
 
 
 ?>
+
+
+
+<?php
+$view = new MicroweberView(__DIR__ . '/../views/footer.php');
+
+$view->display();
+
+
+?>
 <?php
 WHM::footer();
 ?>

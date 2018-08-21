@@ -8,7 +8,6 @@ if (!isset($admin_view)) {
 }
 
 
- 
 ?>
 
 <div class="instance-list">
@@ -72,6 +71,16 @@ if (!isset($admin_view)) {
 
                     </td>
                     <td class="action">
+
+
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Regular link</a>
+                            <a class="dropdown-item disabled" href="#">Disabled link</a>
+                            <a class="dropdown-item" href="#">Another link</a>
+                        </div>
+
+
+
                         <a href="#" class="update">Update</a>
                         <a href="#" class="login">Login</a>
 
