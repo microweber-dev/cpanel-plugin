@@ -21,9 +21,20 @@ class MicroweberVersionsManager
 
     }
 
+    public function getCurrentVersionLastDownloadDateTime()
+    {
+        $version_file = file_exists($this->sharedDir . "/version.txt");
+
+        if ($version_file) {
+            $version = filectime($this->sharedDir . "/version.txt");
+            if ($version) {
+                return date('Y-m-d H:i:s', $version);
+            }
+        }
+    }
+
     public function getCurrentVersion()
     {
-
 
         $version_file = file_exists($this->sharedDir . "/version.txt");
         $version = 'unknown';
@@ -141,5 +152,11 @@ class MicroweberVersionsManager
         }
 
 
+    }
+
+    public function isSymlinked()
+    {
+        $is_symlink = is_link($this->sharedDir . "/src");
+        return $is_symlink;
     }
 }

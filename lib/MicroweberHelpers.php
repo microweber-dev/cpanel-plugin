@@ -60,5 +60,15 @@ class MicroweberHelpers
         return $slug;
     }
 
+    public static function getFileOwnership($file)
+    {
+        $stat = stat($file);
+        if ($stat) {
+            $group = posix_getgrgid($stat[5]);
+            $user = posix_getpwuid($stat[4]);
+            return compact('user', 'group');
+        }
+
+    }
 
 }

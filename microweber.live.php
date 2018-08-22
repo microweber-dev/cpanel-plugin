@@ -1,7 +1,6 @@
 <?php
 
 
-
 include('/usr/local/cpanel/php/cpanel.php');
 
 require_once(__DIR__ . '/lib/MicroweberPluginController.php');
@@ -10,7 +9,6 @@ require_once(__DIR__ . '/lib/MicroweberView.php');
 $cpapi = new MicroweberCpanelApi();
 
 $cpanel = new CPANEL();
-
 
 
 $controller = new MicroweberPluginController($cpanel);
@@ -34,14 +32,13 @@ if (isset($_GET['search']) && !$_GET['search']) {
 }
 
 
- $domaindata = $cpanel->uapi('DomainInfo', 'domains_data', array('format' => 'hash'));
- $domaindata = $domaindata['cpanelresult']['result']['data'];
- $all_domains = array_merge(array($domaindata['main_domain']), $domaindata['addon_domains'], $domaindata['sub_domains']);
+$domaindata = $cpanel->uapi('DomainInfo', 'domains_data', array('format' => 'hash'));
+$domaindata = $domaindata['cpanelresult']['result']['data'];
+$all_domains = array_merge(array($domaindata['main_domain']), $domaindata['addon_domains'], $domaindata['sub_domains']);
 $existing_installs = $controller->findInstalations();
 
 
- ?>
-
+?>
 
 
     <script>
@@ -61,11 +58,10 @@ $existing_installs = $controller->findInstalations();
         </h1>
         <div class="body-content">
             <div id="viewContent">
-                <div class="row ng-scope" ng-show="viewDoneLoading">
+                <div class="row">
                     <div class="col-xs-12 col-sm-8 col-md-6">
                         <p><strong>List of installed Microweber websites</strong></p>
                     </div>
-
 
 
                     <div class="col-xs-12">
@@ -74,14 +70,12 @@ $existing_installs = $controller->findInstalations();
                                 <div class="row input-row">
                                     <div class="col-xs-12">
                                         <div class="input-group filter-controls">
-                                            <input name="search" class="form-control ng-pristine ng-valid ng-touched"
+                                            <input name="search" class="form-control "
                                                    placeholder="Search" title="Type in your search filter."
                                                    value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
                                             <span class="input-group-btn">
-                                                <button id="search-button" type="submit" class="btn btn-default"
-                                                        ng-click="clearSearch()">
-                                                    <span class="glyphicon glyphicon-search"
-                                                          ng-class="{ 'glyphicon-search': !list.meta.filterValue, 'glyphicon-remove': list.meta.filterValue }"></span>
+                                                <button id="search-button" type="submit" class="btn btn-default">
+                                                    <span class="glyphicon glyphicon-search"></span>
                                                 </button>
                                             </span>
                                         </div>
@@ -93,7 +87,6 @@ $existing_installs = $controller->findInstalations();
                 </div>
 
 
-
                 <?php
 
                 $view = new MicroweberView(__DIR__ . '/views/domains.php');
@@ -102,8 +95,6 @@ $existing_installs = $controller->findInstalations();
 
 
                 ?>
-
-
 
 
             </div>
@@ -119,7 +110,6 @@ $existing_installs = $controller->findInstalations();
         ?>
 
 
-
     </div>
 
 
@@ -132,10 +122,6 @@ $view->display();
 ?>
 
 
-
-
-
-
 <?php
 echo $cpanel->footer();
- $cpanel->end();
+$cpanel->end();

@@ -73,20 +73,34 @@ if (!isset($admin_view)) {
                     <td class="action">
 
 
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Regular link</a>
-                            <a class="dropdown-item disabled" href="#">Disabled link</a>
-                            <a class="dropdown-item" href="#">Another link</a>
-                        </div>
+                        <?php if ($admin_view): ?>
 
 
+                            <form method="POST" id="updateSite-<?php print $key; ?>">
+                                <input type="hidden" name="_action" value="_do_update">
+                                <input type="hidden" name="domain"
+                                       value="<?php echo htmlspecialchars(json_encode($domain)); ?>">
+                                <button type="submit"
+                                        target="#updateSite-<?php print $key; ?>"><i class="fa fa-caret-square-up"></i> Update
+                                </button>
+                            </form>
 
-                        <a href="#" class="update">Update</a>
-                        <a href="#" class="login">Login</a>
+
+                        <?php endif; ?>
+
+
+                        <!--                        <a href="#" class="update">Update</a>-->
+                        <!--                        <a href="#" class="login">Login</a>-->
 
                         <button type="button" class="remove" data-toggle="modal"
                                 data-target="#removeSite-<?php print $key; ?>"><i class="fa fa-trash"></i>
                         </button>
+                        <?php if (!$admin_view): ?>
+
+
+                        <?php endif; ?>
+
+
 
                         <!-- Modal Delete Accept -->
                         <div class="modal fade" id="removeSite-<?php print $key; ?>" tabindex="-1"

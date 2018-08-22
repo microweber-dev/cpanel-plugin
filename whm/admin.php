@@ -4,10 +4,12 @@ require_once(__DIR__ . '/../lib/MicroweberStorage.php');
 require_once(__DIR__ . '/../lib/MicroweberView.php');
 require_once(__DIR__ . '/../lib/MicroweberVersionsManager.php');
 require_once(__DIR__ . '/../lib/MicroweberAdminController.php');
+require_once(__DIR__ . '/../lib/MicroweberInstallCommand.php');
 
 
 $controller = new MicroweberAdminController();
 $versions = new MicroweberVersionsManager();
+$install_command = new MicroweberInstallCommand();
 $storage = new MicroweberStorage();
 $keyData = array();
 $settings = $storage->read();
@@ -35,8 +37,26 @@ if (isset($_POST['download_userfiles'])) {
 }
 
 
+if (isset($_POST["_action"])) {
+    $_action = $_POST["_action"];
+    if ($_action == "_do_update") {
+
+        if (isset($_POST["domain"])) {
+            $domain_update_data = htmlspecialchars_decode($_POST["domain"]);
+            $domain_update_data = @json_decode($domain_update_data, true);
+
+            $update_opts = array();
+            $update_opts['public_html_folder'] = $domain_update_data["documentroot"];
+            $install_command->update($update_opts);
+
+        }
+    }
+}
+
+
 $current_version = $versions->getCurrentVersion();
 $latest_version = $versions->getLatestVersion();
+$latest_dl_date = $versions->getCurrentVersionLastDownloadDateTime();
 
 
 //$autoInstall = isset($storedData->auto_install) && $storedData->auto_install == '1';
@@ -66,46 +86,72 @@ WHM::header('Microweber Settings', 0, 0);
 </style>
 
 <hr>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Settings</h2>
+    </div>
+    <div class="panel-body">
 
-<h1>Settings</h1>
-<?php
+        <?php
 
-$view = new MicroweberView(__DIR__ . '/../views/settings.php');
-$view->assign('settings', $settings);
-$view->display();
-
-
-?>
-<hr>
-<h1>Download</h1>
-<?php
-
-$view = new MicroweberView(__DIR__ . '/../views/download.php');
-$view->assign('key', $user_key);
-$view->assign('key_data', $keyData);
-$view->assign('current_version', $current_version);
-$view->assign('latest_version', $latest_version);
-$view->display();
+        $view = new MicroweberView(__DIR__ . '/../views/settings.php');
+        $view->assign('settings', $settings);
+        $view->display();
 
 
-?>
+        ?>
 
 
-<hr>
+    </div>
+</div>
 
 
-<h1>Installations</h1>
-<?php
-
-$view = new MicroweberView(__DIR__ . '/../views/domains.php');
-$view->assign('domains', $domains);
-$view->assign('admin_view', true);
-
-$view->display();
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Download</h2>
+    </div>
+    <div class="panel-body">
 
 
-?>
+        <?php
 
+        $view = new MicroweberView(__DIR__ . '/../views/download.php');
+        $view->assign('key', $user_key);
+        $view->assign('key_data', $keyData);
+        $view->assign('current_version', $current_version);
+        $view->assign('latest_version', $latest_version);
+        $view->assign('last_download_date', $latest_dl_date);
+        $view->display();
+
+
+        ?>
+
+
+    </div>
+</div>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Installations</h2>
+    </div>
+    <div class="panel-body">
+
+
+        <?php
+
+        $view = new MicroweberView(__DIR__ . '/../views/domains.php');
+        $view->assign('domains', $domains);
+        $view->assign('admin_view', true);
+
+        $view->display();
+
+
+        ?>
+
+
+    </div>
+</div>
 
 
 <?php

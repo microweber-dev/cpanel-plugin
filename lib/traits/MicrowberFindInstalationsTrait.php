@@ -49,9 +49,12 @@ trait MicrowberFindInstalationsTrait
             $find_version = new MicroweberVersionsManager($mainDir);
             $config_file = $mainDir . "/config/microweber.php";
             $config = file_exists($config_file);
-            $is_symlink = is_link($mainDir . "/src");
-            $symlink_target = readlink($mainDir . "/src");
-            $symlink_target = dirname($symlink_target);
+            $is_symlink = $find_version->isSymlinked();
+            $symlink_target = false;
+            if ($is_symlink) {
+                $symlink_target = readlink($mainDir . "/src");
+                $symlink_target = dirname($symlink_target);
+            }
             if (!$config) {
                 continue;
             }
