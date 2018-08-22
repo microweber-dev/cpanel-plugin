@@ -345,7 +345,7 @@ class MicroweberInstallCommand
             $chown_user = false;
             $perms = MicroweberHelpers::getFileOwnership($user_public_html_folder);
             if (isset($perms['user']) and isset($perms['user']["name"])) {
-                $chown_user = $perms['user']["name"]''
+                $chown_user = $perms['user']["name"];
             }
 
 
