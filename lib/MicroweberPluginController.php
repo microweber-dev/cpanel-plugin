@@ -31,7 +31,7 @@ class MicroweberPluginController
 
         // Prepare data
         $domainData = htmlspecialchars_decode($_POST["domain"]);
-        $domainData = @json_decode($domainData, true);
+        $domainData = @json_decode($domainData);
 
 
         // $domainData = json_decode($_POST['domain']);
