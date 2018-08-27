@@ -73,7 +73,7 @@ if (!isset($last_download_date)) {
                     <div>
                         <label>
                             Place Your Microweber White Label Key:
-                            <input type="text" name="key" class="form-control" value="<?php echo $key; ?>">
+                            <input type="password" name="key" class="form-control" value="<?php echo $key; ?>">
                         </label>
 
                         <div>

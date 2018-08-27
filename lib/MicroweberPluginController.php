@@ -21,6 +21,17 @@ class MicroweberPluginController
     public function install()
     {
 
+
+        $settings_from_admin = new MicroweberStorage();
+        $settings_from_admin = $settings_from_admin->read();
+
+
+        $is_symlinked = false;
+        if (isset($settings_from_admin['install_type']) and $settings_from_admin['install_type'] == 'symlinked') {
+            $is_symlinked = true;
+
+        }
+
         $adminEmail = $_POST['admin_email'];
         $adminUsername = $_POST['admin_username'];
         $adminPassword = $_POST['admin_password'];
@@ -129,7 +140,9 @@ class MicroweberPluginController
 
         $opts['default_template'] = 'dream'; //@todo get from settings
         $opts['config_only'] = 1; //@todo get from settings
-        $opts['is_symlink'] = 1; //@todo get from settings
+
+
+        $opts['is_symlink'] = $is_symlinked;
 
 
 //        $install_opts = array();

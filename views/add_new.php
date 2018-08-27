@@ -60,7 +60,7 @@ if (isset($all_domains) and $all_domains) {
 
 
     <?php if (isset($all_domains) and $all_domains) { ?>
-    <div class="row">
+    <div class="row"  >
         <div class="col-md-5">
             <h4>Admin account details</h4>
             <br>
@@ -158,7 +158,9 @@ if (isset($all_domains) and $all_domains) {
                      </div>
                 */
 
-                    ?> </div>
+                    ?>
+
+                </div>
 
                 <div class="form-group text-right">
                     <div class="col-lg-12">
@@ -170,6 +172,9 @@ if (isset($all_domains) and $all_domains) {
             </div>
         </div>
     </div>
+
+
+
 
 
     <?php } ?>
