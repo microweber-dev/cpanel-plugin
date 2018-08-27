@@ -1,7 +1,7 @@
 <?php
 
-if (!isset($settings)) {
-    return;
+if (!isset($settings) or !$settings) {
+    $settings = array();
 }
 $white_label_key = isset($settings['key']) ? $settings['key'] : '';
 $auto_install = isset($settings['auto_install']) ? $settings['auto_install'] : '';
