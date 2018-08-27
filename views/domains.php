@@ -7,6 +7,10 @@ if (!isset($admin_view)) {
     $admin_view = false;
 }
 
+$siteCount = 0;
+if ($domains and !empty($domains)) {
+    $siteCount = count($domains);
+}
 
 ?>
 
@@ -22,11 +26,12 @@ if (!isset($admin_view)) {
             <th>Version</th>
             <th>Created at</th>
             <th>File Path</th>
-            <th class="text-right">Actions</th>
+            <?php if (!$admin_view): ?>
+                <th class="text-right">Actions</th>
+            <?php endif; ?>
         </tr>
         </thead>
         <tbody>
-        <?php $siteCount = 0; ?>
         <?php if ($domains): ?>
             <?php foreach ($domains as $key => $domain): ?>
                 <?php
@@ -36,7 +41,6 @@ if (!isset($admin_view)) {
                 if (isset($_GET['search'])) {
                     if (strpos($domain['domain'], $_GET['search']) === false) continue;
                 }
-                $siteCount++;
                 ?>
                 <tr>
                     <td>
@@ -76,14 +80,18 @@ if (!isset($admin_view)) {
                         <?php if ($admin_view): ?>
 
 
-                            <form method="POST" id="updateSite-<?php print $key; ?>">
+                            <?php
+
+                            /*        <form method="POST" id="updateSite-<?php print $key; ?>">
                                 <input type="hidden" name="_action" value="_do_update">
                                 <input type="hidden" name="domain"
                                        value="<?php echo htmlspecialchars(json_encode($domain)); ?>">
                                 <button type="submit"
                                         target="#updateSite-<?php print $key; ?>"><i class="fa fa-caret-square-up"></i> Update
                                 </button>
-                            </form>
+                            </form>*/
+
+                            ?>
 
 
                         <?php endif; ?>
@@ -92,14 +100,13 @@ if (!isset($admin_view)) {
                         <!--                        <a href="#" class="update">Update</a>-->
                         <!--                        <a href="#" class="login">Login</a>-->
 
-                        <button type="button" class="remove" data-toggle="modal"
-                                data-target="#removeSite-<?php print $key; ?>"><i class="fa fa-trash"></i>
-                        </button>
-                        <?php if (!$admin_view): ?>
 
+                        <?php if (!$admin_view): ?>
+                            <button type="button" class="remove" data-toggle="modal"
+                                    data-target="#removeSite-<?php print $key; ?>"><i class="fa fa-trash"></i>
+                            </button>
 
                         <?php endif; ?>
-
 
 
                         <!-- Modal Delete Accept -->
@@ -135,6 +142,11 @@ if (!isset($admin_view)) {
         <?php endif; ?>
         </tbody>
     </table>
+
+
+    <br>
+    <small class="small">You have <?php print $siteCount ?> installations</small>
+
 
     <?php if (!isset($_GET['search']) && $siteCount == 0): ?>
         <div id="row-no-instances" class="instance-list-callout callout callout-info">

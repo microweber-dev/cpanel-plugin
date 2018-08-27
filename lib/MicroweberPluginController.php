@@ -5,12 +5,12 @@ include_once(__DIR__ . '/MicroweberLogger.php');
 require_once(__DIR__ . '/traits/MicrowberFindInstalationsTrait.php');
 
 
-
 class MicroweberPluginController
 {
     use MicrowberFindInstalationsTrait;
 
     public $logger = null;
+
     public function __construct($cpanel)
     {
         $this->cpanel = $cpanel;
@@ -29,13 +29,14 @@ class MicroweberPluginController
         $dbHost = 'localhost';
 
 
-
-
         // Prepare data
-        $domainData = json_decode($_POST['domain']);
-        $installPath = $domainData->documentroot;
-        $domainData = json_decode($_POST['domain']);
+        $domainData = htmlspecialchars_decode($_POST["domain"]);
+        $domainData = @json_decode($domainData, true);
 
+
+        // $domainData = json_decode($_POST['domain']);
+        $installPath = $domainData->documentroot;
+        // $domainData = json_decode($_POST['domain']);
 
 
         $user = $this->getUsername();
@@ -67,7 +68,6 @@ class MicroweberPluginController
         $installPath = $domainData->documentroot;
 
 
-
         $version_manager = new MicroweberVersionsManager($sourcepath);
         if (!$version_manager->hasDownloaded()) {
             $version_manager->download();
@@ -78,8 +78,7 @@ class MicroweberPluginController
 
 
         $cpapi = new MicroweberCpanelApi();
-
-
+        // $dbPassword = $dbPass = $cpapi->randomPassword(12);
 
 
         if ($dbDriver == 'sqlite') {
@@ -110,15 +109,6 @@ class MicroweberPluginController
         }
 
 
-
-
-
-
-
-
-
-
-
         //php artisan microweber:install admin@site.com admin password storage/database1.sqlite microweber microweber nopass sqlite -p site_ -t liteness -d 1
 
 
@@ -137,8 +127,6 @@ class MicroweberPluginController
         $opts['database_host'] = $dbHost;
 
 
-
-
         $opts['default_template'] = 'dream'; //@todo get from settings
         $opts['config_only'] = 1; //@todo get from settings
         $opts['is_symlink'] = 1; //@todo get from settings
@@ -148,7 +136,7 @@ class MicroweberPluginController
 //        $opts['options'] = $install_opts;
         $do_install = new MicroweberInstallCommand();
         $do_install = $do_install->install($opts);
-
+        return $do_install;
 
         // Create database
 //        $this->cpanel->uapi('Mysql', 'create_database', array('name' => $dbName));
@@ -187,7 +175,6 @@ class MicroweberPluginController
             $this->logger->log($msg);
         }
     }
-
 
 
     public function uninstall()

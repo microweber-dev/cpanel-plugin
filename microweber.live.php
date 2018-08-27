@@ -17,12 +17,46 @@ echo $cpanel->header();
 
 if ($_POST) {
     $action = $_POST['_action'];
+    if (isset($_POST["domain"])) {
+        $domainData = htmlspecialchars_decode($_POST["domain"]);
+        $domainData = @json_decode($domainData, true);
+    }
+
     switch ($action) {
         case 'install':
+
+            //var_dump($_POST);
+
+
+            if (isset($domainData['domain'])) {
+
+                $txt = "<a target='_blank' href='http://" . $domainData['domain'] . "'><h2>Click here to setup your website: " . $domainData['domain'] . "</h2></a>";
+                print '<div class="alert alert-success">
+                          <div class="alert-message">
+                          
+                         ' . $txt . '
+                          
+                        </div>
+                 </div>';
+            }
             $admin = $controller->install();
             break;
         case 'uninstall':
             $controller->uninstall();
+
+            if (isset($domainData['domain'])) {
+
+                $txt = "<h3>Your domain " . $domainData['domain'] . " has been removed. </h3>";
+                print '<div class="alert alert-danger">
+                          <div class="alert-message">
+                          
+                         ' . $txt . '
+                          
+                        </div>
+                 </div>';
+            }
+
+
             break;
     }
 }

@@ -347,10 +347,10 @@ class MicroweberInstallCommand
             if (isset($perms['user']) and isset($perms['user']["name"])) {
                 $chown_user = $perms['user']["name"];
             }
+            $link_paths_base = $this->sync_paths;
 
 
             if (!$is_symliked) {
-                $link_paths_base = $this->sync_paths;
                 foreach ($link_paths_base as $link) {
                     $link_src = $mw_shared_dir . $link;
                     $link_dest = $user_public_html_folder . $link;
@@ -359,8 +359,17 @@ class MicroweberInstallCommand
                         $this->__chown_user_folder($user_public_html_folder, $chown_user);
                     }
                 }
-
-
+            } else {
+                foreach ($link_paths_base as $link) {
+                    $link_src = $mw_shared_dir . $link;
+                    $link_dest = $user_public_html_folder . $link;
+                    if (!is_link($link_dest)) {
+                        $exec = "rm -rvf {$link_dest}";
+                        $output = shell_exec($exec);
+                        $this->log('Linking ' . $link_src . ' to ' . $link_dest);
+                        $this->symlink_recursive($link_src, $link_dest);
+                    }
+                }
             }
 
 
