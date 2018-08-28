@@ -219,17 +219,18 @@ class MicroweberVersionsManager
             and isset($data['plugin']['url'])
 
         ) {
-
+            if (is_file($this->tempZipFilePlugin)) {
+                unlink($this->tempZipFilePlugin);
+            }
             $url = $data['plugin']['url'];
 
             MicroweberHelpers::download($url, $this->tempZipFilePlugin);
 
 
             if (is_file($this->tempZipFilePlugin)) {
-                $update = 'rpm -Uvh ' . $this->tempZipFilePlugin;
+                $update = 'rpm -Uvh --force ' . $this->tempZipFilePlugin;
                 exec($update);
-                unlink($this->tempZipFilePlugin);
-            }
+             }
 
         }
 
