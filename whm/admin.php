@@ -32,6 +32,10 @@ if ($user_key) {
 if (isset($_POST['download_cms'])) {
     $versions->download();
 }
+
+if (isset($_POST['update_plugin'])) {
+    $versions->downloadPlugin();
+}
 if (isset($_POST['download_userfiles'])) {
     $versions->downloadExtraContent($user_key);
 }
@@ -56,6 +60,9 @@ if (isset($_POST["_action"])) {
 
 $current_version = $versions->getCurrentVersion();
 $latest_version = $versions->getLatestVersion();
+$latest_plugin_version = $versions->getLatestPluginVersion();
+$current_plugin_version = $versions->getCurrentPluginVersion();
+
 $latest_dl_date = $versions->getCurrentVersionLastDownloadDateTime();
 
 
@@ -121,6 +128,8 @@ WHM::header('Microweber Settings', 0, 0);
         $view->assign('current_version', $current_version);
         $view->assign('latest_version', $latest_version);
         $view->assign('last_download_date', $latest_dl_date);
+        $view->assign('latest_plugin_version', $latest_plugin_version);
+        $view->assign('current_plugin_version', $current_plugin_version);
         $view->display();
 
 

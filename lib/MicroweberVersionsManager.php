@@ -6,7 +6,9 @@ require_once(__DIR__ . '/MicroweberHelpers.php');
 class MicroweberVersionsManager
 {
     private $sharedDir = '/usr/share/microweber/latest';
+    private $pluginDir = '/usr/local/cpanel/microweber';
     private $tempZipFile = null;
+    private $tempZipFilePlugin = null;
     private $tempZipFileExtra = null;
 
     public function __construct($sharedDir = null)
@@ -17,6 +19,7 @@ class MicroweberVersionsManager
 
 
         $this->tempZipFile = $this->sharedDir . '/mw-download.zip';
+        $this->tempZipFilePlugin = $this->sharedDir . '/mw-cpanel-plugin.rpm';
         $this->tempZipFileExtra = $this->sharedDir . '/mw-extra.zip';
 
     }
@@ -45,6 +48,20 @@ class MicroweberVersionsManager
         return $version;
     }
 
+
+    public function getCurrentPluginVersion()
+    {
+
+        $f = __DIR__ . DIRECTORY_SEPARATOR . '../version.txt';
+        $version_file = file_exists($f);
+        $version = 'unknown';
+        if ($version_file) {
+            $version = file_get_contents($f);
+            $version = strip_tags($version);
+        }
+        return $version;
+    }
+
     public function getLatestVersion($force_check = false)
     {
         $data = $this->getLatestVersionData($force_check);
@@ -53,9 +70,20 @@ class MicroweberVersionsManager
         }
     }
 
+    public function getLatestPluginVersion($force_check = false)
+    {
+        $data = $this->getLatestVersionData($force_check);
+        if (isset($data['plugin']) and isset($data['plugin']) and isset($data['plugin']['version'])) {
+            return $data['plugin']['version'];
+        }
+    }
+
+
     public function getLatestVersionData($force_check = false)
     {
-        $cache_file = realpath(__DIR__ . '/../storage/version_check.txt');
+        $cache_file = '/usr/share/microweber/version_check_cache.txt';
+
+
         $current_time = time();
 
         $update_cache = false;
@@ -70,7 +98,7 @@ class MicroweberVersionsManager
 
         if (!$update_cache) {
 
-            if (is_file($cache_file) and !is_writable($update_cache)) {
+            if (is_file($cache_file) and !is_writable($cache_file)) {
                 $update_cache = false;
             } else {
 
@@ -84,8 +112,25 @@ class MicroweberVersionsManager
 
         if ($update_cache) {
             $url = 'http://update.microweberapi.com/?api_function=get_download_link&get_last_version=1';
+            $url2 = 'http://update.microweberapi.com/?api_function=get_download_link&type=3rdparty/cpanel&get_last_version=1';
+
+
             $data = file_get_contents($url);
-            if (!$data) return false;
+
+            if (!$data) {
+                return false;
+            }
+
+
+            $data = @json_decode($data, true);
+            $data2 = file_get_contents($url2);
+            $data2 = @json_decode($data2, true);
+
+            if ($data and $data2) {
+                $data['plugin'] = $data2;
+            }
+            $data = json_encode($data);
+
             if ($cache_file and $data) {
                 $fp = fopen($cache_file, 'w+');
                 fwrite($fp, $data);
@@ -98,6 +143,7 @@ class MicroweberVersionsManager
 
 
         $data = @json_decode($data, true);
+
 
         return $data;
     }
@@ -158,5 +204,34 @@ class MicroweberVersionsManager
     {
         $is_symlink = is_link($this->sharedDir . "/src");
         return $is_symlink;
+    }
+
+
+    public function downloadPlugin()
+    {
+
+
+        $data = $this->getLatestVersionData();
+
+        if (isset($data['plugin'])
+            and isset($data['plugin'])
+            and isset($data['plugin']['version'])
+            and isset($data['plugin']['url'])
+
+        ) {
+
+            $url = $data['plugin']['url'];
+
+            MicroweberHelpers::download($url, $this->tempZipFilePlugin);
+
+
+            if (is_file($this->tempZipFilePlugin)) {
+                $update = 'rpm -Uvh ' . $this->tempZipFilePlugin;
+                exec($update);
+                unlink($this->tempZipFilePlugin);
+            }
+
+        }
+
     }
 }

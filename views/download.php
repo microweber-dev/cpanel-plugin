@@ -14,6 +14,12 @@ if (!isset($latest_version)) {
 if (!isset($last_download_date)) {
     $last_download_date = '';
 }
+if (!isset($current_plugin_version)) {
+    $current_plugin_version = '';
+}
+if (!isset($latest_plugin_version)) {
+    $latest_plugin_version = '';
+}
 
 
 ?>
@@ -51,6 +57,26 @@ if (!isset($last_download_date)) {
                 <?php if ($last_download_date): ?>
                     <h5>Last download date: <?php print  $last_download_date ?></h5>
                 <?php endif; ?>
+
+
+
+                <?php if ($current_plugin_version): ?>
+                    <h5>Your plugin version is: <?php print  $current_plugin_version ?></h5>
+                <?php endif; ?>
+                <?php if ($latest_plugin_version): ?>
+                    <h5>Latest plugin version is: <?php print  $latest_plugin_version ?></h5>
+                <?php endif; ?>
+
+
+
+                <?php if (version_compare($latest_plugin_version, $current_plugin_version,'>')): ?>
+                    <div>
+
+                        <button name="update_plugin" value="update_plugin" class="btn">Update plugin
+                        </button>
+                    </div>
+                <?php endif; ?>
+
 
             </div>
         </form>
