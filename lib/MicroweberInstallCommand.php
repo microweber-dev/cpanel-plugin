@@ -267,6 +267,15 @@ class MicroweberInstallCommand
                 }
             }
 
+            if (isset($opts['extra_config'])) {
+                if (isset($opts['extra_config']['branding']) and is_array($opts['extra_config']['branding']) and !empty($opts['extra_config']['branding'])) {
+                    $branding_file = $user_public_html_folder . 'storage/branding.json';
+                    if (!is_file($branding_file)) {
+                        @file_put_contents($user_public_html_folder . 'storage/branding.json', @json_encode($opts['extra_config']['branding']));
+                    }
+                }
+            }
+
 
             /*
 

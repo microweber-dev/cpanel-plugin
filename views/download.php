@@ -26,9 +26,7 @@ if (!isset($latest_plugin_version)) {
 
 
 <div class="row">
-    <div class="col-sm-6">
-
-
+    <div class="col-sm-12">
         <form method="POST">
             <div>
                 <h2>Download Microweber</h2>
@@ -39,26 +37,17 @@ if (!isset($latest_plugin_version)) {
                     <h5>Your version is: <?php print  $current_version ?></h5>
                 <?php endif; ?>
 
-
-
-
                 <?php if ($latest_version): ?>
                     <h5>Latest version is: <?php print  $latest_version ?></h5>
                 <?php endif; ?>
 
-
                 <div>
-
-                    <button name="download_cms" value="download_cms" class="btn">Download Microweber CMS Latest
-                        Version
-                    </button>
+                    <button name="download_cms" value="download_cms" class="btn btn-primary">Download Microweber CMS LatestVersion</button>
                 </div>
 
                 <?php if ($last_download_date): ?>
                     <h5>Last download date: <?php print  $last_download_date ?></h5>
                 <?php endif; ?>
-
-
 
                 <?php if ($current_plugin_version): ?>
                     <h5>Your plugin version is: <?php print  $current_plugin_version ?></h5>
@@ -67,84 +56,12 @@ if (!isset($latest_plugin_version)) {
                     <h5>Latest plugin version is: <?php print  $latest_plugin_version ?></h5>
                 <?php endif; ?>
 
-
-
-                <?php if (version_compare($latest_plugin_version, $current_plugin_version,'>')): ?>
+                <?php if (version_compare($latest_plugin_version, $current_plugin_version, '>')): ?>
                     <div>
-
-                        <button name="update_plugin" value="update_plugin" class="btn">Update plugin
-                        </button>
-                    </div>
-                <?php endif; ?>
-
-
-            </div>
-        </form>
-
-
-    </div>
-    <div class="col-sm-6">
-
-
-        <form method="POST">
-
-
-            <div>
-
-                <?php if (isset($key_data) and isset($key_data['status']) and $key_data['status'] == 'active'): ?>
-
-
-                    <h2>White Label Key</h2>
-
-                    <div>
-                        <label>
-                            Place Your Microweber White Label Key:
-                            <input type="password" name="key" class="form-control" value="<?php echo $key; ?>">
-                        </label>
-
-                        <div>
-                            <input name="action" type="submit" value="Save" class="btn btn-primary">
-
-
-                        </div>
-                    </div>
-                <?php endif; ?>
-
-                <?php if (isset($key_data) and isset($key_data['status'])): ?>
-                    <div class="callout callout-cpanel">
-                        <?php if ($key_data['status'] == 'active'): ?>
-                            <p><b><?php echo $key_data['rel_name']; ?></b></p>
-                            <p>
-                                <b><?php echo $key_data['registered_name']; ?></b>,
-                                <?php echo $key_data['company_name']; ?>
-                            </p>
-                            <p>
-                                License active from
-                                <b><?php echo date('d M Y', strtotime($key_data['reg_on'])); ?></b>
-                                to
-                                <b><?php echo date('d M Y', strtotime($key_data['due_on'])); ?></b>
-                            </p>
-                            <p>Billing cycle: <?php echo $key_data['billing_cycle']; ?></p>
-                            <button name="download_userfiles" value="download_userfiles" class="btn">Download
-                                Userfiles
-                            </button>
-                        <?php else: ?>
-                            <b>
-                                Your White Label key is invalid.
-                                <a href="https://microweber.com/marketplace#modules">Get your license here.</a>
-                            </b>
-                        <?php endif; ?>
+                        <button name="update_plugin" value="update_plugin" class="btn btn-primary">Update plugin</button>
                     </div>
                 <?php endif; ?>
             </div>
-
-
         </form>
-
-
     </div>
 </div>
-
-
-
-

@@ -43,6 +43,8 @@ if (isset($_POST['download_userfiles'])) {
 
 if (isset($_POST["_action"])) {
     $_action = $_POST["_action"];
+    unset($_POST["_action"]);
+
     if ($_action == "_do_update") {
 
         if (isset($_POST["domain"])) {
@@ -55,6 +57,16 @@ if (isset($_POST["_action"])) {
 
         }
     }
+
+    if ($_action == "_save_branding") {
+        $settings = $storage->read();
+        $settings['branding'] = $_POST;
+        $storage->save($settings);
+    }
+}
+$branding = false;
+if (isset($settings['branding'])) {
+    $branding = $settings['branding'];
 }
 
 
@@ -77,21 +89,6 @@ $domains = $controller->get_installations_across_server();
 WHM::header('Microweber Settings', 0, 0);
 ?>
 
-<style>
-    label {
-        font-weight: normal !important;
-    }
-
-    h2 {
-        font-weight: bold !important;
-    }
-
-    .btn {
-        background-color: #0086db !important;
-        color: #fff !important;
-    }
-</style>
-
 <hr>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -112,6 +109,29 @@ WHM::header('Microweber Settings', 0, 0);
     </div>
 </div>
 
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">White label</h2>
+    </div>
+    <div class="panel-body">
+        <?php
+
+        $view = new MicroweberView(__DIR__ . '/../views/white_label.php');
+        $view->assign('key', $user_key);
+        $view->assign('key_data', $keyData);
+        $view->assign('current_version', $current_version);
+        $view->assign('latest_version', $latest_version);
+        $view->assign('last_download_date', $latest_dl_date);
+        $view->assign('latest_plugin_version', $latest_plugin_version);
+        $view->assign('current_plugin_version', $current_plugin_version);
+        $view->assign('settings', $settings);
+        $view->assign('branding', $branding);
+        $view->display();
+
+
+        ?>
+    </div>
+</div>
 
 <div class="panel panel-default">
     <div class="panel-heading">

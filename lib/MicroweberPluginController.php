@@ -145,6 +145,12 @@ class MicroweberPluginController
         $opts['is_symlink'] = $is_symlinked;
 
 
+        $opts['extra_config'] = $settings_from_admin;
+
+
+
+
+
 //        $install_opts = array();
 //        $opts['options'] = $install_opts;
         $do_install = new MicroweberInstallCommand();

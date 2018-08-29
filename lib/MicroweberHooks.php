@@ -90,14 +90,17 @@ class MicroweberHooks
 
         $isSym = $this->checkIfSymlinkInstall();
 
+        $branding = false;
+        $config = $this->storage->read();
 
-        $this->install($domain, $source_path, $installPath, $adminEmail, $adminUsername, $adminPassword, $dbHost, $dbDriver, $is_symlink = $isSym);
+
+        $this->install($domain, $source_path, $installPath, $adminEmail, $adminUsername, $adminPassword, $dbHost, $dbDriver, $is_symlink = $isSym, $config);
     }
 
 
     // ----------------------
 
-    public function install($domain, $source_path, $installPath, $adminEmail, $adminUsername, $adminPassword, $dbHost = 'localhost', $dbDriver = 'mysql', $is_symlink = false)
+    public function install($domain, $source_path, $installPath, $adminEmail, $adminUsername, $adminPassword, $dbHost = 'localhost', $dbDriver = 'mysql', $is_symlink = false, $extra_config = false)
     {
         $cpapi = new MicroweberCpanelApi();
 
@@ -156,6 +159,7 @@ class MicroweberHooks
         $opts['database_name'] = $dbName;
         $opts['source_folder'] = $source_folder;
         $opts['public_html_folder'] = $installPath;
+        $opts['extra_config'] = $extra_config;
 
         $opts['config_only'] = true;
 

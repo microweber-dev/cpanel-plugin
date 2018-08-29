@@ -18,7 +18,6 @@ $db_driver = isset($settings['db_driver']) ? $settings['db_driver'] : '';
         <div class="col-md-6">
             <input type="hidden" name="save_settings" value="1">
 
-
             <h2>Installation settings</h2>
 
             <div>

@@ -5,6 +5,10 @@ trait MicrowberFindInstalationsTrait
     public function findInstalations($username = false)
     {
 
+
+
+
+
         $method = false;
         if (isset($this->cpanel) and is_object($this->cpanel) and method_exists($this->cpanel, 'uapi')) {
             $method = 'cpanel';

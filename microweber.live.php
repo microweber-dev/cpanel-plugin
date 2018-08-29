@@ -26,7 +26,7 @@ if ($_POST) {
         case 'install':
 
             //var_dump($_POST);
-
+            $admin = $controller->install();
 
             if (isset($domainData['domain'])) {
 
@@ -39,7 +39,7 @@ if ($_POST) {
                         </div>
                  </div>';
             }
-            $admin = $controller->install();
+
             break;
         case 'uninstall':
             $controller->uninstall();
