@@ -43,7 +43,7 @@ if (!isset($latest_plugin_version)) {
                             <b><?php echo date('d M Y', strtotime($key_data['due_on'])); ?></b>
                         </p>
                         <p>Billing cycle: <?php echo $key_data['billing_cycle']; ?></p>
-                        <button name="download_userfiles" value="download_userfiles" class="btn btn-default">Update Premium Templates</button>
+                        <button name="download_userfiles" value="download_userfiles" class="btn btn-primary">Update Premium Templates</button>
                     <?php else: ?>
                         <b>
                             Your White Label key is invalid.
@@ -51,7 +51,7 @@ if (!isset($latest_plugin_version)) {
                         </b>
                     <?php endif; ?>
 
-                    <a href="javascript:;" class="btn btn-success js-show-white-label">Update your White label key</a>
+                    <a href="javascript:;" class="btn btn-link js-show-white-label">Change your White label key</a>
                 </div>
             <?php endif; ?>
 
@@ -75,86 +75,67 @@ if (!isset($latest_plugin_version)) {
     </div>
 
     <div class="col-sm-8">
-        <form class="form-horizontal">
-            <input type="hidden" name="_save_branding" />
+        <form class="form-horizontal1" method="post">
+            <input type="hidden" name="_action" value="_save_branding"/>
+
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label for="brand_name" class="col-lg-4 control-label">Brand Name</label>
-                        <div class="col-lg-8">
-                            <input type="text" name="brand_name" class="form-control" id="brand_name" placeholder="Enter the name of your company">
+                        <label for="brand_name" class="control-label">Brand Name</label>
+                        <input type="text" name="brand_name" class="form-control" id="brand_name" placeholder="Enter the name of your company" value="<?= isset($branding['brand_name']) ? $branding['brand_name'] : ''; ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="admin_logo_login_link" class="control-label">Admin login - White Label URL ?</label>
+                        <input type="text" name="admin_logo_login_link" class="form-control" id="admin_logo_login_link" placeholder="Enter website url of your company" value="<?= isset($branding['admin_logo_login_link']) ? $branding['admin_logo_login_link'] : ''; ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="custom_support_url" class="control-label">Enable support links ?</label>
+                        <input type="text" name="custom_support_url" class="form-control" id="custom_support_url" placeholder="Enter url of your contact page" value="<?= isset($branding['custom_support_url']) ? $branding['custom_support_url'] : ''; ?>">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="enable_service_links" value="1" <?= (isset($branding['enable_service_links']) AND $branding['enable_service_links'] == 1) ? 'checked' : ''; ?>> Enable
+                            </label>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="admin_logo_login_link" class="col-lg-4 control-label">Admin login - White Label URL ?</label>
-                        <div class="col-lg-8">
-                            <input type="text" name="admin_logo_login_link" class="form-control" id="admin_logo_login_link" placeholder="Enter website url of your company">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="custom_support_url" class="col-lg-4 control-label">Enable support links ?</label>
-                        <div class="col-lg-8">
-                            <input type="text" name="custom_support_url" class="form-control" id="custom_support_url" placeholder="Enter url of your contact page">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="enable_service_links"> Enable
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="brand" class="col-lg-4 control-label">Enable "Powered by"</label>
-                        <div class="col-lg-8">
-                            <textarea name="brand_name" class="form-control" rows="3" id="textArea"></textarea>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="brand_name"> Enable
-                                </label>
-                            </div>
+                        <label for="powered_by_link" class="control-label">Enable "Powered by"</label>
+                        <textarea name="powered_by_link" class="form-control" rows="3" id="powered_by_link"><?= isset($branding['powered_by_link']) ? $branding['powered_by_link'] : ''; ?></textarea>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="disable_powered_by_link" value="1" <?= (isset($branding['disable_powered_by_link']) AND $branding['disable_powered_by_link'] == 1) ? 'checked' : ''; ?>> Hide "Powered by" link
+                            </label>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label for="brand" class="col-lg-4 control-label">Brand Name</label>
-                        <div class="col-lg-8">
-                            <input type="text" class="form-control" id="brand" placeholder="Enter the name of your company">
-                        </div>
+                        <label for="logo_admin" class="control-label">Logo for Admin panel (size: 180x35 px)</label>
+                        <input type="text" name="logo_admin" class="form-control" id="logo_admin" value="<?= isset($branding['logo_admin']) ? $branding['logo_admin'] : ''; ?>">
                     </div>
 
                     <div class="form-group">
-                        <label for="brand" class="col-lg-4 control-label">Admin login - White Label URL ?</label>
-                        <div class="col-lg-8">
-                            <input type="text" class="form-control" id="brand" placeholder="Enter website url of your company">
-                        </div>
+                        <label for="logo_live_edit" class="control-label">Logo for Live-Edit toolbar (size: 50x50 px)</label>
+                        <input type="text" name="logo_live_edit" class="form-control" id="logo_live_edit" value="<?= isset($branding['logo_live_edit']) ? $branding['logo_live_edit'] : ''; ?>">
                     </div>
 
                     <div class="form-group">
-                        <label for="brand" class="col-lg-4 control-label">Enable support links ?</label>
-                        <div class="col-lg-8">
-                            <input type="text" class="form-control" id="brand" placeholder="Enter url of your contact page">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> Enable
-                                </label>
-                            </div>
-                        </div>
+                        <label for="logo_login" class="control-label">Logo for Login screen (max width 290px)</label>
+                        <input type="text" name="logo_login" class="form-control" id="logo_login" value="<?= isset($branding['logo_login']) ? $branding['logo_login'] : ''; ?>">
                     </div>
 
                     <div class="form-group">
-                        <label for="brand" class="col-lg-4 control-label">Enable "Powered by"</label>
-                        <div class="col-lg-8">
-                            <textarea class="form-control" rows="3" id="textArea"></textarea>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> Enable
-                                </label>
-                            </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="disable_marketplace" value="1" <?= (isset($branding['disable_marketplace']) AND $branding['disable_marketplace'] == 1) ? 'checked' : ''; ?>> Microweber Marketplace
+                            </label>
                         </div>
+                    </div>
+                    <div class="">
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </div>

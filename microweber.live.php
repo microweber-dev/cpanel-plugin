@@ -74,7 +74,13 @@ $existing_installs = $controller->findInstalations();
 
 ?>
 
+<?php
+$view = new MicroweberView(__DIR__ . '/views/header.php');
 
+$view->display();
+
+
+?>
     <script>
         function advancedRadioChanged() {
             var express = document.forms[document.forms.length - 1].express.value;

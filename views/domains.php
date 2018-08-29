@@ -51,8 +51,7 @@ if ($domains and !empty($domains)) {
                         </a>
 
                         <?php if (isset($domain['type']) and $domain['type']): ?>
-                            <span class="label label-default"
-                                  title="<?php echo $domain['type']; ?>"><?php echo MicroweberHelpers::titlelize($domain['type']); ?></span>
+                            <span class="label label-success" title="<?php echo $domain['type']; ?>" style="margin-left:10px;"><?php echo MicroweberHelpers::titlelize($domain['type']); ?></span>
                         <?php endif; ?>
 
 

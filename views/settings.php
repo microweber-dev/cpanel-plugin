@@ -12,46 +12,32 @@ $db_driver = isset($settings['db_driver']) ? $settings['db_driver'] : '';
 
 ?>
 
-
 <form method="POST">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <input type="hidden" name="save_settings" value="1">
 
             <h2>Installation settings</h2>
 
             <div>
                 <label>
-                    <input type="radio" name="auto_install"
-                           value="1" <?php echo $auto_install == '1' ? 'checked' : ''; ?>>
+                    <input type="radio" name="auto_install" value="1" <?php echo $auto_install == '1' ? 'checked' : ''; ?>>
                     Automatically install Microweber on new domains creation. <a href="#" data-toggle="tooltip" title="You must enable the Microweber feature in your packages settings">[?]</a>
-
                 </label>
-
                 <br>
 
                 <label>
-                    <input type="radio" name="auto_install"
-                           value="0" <?php echo $auto_install == '0' ? 'checked' : ''; ?>>
+                    <input type="radio" name="auto_install" value="0" <?php echo $auto_install == '0' ? 'checked' : ''; ?>>
                     Allow users to Manually install Microweber from cPanel. <a href="#" data-toggle="tooltip" title="You must enable the Microweber feature in your packages settings">[?]</a>
                 </label>
                 <br>
-                <label>
-                    <input type="radio"
-                           name="auto_install" <?php echo $auto_install == 'disabled' ? 'checked' : ''; ?>
-                           value="disabled">
-                  Disabled for all users
-                </label>
+
+                <label><input type="radio" name="auto_install" <?php echo $auto_install == 'disabled' ? 'checked' : ''; ?> value="disabled">Disabled for all users</label>
                 <br>
-
             </div>
-
-
         </div>
 
-        <div class="col-md-6">
-
-
+        <div class="col-md-4">
             <h2>Installation Type</h2>
 
             <div>
@@ -68,7 +54,7 @@ $db_driver = isset($settings['db_driver']) ? $settings['db_driver'] : '';
                            value="symlinked" <?php if ($install_type == 'symlinked') {
                         print 'checked';
                     } ?> >
-                    Sym-linked (saves a big amount of disk space)  <a href="#" data-toggle="tooltip" title="Code is symliked from shared folder for all users">[?]</a>
+                    Sym-linked (saves a big amount of disk space) <a href="#" data-toggle="tooltip" title="Code is symliked from shared folder for all users">[?]</a>
                 </label>
                 <br>
             </div>
@@ -78,7 +64,6 @@ $db_driver = isset($settings['db_driver']) ? $settings['db_driver'] : '';
             <div>
                 <label>
                     <select name="db_driver" class="form-control">
-
 
                         <option <?php if ($db_driver == 'mysql') {
                             print 'selected';
@@ -90,16 +75,9 @@ $db_driver = isset($settings['db_driver']) ? $settings['db_driver'] : '';
                         </option>
                     </select>
                 </label>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: -5px; margin-left: 10px;">Save</button>
             </div>
-
-            <div>
-                <input type="submit" value="Save" class="btn btn-primary">
-            </div>
-
-
         </div>
-
     </div>
-
-
 </form>
