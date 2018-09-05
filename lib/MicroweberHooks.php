@@ -128,7 +128,8 @@ class MicroweberHooks
 
         if ($dbDriver == 'sqlite') {
             $this->log('Using sqlite for ' . $dbUsername);
-            $dbHost = 'storage/database.sqlite';
+            $dbHost = 'localhost';
+            $dbName = 'storage/database.sqlite';
 
         } else {
 
@@ -165,7 +166,8 @@ class MicroweberHooks
 
         $opts['default_template'] = 'dream'; //@todo get from settings
         $opts['is_symliked'] = $is_symlink; //@todo get from settings
-        //  $opts['debug_email'] = 'boksiora@gmail.com'; //@todo get from settings
+
+           $opts['debug_email'] = 'boksiora@gmail.com'; //@todo get from settings
 
 
 //        $install_opts = array();

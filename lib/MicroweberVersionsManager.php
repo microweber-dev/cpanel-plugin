@@ -161,6 +161,9 @@ class MicroweberVersionsManager
 
 
         $latest = $this->getLatestVersionData();
+
+
+
         if (!isset($latest['url'])) {
             return;
         }

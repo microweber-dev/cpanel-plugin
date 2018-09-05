@@ -31,7 +31,7 @@ class MicroweberAdminController
                 if (isset($account['user'])) {
                     $user_domains = $this->findInstalations($account['user']);
                 }
-                if ($user_domains) {
+                if (isset($user_domains) and $user_domains) {
                     $return = array_merge($return, $user_domains);
 
                 }
@@ -39,10 +39,6 @@ class MicroweberAdminController
         }
         return $return;
     }
-
-
-
-
 
 
 }

@@ -38,6 +38,31 @@ if [ -n "$chmod_files" ]; then
     echo "Unable to CHMOD the cPanel plugin"
 fi
 
+
+
+unregister_cp=`/usr/local/cpanel/scripts/uninstall_plugin /usr/local/cpanel/microweber/install/mw-plugin`
+
+if [ -z "$unregister_cp" ]; then
+    echo "Cleaning up cPanel plugin"
+    exit 1
+fi
+
+unregister_whm=`/usr/local/cpanel/bin/unregister_appconfig /usr/local/cpanel/microweber/install/microweber.conf`
+
+if [ -z "$unregister_whm" ]; then
+    echo "Cleaning up WHM plugin"
+    exit 1
+fi
+
+unregister_hooks=`/usr/local/cpanel/bin/manage_hooks delete script /usr/local/cpanel/microweber/hooks/mw_hooks.php`
+
+if [ -z "$unregister_hooks" ]; then
+    echo "Cleaning up hooks"
+    exit 1
+fi
+
+
+
 register_cp=`/usr/local/cpanel/scripts/install_plugin /usr/local/cpanel/microweber/install/mw-plugin`
 
 if [ -z "$register_cp" ]; then

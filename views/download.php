@@ -42,6 +42,9 @@ if (!isset($latest_plugin_version)) {
                         <h5>Latest version is: <?php print  $latest_version ?></h5>
                     <?php endif; ?>
 
+
+
+
                     <?php if (version_compare($latest_version, $current_version, '>')): ?>
                         <button name="download_cms" value="download_cms" class="btn btn-primary btn-xs">UPDATE</button>
 
@@ -69,7 +72,8 @@ if (!isset($latest_plugin_version)) {
                     <?php endif; ?>
 
                     <?php if (version_compare($latest_plugin_version, $current_plugin_version, '>')): ?>
-                        <button name="update_plugin" value="update_plugin" class="btn btn-primary btn-xs">UPDATE</button>
+                        <button name="update_plugin" value="update_plugin" class="btn btn-primary btn-xs">UPDATE
+                        </button>
 
                         <script>
                             $(document).ready(function () {
