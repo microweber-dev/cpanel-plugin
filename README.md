@@ -4,7 +4,7 @@
 
 ### Using RPM
 
-Run the following commands:
+Run the following commands in the Terminal:
 
 ```
 wget http://download.microweberapi.com/cpanel/microweber-cpanel.rpm
@@ -39,6 +39,28 @@ sudo rpm -Uvh microweber-cpanel.rpm
  
 * Run the following script:
 
-```
+```setup_acl.png
 /usr/local/cpanel/microweber/install/uninstall.sh
 ```
+
+
+ 
+# Usage 
+
+### You may need to enable the ACL 
+![setup_acl.png](assets/setup_acl.png "")
+### After that go in feature manager and add the "Microweber" feature to a plan of your choice 
+![setup_feature.png](assets/setup_feature.png "")
+### And you can search for microweber 
+![setup_mw.png](assets/setup_mw.png "")
+### You can now setup your database type and install type 
+![setup_install_settings.png](assets/setup_install_settings.png "")
+
+And you are ready. 
+
+Now if you make new domain with a plan that has the "microweber" feature, you will see a website created automatically. 
+
+
+
+
+
