@@ -60,6 +60,11 @@ And you are ready.
 
 Now if you make new domain with a plan that has the "microweber" feature, you will see a website created automatically. 
 
+Also make sure you have the required php exatensions enabled.
+
+You need mb_string and iconv enabled. You can import the EasyApache4 Profile from this link [easyapache_profile.json](assets/easyapache_profile.json "")
+
+
 
 
 
