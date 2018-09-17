@@ -80,13 +80,13 @@ fi
 
 
 
-step2=`ln -s /usr/local/cpanel/microweber/whm/index.cgi /usr/local/cpanel/whostmgr/docroot/cgi/3rdparty/microweber/index.cgi`
+step2=`ln -sfn /usr/local/cpanel/microweber/whm/index.cgi /usr/local/cpanel/whostmgr/docroot/cgi/3rdparty/microweber/index.cgi`
 
 if [ -n "$step2" ]; then
     echo "Unable to complete step 2"
 fi
 
-step21=`ln -s /usr/local/cpanel/microweber/microweber.live.php /usr/local/cpanel/base/frontend/paper_lantern/microweber.live.php`
+step21=`ln -sfn /usr/local/cpanel/microweber/microweber.live.php /usr/local/cpanel/base/frontend/paper_lantern/microweber.live.php`
 
 if [ -n "$step21" ]; then
     echo "Unable to complete step 2-1"
@@ -98,19 +98,22 @@ if [ -n "$step3" ]; then
     echo "Unable to complete step 3"
 fi
 
-step4=`ln -s /usr/local/cpanel/microweber/whm/admin.php /usr/local/cpanel/whostmgr/docroot/3rdparty/microweber/admin.php`
+step4=`ln -sfn /usr/local/cpanel/microweber/whm/admin.php /usr/local/cpanel/whostmgr/docroot/3rdparty/microweber/admin.php`
 
 if [ -n "$step4" ]; then
     echo "Unable to complete step 4"
 fi
 
-step5=`ln -s /usr/local/cpanel/microweber/install/mw-plugin/microweber.png /usr/local/cpanel/whostmgr/docroot/addon_plugins/microweber.png`
+step5=`ln -sfn /usr/local/cpanel/microweber/install/mw-plugin/microweber.png /usr/local/cpanel/whostmgr/docroot/addon_plugins/microweber.png`
 
 if [ -n "$step5" ]; then
     echo "Unable to complete step 5"
 fi
 
-step6=`ln -s /usr/local/cpanel/microweber/hooks /var/cpanel/microweber`
+
+
+
+step6=`ln -sfn /usr/local/cpanel/microweber/hooks /var/cpanel/microweber`
 
 if [ -n "$step6" ]; then
     echo "Unable to complete step 6"
