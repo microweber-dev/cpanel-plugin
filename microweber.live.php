@@ -30,8 +30,8 @@ if ($_POST) {
 
             if (isset($domainData['domain'])) {
 
-                $txt = "<a target='_blank' href='http://" . $domainData['domain'] . "'><h2>Click here to setup your website: " . $domainData['domain'] . "</h2></a>";
-                print '<div class="alert alert-success">
+                $txt = "<p style=\"margin: 10px 0;\"><a target='_blank' href='http://" . $domainData['domain'] . "' style='font-size: 17px; text-decoration: none; font-weight: bold; color: #5d5d5d;'>Click here to setup your website: " . $domainData['domain'] . "</a></p>";
+                print '<div class="alert alert-success" style="margin-top:20px;">
                           <div class="alert-message">
                           
                          ' . $txt . '
@@ -46,7 +46,7 @@ if ($_POST) {
 
             if (isset($domainData['domain'])) {
 
-                $txt = "<h3>Your domain " . $domainData['domain'] . " has been removed. </h3>";
+                $txt = "<p style=\"margin: 10px 0;\">Your domain " . $domainData['domain'] . " has been removed. </p>";
                 print '<div class="alert alert-danger">
                           <div class="alert-message">
                           

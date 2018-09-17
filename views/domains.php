@@ -19,12 +19,13 @@ if ($domains and !empty($domains)) {
         <thead>
         <tr>
             <th>Domain</th>
-
+            <th></th>
             <?php if ($admin_view): ?>
                 <th>User</th>
             <?php endif; ?>
             <th>Version</th>
             <th>Created at</th>
+            <th class="text-center">Type</th>
             <th>File Path</th>
             <?php if (!$admin_view): ?>
                 <th class="text-right">Actions</th>
@@ -46,38 +47,34 @@ if ($domains and !empty($domains)) {
                     <td>
                         <a href="http://<?php echo $domain['domain']; ?>" target="_blank">
                             <!--                            <img src="./microweber/mw-icon.png"       class="mw-icon" /> -->
-
                             <?php echo $domain['domain']; ?>
                         </a>
-
-                        <?php if (isset($domain['type']) and $domain['type']): ?>
-                            <span class="label label-success" title="<?php echo $domain['type']; ?>" style="margin-left:10px;"><?php echo MicroweberHelpers::titlelize($domain['type']); ?></span>
-                        <?php endif; ?>
-
-
                     </td>
+                    <td class="text-right"> <?php if (isset($domain['type']) and $domain['type']): ?>
+                            <span class="label <?php if ($domain['type'] == 'main_domain') {
+                                echo 'label-success';
+                            } else {
+                                echo 'label-primary';
+                            }; ?>" title="<?php echo $domain['type']; ?>" style="margin-left:10px;"><?php echo MicroweberHelpers::titlelize($domain['type']); ?></span>
+                        <?php endif; ?>
+                    </td>
+
                     <?php if ($admin_view): ?>
                         <td><?php echo $domain['user']; ?></td>
                     <?php endif; ?>
 
                     <td><?php echo $domain['version']; ?></td>
                     <td><?php echo date('Y M d', strtotime($domain['created_at'])); ?></td>
-                    <td>
-
-                        <?php echo $domain['documentroot']; ?>
-
+                    <td class="text-center">
                         <?php if ($admin_view and isset($domain['is_symlink']) and $domain['is_symlink']): ?>
-                            <span class="label label-default"
-                                  title="<?php echo $domain['symlink_target']; ?>">symlink</span>
+                            <span class="label label-default" title="<?php echo $domain['symlink_target']; ?>">symlink</span>
+                        <?php else: ?>
+                            <span class="label label-warning" title="copy of source">standalone</span>
                         <?php endif; ?>
-
-
                     </td>
-                    <td class="action">
-
-
+                    <td><?php echo $domain['documentroot']; ?></td>
+                    <td class="action text-right">
                         <?php if ($admin_view): ?>
-
 
                             <?php
 
@@ -91,8 +88,6 @@ if ($domains and !empty($domains)) {
                             </form>*/
 
                             ?>
-
-
                         <?php endif; ?>
 
 
@@ -101,12 +96,8 @@ if ($domains and !empty($domains)) {
 
 
                         <?php if (!$admin_view): ?>
-                            <button type="button" class="remove" data-toggle="modal"
-                                    data-target="#removeSite-<?php print $key; ?>"><i class="fa fa-trash"></i>
-                            </button>
-
+                            <button type="button" class="btn btn-danger remove" data-toggle="modal" data-target="#removeSite-<?php print $key; ?>"><i class="fa fa-trash"></i> Remove</button>
                         <?php endif; ?>
-
 
                         <!-- Modal Delete Accept -->
                         <div class="modal fade" id="removeSite-<?php print $key; ?>" tabindex="-1"
@@ -114,22 +105,16 @@ if ($domains and !empty($domains)) {
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <form method="POST">
-                                        <div class="modal-body" style="padding: 70px 0;">
-                                            <h4 class="modal-title text-center">Are you sure you want to
-                                                delete this website?</h4>
+                                        <div class="modal-body" style="padding: 80px 0;">
+                                            <h4 class="modal-title text-center">Are you sure you want to delete this website?</h4>
 
                                             <input type="hidden" name="_action" value="uninstall">
-                                            <input type="hidden" name="domain"
-                                                   value="<?php echo htmlspecialchars(json_encode($domain)); ?>">
+                                            <input type="hidden" name="domain" value="<?php echo htmlspecialchars(json_encode($domain)); ?>">
                                         </div>
 
                                         <div class="modal-footer" style="margin: 0;">
-                                            <button type="button" class="btn btn-primary"
-                                                    data-dismiss="modal">No
-                                            </button>
-                                            <button type="submit" class="btn btn-default">Yes, delete my
-                                                website
-                                            </button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                            <button type="submit" class="btn btn-danger">Yes, delete my website</button>
                                         </div>
                                     </form>
                                 </div>
@@ -143,17 +128,14 @@ if ($domains and !empty($domains)) {
     </table>
 
 
-    <br>
-    <small class="small">You have <?php print $siteCount ?> installations</small>
+    <p>You have <?php print $siteCount ?> installations</p>
 
 
     <?php if (!isset($_GET['search']) && $siteCount == 0): ?>
         <div id="row-no-instances" class="instance-list-callout callout callout-info">
             <i class="fa fa-exclamation-circle"></i>
             <span id="no-installation-msg" class="callout-message">
-                            There is no Microweber installations yet.
-                            <a id="addinstall" href="#install" title="Create a new Microweber installation.">Create an
-                                installation.</a>
+                            There is no Microweber installations yet. <a id="addinstall" href="#install" title="Create a new Microweber installation.">Create aninstallation.</a>
                         </span>
         </div>
     <?php endif; ?>
@@ -172,3 +154,4 @@ if ($domains and !empty($domains)) {
         </div>
     <?php endif; ?>
 </div>
+<br> <br>
