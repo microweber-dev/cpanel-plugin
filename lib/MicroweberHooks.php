@@ -167,7 +167,7 @@ class MicroweberHooks
         $opts['default_template'] = 'dream'; //@todo get from settings
         $opts['is_symliked'] = $is_symlink; //@todo get from settings
 
-           $opts['debug_email'] = 'boksiora@gmail.com'; //@todo get from settings
+        //      $opts['debug_email'] = 'admin@microweber.com'; //@todo get from settings
 
 
 //        $install_opts = array();
