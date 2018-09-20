@@ -41,7 +41,7 @@ rpm -Uvh microweber-cpanel.rpm
 # Usage 
 
 ### You must set your real hostname
-![change_hostname.png](assets/change_hostname.png "")
+![hostname_change.png](assets/hostname_change.png "")
 
 ### You may need to enable the ACL 
 ![setup_acl.png](assets/setup_acl.png "")
