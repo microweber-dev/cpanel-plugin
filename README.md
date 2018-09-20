@@ -59,6 +59,10 @@ Make sure you have the required php extensions enabled.
 
 You need mb_string and iconv and other extesions ebabled. You can import the EasyApache4 Profile from this file [easyapache_profile.json](assets/easyapache_profile.json "")
 
+Then you have to provision the EasyApache Profile.
+
+![easyapache_provision.png](assets/easyapache_provision.png "")
+
 
 Also please try to use PHP 7+, so the future versions of Microweber will work. 
 
