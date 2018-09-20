@@ -8,7 +8,7 @@ Run the following commands in the Terminal:
 
 ```
 wget http://download.microweberapi.com/cpanel/microweber-cpanel.rpm
-sudo yum install microweber-cpanel.rpm
+yum install microweber-cpanel.rpm
 ```
  
 ### Manual installation
@@ -21,18 +21,11 @@ sudo yum install microweber-cpanel.rpm
 /usr/local/cpanel/microweber/install/installer.sh
 ```
 
-## Find The Plugin
-
-* Login to WHM, search for "Microweber" and open the plugin settings page.
-* Add the "Microweber" feature to plans you wish to have Microweber installed with them.
-* Login to cPanel and open the plugin under "Software". From that page Microweber can be manually installed to any of the user's domains.
-
-
 ### Update 
 
 ```
 wget http://download.microweberapi.com/cpanel/microweber-cpanel.rpm
-sudo rpm -Uvh microweber-cpanel.rpm
+rpm -Uvh microweber-cpanel.rpm
 ```
 
 ### Uninstall
@@ -71,7 +64,11 @@ Also please try to use PHP 7+, so the future versions of Microweber will work.
 
 ![easyapache_php_ver.png](assets/easyapache_php_ver.png "")
 
- 
+ ## Find The Plugin
+
+* Login to WHM, search for "Microweber" and open the plugin settings page.
+* Add the "Microweber" feature to plans you wish to have Microweber installed with them.
+* Login to cPanel and open the plugin under "Software". From that page Microweber can be manually installed to any of the user's domains.
 
 ### Search for Microweber in the sidebar
 ![setup_mw.png](assets/setup_mw.png "")
