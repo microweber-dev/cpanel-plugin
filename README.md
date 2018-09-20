@@ -8,7 +8,7 @@ Run the following commands in the Terminal:
 
 ```
 wget http://download.microweberapi.com/cpanel/microweber-cpanel.rpm
-sudo yum install microweber-cpanel.rpm
+yum install microweber-cpanel.rpm
 ```
  
 ### Manual installation
@@ -32,7 +32,7 @@ sudo yum install microweber-cpanel.rpm
 
 ```
 wget http://download.microweberapi.com/cpanel/microweber-cpanel.rpm
-sudo rpm -Uvh microweber-cpanel.rpm
+rpm -Uvh microweber-cpanel.rpm
 ```
 
 ### Uninstall
