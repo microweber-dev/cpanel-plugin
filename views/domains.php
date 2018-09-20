@@ -25,7 +25,9 @@ if ($domains and !empty($domains)) {
             <?php endif; ?>
             <th>Version</th>
             <th>Created at</th>
-            <th class="text-center">Type</th>
+            <?php if ($admin_view): ?>
+                <th class="text-center">Type</th>
+            <?php endif; ?>
             <th>File Path</th>
             <?php if (!$admin_view): ?>
                 <th class="text-right">Actions</th>
