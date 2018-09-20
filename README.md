@@ -63,6 +63,8 @@ Then you have to provision the EasyApache Profile.
 
 ![easyapache_provision.png](assets/easyapache_provision.png "")
 
+![easyapache_provision_confirm.png](assets/easyapache_provision_confirm.png "")
+
 
 Also please try to use PHP 7+, so the future versions of Microweber will work. 
 
