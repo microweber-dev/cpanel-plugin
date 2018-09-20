@@ -68,7 +68,7 @@ if ($domains and !empty($domains)) {
                     <td class="text-center">
                         <?php if ($admin_view and isset($domain['is_symlink']) and $domain['is_symlink']): ?>
                             <span class="label label-default" title="<?php echo $domain['symlink_target']; ?>">symlink</span>
-                        <?php else: ?>
+                        <?php elseif ($admin_view and isset($domain['is_symlink']) and $domain['is_symlink'] == false): ?>
                             <span class="label label-warning" title="copy of source">standalone</span>
                         <?php endif; ?>
                     </td>
