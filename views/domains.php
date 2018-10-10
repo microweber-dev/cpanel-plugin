@@ -137,7 +137,7 @@ if ($domains and !empty($domains)) {
         <div id="row-no-instances" class="instance-list-callout callout callout-info">
             <i class="fa fa-exclamation-circle"></i>
             <span id="no-installation-msg" class="callout-message">
-                            There is no Microweber installations yet. <a id="addinstall" href="#install" title="Create a new Microweber installation.">Create aninstallation.</a>
+                            There is no Microweber installations yet. <a id="addinstall" href="#install" title="Create a new Microweber installation.">Create an installation.</a>
                         </span>
         </div>
     <?php endif; ?>
