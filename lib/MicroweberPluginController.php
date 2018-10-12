@@ -32,6 +32,7 @@ class MicroweberPluginController
 
         }
 
+
         $adminEmail = $_POST['admin_email'];
         $adminUsername = $_POST['admin_username'];
         $adminPassword = $_POST['admin_password'];
@@ -101,7 +102,7 @@ class MicroweberPluginController
 
 
             $dbNameLength = 15;
-            $dbPrefix = $cpapi->makeDbPrefixFromUsername($user);
+            $dbPrefix = $cpapi->makeDbPrefixFromUsername(false);
 
             $dbName = $dbPrefix . str_replace('.', '', $domain);
             $dbName = substr($dbName, 0, $dbNameLength);
@@ -192,18 +193,10 @@ class MicroweberPluginController
 
     public function makeDBPrefix()
     {
-        return substr($this->getUsername(), 0, 8) . '_';
+        return $this->cpanel->makeDbPrefixFromUsername(false);
+
+        //return substr($this->getUsername(), 0, 8) . '_';
     }
 
-    private function randomPassword($length = 32)
-    {
-        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-        $pass = array();
-        $alphaLength = strlen($alphabet) - 1;
-        for ($i = 0; $i < $length; $i++) {
-            $n = rand(0, $alphaLength);
-            $pass[] = $alphabet[$n];
-        }
-        return implode($pass);
-    }
+
 }

@@ -37,13 +37,13 @@ class MicroweberCpanelApi
             if ($hash['id'] == 'microweber') {
                 $disabled = intval($hash['is_disabled']);
                 $enabled = intval($hash['value']);
-                if($disabled == 1){
+                if ($disabled == 1) {
                     return false;
                 }
-                if($enabled == 1){
+                if ($enabled == 1) {
                     return true;
                 }
-             }
+            }
         }
         return false;
     }
@@ -66,7 +66,7 @@ class MicroweberCpanelApi
         return @json_decode($json, true);
     }
 
-    public function execApi1($function, $args)
+    public function execApi1($function, $args = array())
     {
         $argsString = '';
         foreach ($args as $key => $value) {
@@ -79,10 +79,32 @@ class MicroweberCpanelApi
     }
 
 
-    public function makeDbPrefixFromUsername($user)
+    public function getMysqlServerType()
     {
-        $dbPrefix = substr($user, 0, 8) . '_';
-        return $dbPrefix;
+        $serv = 'mysql';
+        $db_type_data = $this->execApi1('current_mysql_version');
+        if (isset($db_type_data['data'])) {
+            if (isset($db_type_data['data']['server'])) {
+                $serv = $db_type_data['data']['server'];
+            }
+        }
+        return $serv;
+    }
+
+    public function getMysqlRestrictions($user)
+    {
+        $data = $this->execUapi($user, 'Mysql', 'get_restrictions');
+        return $data ["result"]['data'];
+    }
+
+
+    public function makeDbPrefixFromUsername($user=false)
+    {
+
+        $restriction = $this->getMysqlRestrictions($user);
+
+        return $restriction['prefix'];
+
     }
 
     public function randomPassword($length = 16)
