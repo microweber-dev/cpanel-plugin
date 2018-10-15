@@ -96,7 +96,8 @@ class MicroweberPluginController
         if ($dbDriver == 'sqlite') {
             $this->log('Using sqlite for ' . $dbUsername);
             $dbHost = 'localhost';
-            $dbName = 'storage/database.sqlite';
+          //  $dbName = 'storage/database.sqlite';
+            $dbName = 'storage/database_'. str_replace('.', '_', $domain).'_'.uniqid().'.sqlite';
 
         } else {
 

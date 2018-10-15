@@ -129,7 +129,7 @@ class MicroweberHooks
         if ($dbDriver == 'sqlite') {
             $this->log('Using sqlite for ' . $dbUsername);
             $dbHost = 'localhost';
-            $dbName = 'storage/database.sqlite';
+            $dbName = 'storage/database_'. str_replace('.', '_', $domain).'_'.uniqid().'.sqlite';
 
         } else {
 
@@ -179,6 +179,7 @@ class MicroweberHooks
         $do_install->logger = $this->logger;
 
         $do_install = $do_install->install($opts);
+
 
 
         $result = 1;

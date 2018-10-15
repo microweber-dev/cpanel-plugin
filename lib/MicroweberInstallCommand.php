@@ -76,10 +76,10 @@ class MicroweberInstallCommand
             $copy_files[] = 'favicon.ico';
             $copy_files[] = 'composer.json';
             $copy_files[] = 'artisan';
-            $copy_files[] = 'config';
+           // $copy_files[] = 'config';
             $copy_files[] = 'bootstrap/app.php';
             $copy_files[] = 'bootstrap/autoload.php';
-            $copy_files[] = 'storage/database.sqlite';
+            //$copy_files[] = 'storage/database.sqlite';
 
             if (isset($opts['source_folder'])) {
                 $mw_shared_dir = $opts['source_folder']; //add slash
@@ -128,6 +128,7 @@ class MicroweberInstallCommand
             }
 
 
+
             $mw_shared_dir .= (substr($mw_shared_dir, -1) == '/' ? '' : '/');
 
             $this->log('Source folder ' . $mw_shared_dir);
@@ -157,6 +158,7 @@ class MicroweberInstallCommand
                         $exec = "cp -f $file $newfile";
                         $output = exec($exec);
                     } elseif (is_dir($file)) {
+                        $newfile = rtrim($newfile,'/');
                         $exec = "cp -rf $file $newfile";
                         $output = exec($exec);
                     }
@@ -410,6 +412,18 @@ class MicroweberInstallCommand
         $output = exec($exec);
         $message = $message . "\n\n\n" . $output;
 
+        $exec = "find {$user_public_html_folder}storage -type d -exec chmod 750 {} \\";
+        exec($exec);
+
+        $exec = "find {$user_public_html_folder}storage -type f -exec chmod 640 {} \\";
+        exec($exec);
+
+        $exec = "find {$user_public_html_folder}config -type d -exec chmod 750 {} \\";
+        exec($exec);
+
+        $exec = "find {$user_public_html_folder}config -type f -exec chmod 640 {} \\";
+        exec($exec);
+
 
     }
 
@@ -426,21 +440,22 @@ class MicroweberInstallCommand
         $message = $message . "\n\n\n" . $exec;
         $output = exec($exec);
         $message = $message . "\n\n\n" . $output;
-        if (isset($copy_files) and is_array($copy_files) and !empty($copy_files)) {
-            foreach ($copy_files as $file) {
-                $file = str_replace('..', '', $file);
-                $file_dest = $file;
-                $file = $mw_shared_dir . $file;
-                $newfile = "{$user_public_html_folder}{$file_dest}";
-                if (is_file($file)) {
-                    $exec = "cp -f $file $newfile";
-                    $output = exec($exec);
-                } elseif (is_dir($file)) {
-                    $exec = "cp -rf $file $newfile";
-                    $output = exec($exec);
-                }
-            }
-        }
+//        if (isset($copy_files) and is_array($copy_files) and !empty($copy_files)) {
+//            foreach ($copy_files as $file) {
+//                $file = str_replace('..', '', $file);
+//                $file_dest = $file;
+//                $file = $mw_shared_dir . $file;
+//                $newfile = "{$user_public_html_folder}{$file_dest}";
+//                if (is_file($file)) {
+//                    $exec = "cp -f $file $newfile";
+//                    $output = exec($exec);
+//                } elseif (is_dir($file)) {
+//                    $newfile = rtrim($newfile,'/');
+//                    $exec = "cp -rf $file $newfile";
+//                    $output = exec($exec);
+//                }
+//            }
+//        }
 
     }
 
