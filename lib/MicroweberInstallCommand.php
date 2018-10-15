@@ -412,17 +412,24 @@ class MicroweberInstallCommand
         $output = exec($exec);
         $message = $message . "\n\n\n" . $output;
 
-        $exec = "find {$user_public_html_folder}storage -type d -exec chmod 750 {} \\";
+        $exec = 'find '.$user_public_html_folder.'storage -type d -exec chmod 750 {} \;';
         exec($exec);
 
-        $exec = "find {$user_public_html_folder}storage -type f -exec chmod 640 {} \\";
+        $exec = 'find '.$user_public_html_folder.'storage -type f -exec chmod 640 {} \;';
         exec($exec);
 
-        $exec = "find {$user_public_html_folder}config -type d -exec chmod 750 {} \\";
+        $exec = 'find '.$user_public_html_folder.'.env -type f -exec chmod 640 {} \;';
         exec($exec);
 
-        $exec = "find {$user_public_html_folder}config -type f -exec chmod 640 {} \\";
+
+
+
+        $exec = 'find '.$user_public_html_folder.'config -type d -exec chmod 750 {} \;';
         exec($exec);
+
+        $exec = 'find '.$user_public_html_folder.'config -type f -exec chmod 640 {} \;';
+        exec($exec);
+
 
 
     }
