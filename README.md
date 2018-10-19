@@ -43,11 +43,6 @@ rpm -Uvh microweber-cpanel.rpm
 ### You must set your real hostname
 ![hostname_change.png](assets/hostname_change.png "")
 
-### You may need to enable the ACL 
-![setup_acl.png](assets/setup_acl.png "")
-
-### After that go in "Feature Manager" and add the "Microweber" feature to a plan of your choice 
-![setup_feature.png](assets/setup_feature_0.png "")
 
 ### Select the feature list you want to edit 
 Select the feature list, click on "edit" button and add the Microweber feature
