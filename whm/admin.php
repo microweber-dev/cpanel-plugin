@@ -86,7 +86,7 @@ $latest_dl_date = $versions->getCurrentVersionLastDownloadDateTime();
 $domains = $controller->get_installations_across_server();
 
 
-WHM::header('Microweber Settings', 0, 0);
+WHM::header('Microweber Settings', 1, 1);
 ?>
 <?php
 $view = new MicroweberView(__DIR__ . '/../views/header.php');
