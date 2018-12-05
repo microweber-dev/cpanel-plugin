@@ -66,6 +66,7 @@ Then you have to provision the EasyApache Profile.
 
 Also please try to use PHP 7+, so the future versions of Microweber will work. 
 
+
 ![easyapache_php_ver.png](assets/easyapache_php_ver.png "")
 
  ## Find The Plugin
@@ -87,13 +88,29 @@ Also please try to use PHP 7+, so the future versions of Microweber will work.
 
 
 
+
+### For Symlink setup
+
+If you use Symlink configuration you can save a lot of disk space and use single code-base for all websites
+
+Make sure your check on  And set `Symlink Protection` to "Off" under "Apache Configuration > Global Configuration"
+
+
+
+![setup_symlink2.png](assets/setup_symlink2.png "")
+
+ 
+
+
 ## You are ready. 
 
 Now if you make new domain with a plan that has the "microweber" feature, you will see a website created automatically. 
 
 ![setup_mw_after_create.png](assets/setup_mw_after_create.png "")
 
- 
+
+
+
 
 
 
