@@ -135,6 +135,17 @@ class MicroweberInstallCommand
             $this->log('Destination folder ' . $user_public_html_folder);
 
 
+
+
+            $is_already_installed = is_file($user_public_html_folder.'config/microweber.php');
+            if($is_already_installed){
+                return;
+            }
+
+
+
+
+
             $this->__rsync_user_folder($mw_shared_dir, $user_public_html_folder);
 
             /*
