@@ -64,6 +64,11 @@ class MicroweberHooks
         $adminUsername = $input['data']['user'];
         $adminPassword = $input['data']['pass'];
 
+        if($adminPassword == 'HIDDEN'){
+            //do nothing, maybe CPMOVE is in progress or backup is restored
+            return;
+        }
+
 
         //@todo check for existing
         $source_path = '/usr/share/microweber/latest/';
