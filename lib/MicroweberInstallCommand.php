@@ -19,6 +19,9 @@ class MicroweberInstallCommand
         'userfiles/elements/*',
         'userfiles/templates/*',
     );
+    public $sync_paths_extras = array(
+        'userfiles/modules/whmcs_login/',
+    );
 
 
     // $opts['user'];
@@ -76,7 +79,7 @@ class MicroweberInstallCommand
             $copy_files[] = 'favicon.ico';
             $copy_files[] = 'composer.json';
             $copy_files[] = 'artisan';
-           // $copy_files[] = 'config';
+            // $copy_files[] = 'config';
             $copy_files[] = 'bootstrap/app.php';
             $copy_files[] = 'bootstrap/autoload.php';
             //$copy_files[] = 'storage/database.sqlite';
@@ -128,22 +131,16 @@ class MicroweberInstallCommand
             }
 
 
-
             $mw_shared_dir .= (substr($mw_shared_dir, -1) == '/' ? '' : '/');
 
             $this->log('Source folder ' . $mw_shared_dir);
             $this->log('Destination folder ' . $user_public_html_folder);
 
 
-
-
-            $is_already_installed = is_file($user_public_html_folder.'config/microweber.php');
-            if($is_already_installed){
+            $is_already_installed = is_file($user_public_html_folder . 'config/microweber.php');
+            if ($is_already_installed) {
                 return;
             }
-
-
-
 
 
             $this->__rsync_user_folder($mw_shared_dir, $user_public_html_folder);
@@ -169,7 +166,7 @@ class MicroweberInstallCommand
                         $exec = "cp -f $file $newfile";
                         $output = exec($exec);
                     } elseif (is_dir($file)) {
-                        $newfile = rtrim($newfile,'/');
+                        $newfile = rtrim($newfile, '/');
                         $exec = "cp -rf $file $newfile";
                         $output = exec($exec);
                     }
@@ -230,6 +227,21 @@ class MicroweberInstallCommand
                     $this->symlink_recursive($link_src, $link_dest);
                 }
             }
+
+            $link_paths_extras = $this->sync_paths_extras;
+            if (isset($link_paths_extras) and is_array($link_paths_extras) and !empty($link_paths_extras)) {
+                foreach ($link_paths_extras as $link) {
+                    $link_src = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'extras' . $link;
+                    $link_dest = $user_public_html_folder . $link;
+                    if (!is_link($link_dest)) {
+                        $link_src = escapeshellarg($link_src);
+                        $link_dest = escapeshellarg($link_dest);
+                        $exec = " ln -s  $link_src $link_dest";
+                        exec($exec);
+                    }
+                }
+            }
+
 
             $exec = "chown -R {$chown_user}:{$chown_user} {$user_public_html_folder}*";
             $message = $message . "\n\n\n" . $exec;
@@ -395,6 +407,22 @@ class MicroweberInstallCommand
             }
 
 
+
+            $link_paths_extras = $this->sync_paths_extras;
+            if (isset($link_paths_extras) and is_array($link_paths_extras) and !empty($link_paths_extras)) {
+                foreach ($link_paths_extras as $link) {
+                    $link_src = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'extras' . $link;
+                    $link_dest = $user_public_html_folder . $link;
+                    if (!is_link($link_dest)) {
+                        $link_src = escapeshellarg($link_src);
+                        $link_dest = escapeshellarg($link_dest);
+                        $exec = " ln -s  $link_src $link_dest";
+                        exec($exec);
+                    }
+                }
+            }
+
+
         }
 
 
@@ -423,24 +451,21 @@ class MicroweberInstallCommand
         $output = exec($exec);
         $message = $message . "\n\n\n" . $output;
 
-        $exec = 'find '.$user_public_html_folder.'storage -type d -exec chmod 750 {} \;';
+        $exec = 'find ' . $user_public_html_folder . 'storage -type d -exec chmod 750 {} \;';
         exec($exec);
 
-        $exec = 'find '.$user_public_html_folder.'storage -type f -exec chmod 640 {} \;';
+        $exec = 'find ' . $user_public_html_folder . 'storage -type f -exec chmod 640 {} \;';
         exec($exec);
 
-        $exec = 'find '.$user_public_html_folder.'.env -type f -exec chmod 640 {} \;';
+        $exec = 'find ' . $user_public_html_folder . '.env -type f -exec chmod 640 {} \;';
         exec($exec);
 
 
-
-
-        $exec = 'find '.$user_public_html_folder.'config -type d -exec chmod 750 {} \;';
+        $exec = 'find ' . $user_public_html_folder . 'config -type d -exec chmod 750 {} \;';
         exec($exec);
 
-        $exec = 'find '.$user_public_html_folder.'config -type f -exec chmod 640 {} \;';
+        $exec = 'find ' . $user_public_html_folder . 'config -type f -exec chmod 640 {} \;';
         exec($exec);
-
 
 
     }

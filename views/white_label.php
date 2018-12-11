@@ -137,12 +137,13 @@ if (!isset($latest_plugin_version)) {
 
 
                     <div class="form-group">
-                        <label for="brand_name" class="control-label">WHMCS Intragration</label>
-                        <input type="text" name="whmcs_url" class="form-control" id="whmcs_url"   placeholder="Enter the URL of your WHMCS" value="<?= isset($branding['whmcs_url']) ? $branding['whmcs_url'] : ''; ?>">
-<br>
-                        <small>You must install the  Microweber WHMCS addon from <a href="https://github.com/microweber-dev/whmcs-plugin" target="_blank">this link</a> and then Enter the url of WHMCS for example: https://members.microweber.com/ </small>
-
+                        <label for="whmcs_url" class="control-label">WHMCS Intregration</label>
+                        <input type="text" name="whmcs_url" class="form-control" id="whmcs_url"   placeholder="Enter the URL of your WHMCS for example: https://members.example.com/" value="<?= isset($branding['whmcs_url']) ? $branding['whmcs_url'] : ''; ?>">
+                        <br>
+                        <small>You must install the Microweber WHMCS addon from <a href="https://github.com/microweber-dev/whmcs-plugin" target="_blank">this link</a> and then enter the url of your WHMCS installation for example: https://members.example.com/ </small>
                     </div>
+
+
 
 
 
