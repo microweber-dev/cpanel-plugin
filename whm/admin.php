@@ -6,13 +6,41 @@ require_once(__DIR__ . '/../lib/MicroweberVersionsManager.php');
 require_once(__DIR__ . '/../lib/MicroweberAdminController.php');
 require_once(__DIR__ . '/../lib/MicroweberInstallCommand.php');
 
-
 $controller = new MicroweberAdminController();
 $versions = new MicroweberVersionsManager();
 $install_command = new MicroweberInstallCommand();
 $storage = new MicroweberStorage();
 $keyData = array();
 $settings = $storage->read();
+
+
+
+if (isset($_GET['ajax_view'])) {
+
+    $ajax_view = $_GET['ajax_view'];
+
+
+    switch ($ajax_view) {
+        case 'domains':
+            $domains = $controller->get_installations_across_server();
+
+            $view = new MicroweberView(__DIR__ . '/../views/domains.php');
+            $view->assign('domains', $domains);
+            $view->assign('admin_view', true);
+            $view->display();
+
+            break;
+    }
+
+
+    return;
+}
+
+
+
+
+
+
 
 // Check white label key
 
@@ -78,12 +106,12 @@ $current_plugin_version = $versions->getCurrentPluginVersion();
 $latest_dl_date = $versions->getCurrentVersionLastDownloadDateTime();
 
 
+
+
+
 //$autoInstall = isset($storedData->auto_install) && $storedData->auto_install == '1';
 //$install_type = isset($storedData->install_type) && $storedData->install_type == 'symlinked';
 //$user_key = isset($storedData->key) ? $storedData->key : '';
-
-
-$domains = $controller->get_installations_across_server();
 
 
 WHM::header('Microweber Settings', 1, 1);
@@ -96,105 +124,125 @@ $view->display();
 
 ?>
 
-<div class="alert alert-info js-cms-plugin" style="display: none;">
-    <div class="content">
-        <form method="POST">
-            <div class="row">
-                <div class="col-md-6">
-                    Your Microweber CMS version is out of date. Update it!
+    <div class="alert alert-info js-cms-plugin" style="display: none;">
+        <div class="content">
+            <form method="POST">
+                <div class="row">
+                    <div class="col-md-6">
+                        Your Microweber CMS version is out of date. Update it!
+                    </div>
+                    <div class="col-md-6" style="text-align: right;">
+                        <button name="download_cms" value="download_cms" class="btn btn-primary btn-xs">UPDATE
+                            MICROWEBER
+                        </button>
+                    </div>
                 </div>
-                <div class="col-md-6" style="text-align: right;">
-                    <button name="download_cms" value="download_cms" class="btn btn-primary btn-xs">UPDATE MICROWEBER</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="alert alert-info js-update-plugin" style="display: none;">
+        <div class="content">
+            <form method="POST">
+                <div class="row">
+                    <div class="col-md-6">
+                        Your cPanel Microweber Plugin is out of date. Update it!
+                    </div>
+                    <div class="col-md-6" style="text-align: right;">
+                        <button name="update_plugin" value="update_plugin" class="btn btn-primary btn-xs">UPDATE
+                            PLUGIN
+                        </button>
+                    </div>
                 </div>
+            </form>
+        </div>
+    </div>
+
+    <hr>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Version</h2>
+        </div>
+        <div class="panel-body">
+            <?php
+            $view = new MicroweberView(__DIR__ . '/../views/download.php');
+            $view->assign('key', $user_key);
+            $view->assign('key_data', $keyData);
+            $view->assign('current_version', $current_version);
+            $view->assign('latest_version', $latest_version);
+            $view->assign('last_download_date', $latest_dl_date);
+            $view->assign('latest_plugin_version', $latest_plugin_version);
+            $view->assign('current_plugin_version', $current_plugin_version);
+            $view->display();
+            ?>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Settings</h2>
+        </div>
+        <div class="panel-body">
+            <?php
+            $view = new MicroweberView(__DIR__ . '/../views/settings.php');
+            $view->assign('settings', $settings);
+            $view->display();
+            ?>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">White label</h2>
+        </div>
+        <div class="panel-body">
+            <?php
+            $view = new MicroweberView(__DIR__ . '/../views/white_label.php');
+            $view->assign('key', $user_key);
+            $view->assign('key_data', $keyData);
+            $view->assign('current_version', $current_version);
+            $view->assign('latest_version', $latest_version);
+            $view->assign('last_download_date', $latest_dl_date);
+            $view->assign('latest_plugin_version', $latest_plugin_version);
+            $view->assign('current_plugin_version', $current_plugin_version);
+            $view->assign('settings', $settings);
+            $view->assign('branding', $branding);
+            $view->display();
+            ?>
+        </div>
+    </div>
+
+
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Installations</h2>
+        </div>
+        <div class="panel-body">
+            <script>
+
+                $(document).ready(function () {
+                    $("#domains-ajax-result").load("?ajax_view=domains", function () {
+                        //alert("Load was performed.");
+                    });
+                });
+
+
+            </script>
+            <div id="domains-ajax-result">
+                Loading...
             </div>
-        </form>
+            <?php
+            //        $view = new MicroweberView(__DIR__ . '/../views/domains.php');
+            //        $view->assign('domains', $domains);
+            //        $view->assign('admin_view', true);
+            //        $view->display();
+            ?>
+        </div>
     </div>
-</div>
-
-<div class="alert alert-info js-update-plugin" style="display: none;">
-    <div class="content">
-        <form method="POST">
-            <div class="row">
-                <div class="col-md-6">
-                    Your cPanel Microweber Plugin is out of date. Update it!
-                </div>
-                <div class="col-md-6" style="text-align: right;">
-                    <button name="update_plugin" value="update_plugin" class="btn btn-primary btn-xs">UPDATE PLUGIN</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-<hr>
-
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h2 class="panel-title">Version</h2>
-    </div>
-    <div class="panel-body">
-        <?php
-        $view = new MicroweberView(__DIR__ . '/../views/download.php');
-        $view->assign('key', $user_key);
-        $view->assign('key_data', $keyData);
-        $view->assign('current_version', $current_version);
-        $view->assign('latest_version', $latest_version);
-        $view->assign('last_download_date', $latest_dl_date);
-        $view->assign('latest_plugin_version', $latest_plugin_version);
-        $view->assign('current_plugin_version', $current_plugin_version);
-        $view->display();
-        ?>
-    </div>
-</div>
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h2 class="panel-title">Settings</h2>
-    </div>
-    <div class="panel-body">
-        <?php
-        $view = new MicroweberView(__DIR__ . '/../views/settings.php');
-        $view->assign('settings', $settings);
-        $view->display();
-        ?>
-    </div>
-</div>
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h2 class="panel-title">White label</h2>
-    </div>
-    <div class="panel-body">
-        <?php
-        $view = new MicroweberView(__DIR__ . '/../views/white_label.php');
-        $view->assign('key', $user_key);
-        $view->assign('key_data', $keyData);
-        $view->assign('current_version', $current_version);
-        $view->assign('latest_version', $latest_version);
-        $view->assign('last_download_date', $latest_dl_date);
-        $view->assign('latest_plugin_version', $latest_plugin_version);
-        $view->assign('current_plugin_version', $current_plugin_version);
-        $view->assign('settings', $settings);
-        $view->assign('branding', $branding);
-        $view->display();
-        ?>
-    </div>
-</div>
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h2 class="panel-title">Installations</h2>
-    </div>
-    <div class="panel-body">
-        <?php
-        $view = new MicroweberView(__DIR__ . '/../views/domains.php');
-        $view->assign('domains', $domains);
-        $view->assign('admin_view', true);
-        $view->display();
-        ?>
-    </div>
-</div>
 
 
 <?php

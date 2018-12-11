@@ -2,7 +2,8 @@
 <?php
 
 $input = get_passed_data();
- file_put_contents(__DIR__ . '/log_mw_hooks.txt', json_encode($input));
+
+
 
 
 include_once(__DIR__ . '/../lib/MicroweberHooks.php');

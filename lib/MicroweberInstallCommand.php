@@ -20,7 +20,7 @@ class MicroweberInstallCommand
         'userfiles/templates/*',
     );
     public $sync_paths_extras = array(
-        'userfiles/modules/whmcs_login/',
+        'userfiles/modules/whmcs_connector/',
     );
 
 
