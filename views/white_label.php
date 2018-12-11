@@ -111,7 +111,7 @@ if (!isset($latest_plugin_version)) {
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-8">
                     <div class="form-group">
                         <label for="logo_admin" class="control-label">Logo for Admin panel (size: 180x35 px)</label>
                         <input type="text" name="logo_admin" class="form-control" id="logo_admin" value="<?= isset($branding['logo_admin']) ? $branding['logo_admin'] : ''; ?>">
@@ -130,10 +130,27 @@ if (!isset($latest_plugin_version)) {
                     <div class="form-group">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="disable_marketplace" value="1" <?= (isset($branding['disable_marketplace']) AND $branding['disable_marketplace'] == 1) ? 'checked' : ''; ?>> Microweber Marketplace
+                                <input type="checkbox" name="disable_marketplace" value="1" <?= (isset($branding['disable_marketplace']) AND $branding['disable_marketplace'] == 1) ? 'checked' : ''; ?>> Disable Microweber Marketplace
                             </label>
                         </div>
                     </div>
+
+
+                    <div class="form-group">
+                        <label for="brand_name" class="control-label">WHMCS Intragration</label>
+                        <input type="text" name="whmcs_url" class="form-control" id="whmcs_url"   placeholder="Enter the URL of your WHMCS" value="<?= isset($branding['whmcs_url']) ? $branding['whmcs_url'] : ''; ?>">
+<br>
+                        <small>You must install the  Microweber WHMCS addon from <a href="https://github.com/microweber-dev/whmcs-plugin" target="_blank">this link</a> and then Enter the url of WHMCS for example: https://members.microweber.com/ </small>
+
+                    </div>
+
+
+
+
+
+
+
+
                     <div class="">
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>
