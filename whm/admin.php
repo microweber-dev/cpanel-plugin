@@ -113,6 +113,7 @@ $current_version = $versions->getCurrentVersion();
 $latest_version = $versions->getLatestVersion();
 $latest_plugin_version = $versions->getLatestPluginVersion();
 $current_plugin_version = $versions->getCurrentPluginVersion();
+$current_templates = $versions->templatesList();
 
 $latest_dl_date = $versions->getCurrentVersionLastDownloadDateTime();
 
@@ -183,6 +184,7 @@ $view->display();
             $view->assign('last_download_date', $latest_dl_date);
             $view->assign('latest_plugin_version', $latest_plugin_version);
             $view->assign('current_plugin_version', $current_plugin_version);
+            $view->assign('current_templates', $current_templates);
             $view->display();
             ?>
         </div>

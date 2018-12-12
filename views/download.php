@@ -45,6 +45,7 @@ if (!isset($latest_plugin_version)) {
 
 
 
+
                     <?php if (version_compare($latest_version, $current_version, '>')): ?>
                         <button name="download_cms" value="download_cms" class="btn btn-primary btn-xs">UPDATE</button>
 
@@ -57,6 +58,11 @@ if (!isset($latest_plugin_version)) {
 
                     <?php if ($last_download_date): ?>
                         <h5>Last download date: <?php print  $last_download_date ?></h5>
+                    <?php endif; ?>
+
+
+                    <?php if (isset($current_templates) and $current_templates and is_array($current_templates)): ?>
+                        <h5>Templates <em>(<?php print count($current_templates); ?>)</em>: <?php print implode(', ',$current_templates); ?></h5>
                     <?php endif; ?>
                 </div>
 

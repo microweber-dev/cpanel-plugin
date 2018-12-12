@@ -163,7 +163,6 @@ class MicroweberVersionsManager
         $latest = $this->getLatestVersionData();
 
 
-
         if (!isset($latest['url'])) {
             return;
         }
@@ -233,9 +232,32 @@ class MicroweberVersionsManager
             if (is_file($this->tempZipFilePlugin)) {
                 $update = 'rpm -Uvh --force ' . $this->tempZipFilePlugin;
                 exec($update);
-             }
+            }
 
         }
 
+    }
+
+
+    public function templatesList($sharedDir = false)
+    {
+
+        if (!$sharedDir) {
+            $sharedDir = $this->sharedDir;
+        }
+        if (is_dir($sharedDir) and file_exists("{$sharedDir}/version.txt")) {
+            if (is_dir("{$sharedDir}/userfiles/templates")) {
+                $dirs = glob("{$sharedDir}/userfiles/templates/*", GLOB_ONLYDIR);
+                if ($dirs) {
+                    $return = array();
+                    foreach ($dirs as $index=>$dir){
+                        $return[] = basename($dir);
+                    }
+
+                    return $return;
+                }
+            }
+        }
+        return;
     }
 }
