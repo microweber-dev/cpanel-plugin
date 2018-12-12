@@ -6,6 +6,23 @@ class MicroweberInstallCommand
 
     public $logger = null;
     public $shared_dir = '/usr/share/microweber/latest/'; //add slash
+    public $extras_dir = '/usr/local/cpanel/microweber/extras/'; //add slash
+
+    /**
+     * @return string
+     */
+    public function getExtrasDir()
+    {
+        return $this->extras_dir;
+    }
+
+    /**
+     * @param string $extras_dir
+     */
+    public function setExtrasDir($extras_dir)
+    {
+        $this->extras_dir = $extras_dir;
+    }
 
 
     public $sync_paths = array(
@@ -20,7 +37,7 @@ class MicroweberInstallCommand
         'userfiles/templates/*',
     );
     public $sync_paths_extras = array(
-        'userfiles/modules/whmcs_connector/',
+        'userfiles/modules/*',
     );
 
 
@@ -230,15 +247,12 @@ class MicroweberInstallCommand
 
             $link_paths_extras = $this->sync_paths_extras;
             if (isset($link_paths_extras) and is_array($link_paths_extras) and !empty($link_paths_extras)) {
+                $this->log('Linking extra paths');
+
                 foreach ($link_paths_extras as $link) {
-                    $link_src = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'extras' . $link;
+                    $link_src = $this->extras_dir .  $link;
                     $link_dest = $user_public_html_folder . $link;
-                    if (!is_link($link_dest)) {
-                        $link_src = escapeshellarg($link_src);
-                        $link_dest = escapeshellarg($link_dest);
-                        $exec = " ln -s  $link_src $link_dest";
-                        exec($exec);
-                    }
+                    $this->symlink_recursive($link_src, $link_dest);
                 }
             }
 
@@ -410,15 +424,12 @@ class MicroweberInstallCommand
 
             $link_paths_extras = $this->sync_paths_extras;
             if (isset($link_paths_extras) and is_array($link_paths_extras) and !empty($link_paths_extras)) {
+                $this->log('Linking extra paths');
+
                 foreach ($link_paths_extras as $link) {
-                    $link_src = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'extras' . $link;
+                    $link_src = $this->extras_dir .  $link;
                     $link_dest = $user_public_html_folder . $link;
-                    if (!is_link($link_dest)) {
-                        $link_src = escapeshellarg($link_src);
-                        $link_dest = escapeshellarg($link_dest);
-                        $exec = " ln -s  $link_src $link_dest";
-                        exec($exec);
-                    }
+                    $this->symlink_recursive($link_src, $link_dest);
                 }
             }
 

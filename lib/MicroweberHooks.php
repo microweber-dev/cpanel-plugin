@@ -5,18 +5,29 @@ include_once(__DIR__ . '/MicroweberVersionsManager.php');
 include_once(__DIR__ . '/MicroweberInstallCommand.php');
 include_once(__DIR__ . '/MicroweberCpanelApi.php');
 include_once(__DIR__ . '/MicroweberLogger.php');
+include_once(__DIR__ . '/MicroweberWhmcsConnector.php');
 
 class MicroweberHooks
 {
     private $input;
     private $storage;
     public $logger;
+    public $installer;
+    public $whmcs_connector;
 
     public function __construct($input = false)
     {
         $this->input = $input;
         $this->storage = new MicroweberStorage();
         $this->logger = new MicroweberLogger();
+
+        $this->installer = new MicroweberInstallCommand();
+        $this->installer->logger = $this->logger;
+
+
+        $this->whmcs_connector = new MicroweberWhmcsConnector($this->installer);
+
+
     }
 
     // Embed hook attribute information.
@@ -64,7 +75,7 @@ class MicroweberHooks
         $adminUsername = $input['data']['user'];
         $adminPassword = $input['data']['pass'];
 
-        if($adminPassword == 'HIDDEN'){
+        if ($adminPassword == 'HIDDEN') {
             //do nothing, maybe CPMOVE is in progress or backup is restored
             return;
         }
@@ -99,13 +110,31 @@ class MicroweberHooks
         $config = $this->storage->read();
 
 
-        $this->install($domain, $source_path, $installPath, $adminEmail, $adminUsername, $adminPassword, $dbHost, $dbDriver, $is_symlink = $isSym, $config);
+        $prepare_only = true;
+        $template = 'dream';
+
+
+        $domain_config = $this->whmcs_connector->getDomainConfig($domain);
+
+
+
+        if($domain_config and isset($domain_config['template'])){
+            $template =$domain_config['template'];
+            $prepare_only = false;
+
+        }
+
+
+
+
+
+        $this->install($domain, $source_path, $installPath, $adminEmail, $adminUsername, $adminPassword, $dbHost, $dbDriver, $isSym, $config, $prepare_only, $template);
     }
 
 
     // ----------------------
 
-    public function install($domain, $source_path, $installPath, $adminEmail, $adminUsername, $adminPassword, $dbHost = 'localhost', $dbDriver = 'mysql', $is_symlink = false, $extra_config = false)
+    public function install($domain, $source_path, $installPath, $adminEmail, $adminUsername, $adminPassword, $dbHost = 'localhost', $dbDriver = 'mysql', $is_symlink = false, $extra_config = false, $prepare_only = true, $template = false)
     {
         $cpapi = new MicroweberCpanelApi();
 
@@ -134,7 +163,7 @@ class MicroweberHooks
         if ($dbDriver == 'sqlite') {
             $this->log('Using sqlite for ' . $dbUsername);
             $dbHost = 'localhost';
-            $dbName = 'storage/database_'. str_replace('.', '_', $domain).'_'.uniqid().'.sqlite';
+            $dbName = 'storage/database_' . str_replace('.', '_', $domain) . '_' . uniqid() . '.sqlite';
 
         } else {
 
@@ -167,9 +196,18 @@ class MicroweberHooks
         $opts['public_html_folder'] = $installPath;
         $opts['extra_config'] = $extra_config;
 
-        $opts['config_only'] = true;
+        if ($prepare_only) {
+            $opts['config_only'] = true;
+        } else {
+            $opts['config_only'] = false;
 
+        }
         $opts['default_template'] = 'dream'; //@todo get from settings
+
+        if ($template) {
+            $opts['default_template'] = $template;
+        }
+
         $opts['is_symliked'] = $is_symlink;
 
         //      $opts['debug_email'] = 'admin@microweber.com'; //@todo get from settings
@@ -180,11 +218,10 @@ class MicroweberHooks
 
         $this->log('Running install command');
 
-        $do_install = new MicroweberInstallCommand();
-        $do_install->logger = $this->logger;
+//        $do_install = new MicroweberInstallCommand();
+//        $do_install->logger = $this->logger;
 
-        $do_install = $do_install->install($opts);
-
+        $do_install = $this->installer->install($opts);
 
 
         $result = 1;

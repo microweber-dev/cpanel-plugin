@@ -5,14 +5,20 @@ require_once(__DIR__ . '/../lib/MicroweberView.php');
 require_once(__DIR__ . '/../lib/MicroweberVersionsManager.php');
 require_once(__DIR__ . '/../lib/MicroweberAdminController.php');
 require_once(__DIR__ . '/../lib/MicroweberInstallCommand.php');
+require_once(__DIR__ . '/../lib/MicroweberWhmcsConnector.php');
 
 $controller = new MicroweberAdminController();
 $versions = new MicroweberVersionsManager();
 $install_command = new MicroweberInstallCommand();
+
+
+$whmcs_connector = new MicroweberWhmcsConnector($install_command);
+
+$extras_folder = $install_command->getExtrasDir();
+
 $storage = new MicroweberStorage();
 $keyData = array();
 $settings = $storage->read();
-
 
 
 if (isset($_GET['ajax_view'])) {
@@ -37,9 +43,7 @@ if (isset($_GET['ajax_view'])) {
 }
 
 
-
-
-
+$storage_whmcs_connector_settings = $whmcs_connector->getSettings();
 
 
 // Check white label key
@@ -91,6 +95,13 @@ if (isset($_POST["_action"])) {
         $settings['branding'] = $_POST;
         $storage->save($settings);
     }
+
+
+    if ($_action == "_save_whmcs_connector_settings") {
+        $whmcs_connector->saveSettings($_POST);
+        $storage_whmcs_connector_settings = $whmcs_connector->getSettings();
+
+    }
 }
 $branding = false;
 if (isset($settings['branding'])) {
@@ -104,9 +115,6 @@ $latest_plugin_version = $versions->getLatestPluginVersion();
 $current_plugin_version = $versions->getCurrentPluginVersion();
 
 $latest_dl_date = $versions->getCurrentVersionLastDownloadDateTime();
-
-
-
 
 
 //$autoInstall = isset($storedData->auto_install) && $storedData->auto_install == '1';
@@ -215,6 +223,18 @@ $view->display();
     </div>
 
 
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">WHMCS Connection</h2>
+        </div>
+        <div class="panel-body">
+            <?php
+            $view = new MicroweberView(__DIR__ . '/../views/whmcs_connector.php');
+            $view->assign('whmcs_connector_settings', $storage_whmcs_connector_settings);
+            $view->display();
+            ?>
+        </div>
+    </div>
 
 
     <div class="panel panel-default">

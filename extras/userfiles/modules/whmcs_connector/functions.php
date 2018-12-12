@@ -1,5 +1,11 @@
 <?php
-$dbg = 0;
+
+
+if (!defined('MW_WHMCS_CONNECTOR_SETTINGS_FILE')) {
+    define('MW_WHMCS_CONNECTOR_SETTINGS_FILE', __DIR__ . DIRECTORY_SEPARATOR . 'settings.json');
+    define('MW_WHMCS_CONNECTOR_SETTINGS_FILE_LOCAL', storage_path() . DIRECTORY_SEPARATOR . 'whmcs_connector.json');
+}
+
 
 event_bind('mw.admin.dashboard.main', function ($params = false) {
 
@@ -10,8 +16,6 @@ event_bind('mw.admin.dashboard.main', function ($params = false) {
     }
 
 });
-
-
 
 
 event_bind('on_load', function ($params = false) {
