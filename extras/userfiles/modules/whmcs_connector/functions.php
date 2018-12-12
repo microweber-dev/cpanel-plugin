@@ -29,7 +29,13 @@ event_bind('mw.user.before_login', function ($params = false) {
 
 event_bind('mw.ui.admin.login.form.after', function ($params = false) {
 
-    $btn_url = 'https://members.microweber.com/go_to_product.php?domain=' . site_url();
+    //$btn_url = 'https://members.microweber.com/go_to_product.php?domain=' . site_url();
+
+    $btn_url = mw_whmcs_remote_get_connector_url().'index.php?m=microweber_addon&function=go_to_product&domain='. site_url();
+
+
+
+
 
     $username_path = explode('public_html', mw_root_path());
     if (isset($username_path[0])) {
@@ -39,7 +45,7 @@ event_bind('mw.ui.admin.login.form.after', function ($params = false) {
             if ($username_path) {
                 $username_path = array_pop($username_path);
                 if ($username_path) {
-                    $btn_url = 'https://members.microweber.com/go_to_product.php?username2=' . $username_path . '&return_domain=' . site_url();
+                    $btn_url = mw_whmcs_remote_get_connector_url().   'index.php?m=microweber_addon&function=go_to_product&username2=' . $username_path . '&return_domain=' . site_url();
                 }
             }
         }
@@ -51,12 +57,37 @@ event_bind('mw.ui.admin.login.form.after', function ($params = false) {
     print "<h4>Use Microweber.com Account</h4>";
     print "<br>";
 
-    print '<a class="mw-ui-btn  mw-ui-btn-info mw-ui-btn-big" href="' . $btn_url . '"><span class="mw-icon-mw"></span>Login with your account</a>';
+    print '<a class="mw-ui-btn  mw-ui-btn-info mw-ui-btn-big" href="' . $btn_url . '"><span class="mw-icon-login"></span>Login with your account</a>';
     print "</center>";
 
 
     return;
 });
+
+
+function mw_whmcs_remote_get_connector_url()
+{
+    $file = false;
+    if (is_file(MW_WHMCS_CONNECTOR_SETTINGS_FILE_LOCAL)) {
+        $file = MW_WHMCS_CONNECTOR_SETTINGS_FILE_LOCAL;
+    } elseif (is_file(MW_WHMCS_CONNECTOR_SETTINGS_FILE)) {
+        $file = MW_WHMCS_CONNECTOR_SETTINGS_FILE;
+    }
+
+    if (is_file($file)) {
+        $settings = json_decode(file_get_contents($file), true);
+        if ($settings and isset($settings['whmcs_url'])) {
+            return $settings['whmcs_url'];
+        }
+
+        if ($settings and isset($settings['url'])) {
+            return $settings['url'];
+        }
+    }
+
+}
+
+
 function mw_whmcs_remote_user_login($params = false)
 {
 
@@ -160,7 +191,11 @@ function mw_whmcs_remote_user_login_exec($params)
         $cache_time = intval($params['cache']);
     }
 
-    $url = 'https://members.microweber.com/login_to_my_website.php';
+    $url = mw_whmcs_remote_get_connector_url().'index.php?m=microweber_addon&function=login_to_my_website';
+
+
+
+
 
 
     $postfields = $params;
