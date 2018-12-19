@@ -11,21 +11,23 @@ $cpapi = new MicroweberCpanelApi();
 $cpanel = new CPANEL();
 
 
+
 $controller = new MicroweberPluginController($cpanel);
 $username = $controller->getUsername();
 echo $cpanel->header();
 
 if ($_POST) {
+
     $action = $_POST['_action'];
     if (isset($_POST["domain"])) {
         $domainData = htmlspecialchars_decode($_POST["domain"]);
         $domainData = @json_decode($domainData, true);
     }
-
     switch ($action) {
         case 'install':
 
-            //var_dump($_POST);
+
+
             $admin = $controller->install();
 
             if (isset($domainData['domain'])) {

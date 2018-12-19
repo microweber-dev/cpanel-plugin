@@ -21,10 +21,11 @@ class MicroweberPluginController
     public function install()
     {
 
+        $cpapi = new MicroweberCpanelApi();
+
 
         $settings_from_admin = new MicroweberStorage();
         $settings_from_admin = $settings_from_admin->read();
-
 
         $is_symlinked = false;
         if (isset($settings_from_admin['install_type']) and $settings_from_admin['install_type'] == 'symlinked') {
@@ -49,8 +50,8 @@ class MicroweberPluginController
         // $domainData = json_decode($_POST['domain']);
         $installPath = $domainData->documentroot;
         // $domainData = json_decode($_POST['domain']);
-
-
+  
+  
         $user = $this->getUsername();
         $dbPrefix = $this->makeDBPrefix();
 
@@ -89,15 +90,14 @@ class MicroweberPluginController
         }
 
 
-        $cpapi = new MicroweberCpanelApi();
         // $dbPassword = $dbPass = $cpapi->randomPassword(12);
 
 
         if ($dbDriver == 'sqlite') {
             $this->log('Using sqlite for ' . $dbUsername);
             $dbHost = 'localhost';
-          //  $dbName = 'storage/database.sqlite';
-            $dbName = 'storage/database_'. str_replace('.', '_', $domain).'_'.uniqid().'.sqlite';
+            //  $dbName = 'storage/database.sqlite';
+            $dbName = 'storage/database_' . str_replace('.', '_', $domain) . '_' . uniqid() . '.sqlite';
 
         } else {
 
@@ -194,9 +194,8 @@ class MicroweberPluginController
 
     public function makeDBPrefix()
     {
-        return $this->cpanel->makeDbPrefixFromUsername(false);
-
-        //return substr($this->getUsername(), 0, 8) . '_';
+        $cpapi = new MicroweberCpanelApi();
+        return $cpapi->makeDbPrefixFromUsername(false);
     }
 
 
