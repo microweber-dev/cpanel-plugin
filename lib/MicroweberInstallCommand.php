@@ -96,7 +96,7 @@ class MicroweberInstallCommand
             $copy_files[] = 'favicon.ico';
             $copy_files[] = 'composer.json';
             $copy_files[] = 'artisan';
-            // $copy_files[] = 'config';
+            $copy_files[] = 'config';
             $copy_files[] = 'bootstrap/app.php';
             $copy_files[] = 'bootstrap/autoload.php';
             //$copy_files[] = 'storage/database.sqlite';
