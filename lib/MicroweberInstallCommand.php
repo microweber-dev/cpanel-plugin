@@ -96,10 +96,34 @@ class MicroweberInstallCommand
             $copy_files[] = 'favicon.ico';
             $copy_files[] = 'composer.json';
             $copy_files[] = 'artisan';
-            $copy_files[] = 'config';
+            // $copy_files[] = 'config';
             $copy_files[] = 'bootstrap/app.php';
             $copy_files[] = 'bootstrap/autoload.php';
             //$copy_files[] = 'storage/database.sqlite';
+
+
+            $copy_files = array();
+            $copy_files[] = 'index.php';
+            $copy_files[] = '.htaccess';
+            $copy_files[] = 'favicon.ico';
+            $copy_files[] = 'composer.json';
+            $copy_files[] = 'artisan';
+            // $copy_files[] = 'config';
+            $copy_files[] = 'bootstrap/app.php';
+            $copy_files[] = 'bootstrap/autoload.php';
+
+            $copy_files[] = 'config/.htaccess';
+            $copy_files[] = 'config/database.php';
+            $copy_files[] = 'config/app.php';
+            $copy_files[] = 'config/auth.php';
+            $copy_files[] = 'config/cache.php';
+            $copy_files[] = 'config/compile.php';
+            $copy_files[] = 'config/filesystems.php';
+            $copy_files[] = 'config/queue.php';
+            $copy_files[] = 'config/services.php';
+            $copy_files[] = 'config/view.php';
+            $copy_files[] = 'config/workbench.php';
+            $copy_files[] = 'config/hashing.php';
 
             if (isset($opts['source_folder'])) {
                 $mw_shared_dir = $opts['source_folder']; //add slash
@@ -493,6 +517,12 @@ class MicroweberInstallCommand
         $exec = "rsync -a {$mw_shared_dir}.htaccess {$user_public_html_folder}";
         $message = $message . "\n\n\n" . $exec;
         $output = exec($exec);
+
+        $exec = "rsync -a {$mw_shared_dir}config/ {$user_public_html_folder}config";
+        $message = $message . "\n\n\n" . $exec;
+        $output = exec($exec);
+
+
         $message = $message . "\n\n\n" . $output;
 //        if (isset($copy_files) and is_array($copy_files) and !empty($copy_files)) {
 //            foreach ($copy_files as $file) {

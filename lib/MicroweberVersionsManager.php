@@ -6,6 +6,7 @@ require_once(__DIR__ . '/MicroweberHelpers.php');
 class MicroweberVersionsManager
 {
     private $sharedDir = '/usr/share/microweber/latest';
+    private $sharedDir_default = '/usr/share/microweber/latest';
     private $pluginDir = '/usr/local/cpanel/microweber';
     private $tempZipFile = null;
     private $tempZipFilePlugin = null;
@@ -171,6 +172,10 @@ class MicroweberVersionsManager
         //$cmd = "wget -O $this->tempZipFile {$latest->url}";
         // exec($cmd);
         exec("unzip -o {$this->tempZipFile} -d {$this->sharedDir}");
+        if(is_dir($this->sharedDir_default)){
+            $exec = "chmod 755 -R {$this->sharedDir_default}";
+            $output = exec($exec);
+        }
         unlink($this->tempZipFile);
     }
 
