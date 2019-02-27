@@ -8,6 +8,12 @@ class MicroweberStorage
     public function __construct($file = '/usr/local/cpanel/microweber/storage/settings.json')
     {
         $this->file = $file;
+
+        if (!is_file($file)) {
+            touch($file);
+        }
+
+
     }
 
     public function read()

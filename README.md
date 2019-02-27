@@ -2,6 +2,7 @@
 
 ## Installation
 
+
 ### Using RPM
 
 Run the following commands in the Terminal:

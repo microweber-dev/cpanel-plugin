@@ -28,6 +28,12 @@ class MicroweberHelpers
 
     public static function download($url, $file)
     {
+
+        $dn = dirname($file);
+        if (!is_dir($dn)) {
+            MicroweberHelpers::mkdirRecursive($dn);
+        }
+
         set_time_limit(0);
         $fp = fopen($file, 'w+');
         $ch = curl_init(str_replace(" ", "%20", $url));

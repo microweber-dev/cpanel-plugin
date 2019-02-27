@@ -212,7 +212,10 @@ function mw_whmcs_remote_user_login_exec($params)
 
 
     curl_close($ch);
-
+//    print_r($url);
+//    print_r($postfields);
+//    print_r($data);
+//    exit;
     $data = @json_decode($data, true);
 
 

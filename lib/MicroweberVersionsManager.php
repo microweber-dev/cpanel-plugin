@@ -102,9 +102,10 @@ class MicroweberVersionsManager
             if (is_file($cache_file) and !is_writable($cache_file)) {
                 $update_cache = false;
             } else {
-
-                $data = file_get_contents($cache_file);
-
+                $data = false;
+                if ($cache_file) {
+                    $data = file_get_contents($cache_file);
+                }
                 if (!$data) {
                     $update_cache = true;
                 }
@@ -133,6 +134,13 @@ class MicroweberVersionsManager
             $data = json_encode($data);
 
             if ($cache_file and $data) {
+                $dn = dirname($cache_file);
+                if(!is_dir($dn)){
+                    MicroweberHelpers::mkdirRecursive($dn);
+                    touch($cache_file);
+                }
+
+
                 $fp = fopen($cache_file, 'w+');
                 fwrite($fp, $data);
                 fclose($fp);
@@ -172,7 +180,7 @@ class MicroweberVersionsManager
         //$cmd = "wget -O $this->tempZipFile {$latest->url}";
         // exec($cmd);
         exec("unzip -o {$this->tempZipFile} -d {$this->sharedDir}");
-        if(is_dir($this->sharedDir_default)){
+        if (is_dir($this->sharedDir_default)) {
             $exec = "chmod 755 -R {$this->sharedDir_default}";
             $output = exec($exec);
         }
@@ -196,6 +204,8 @@ class MicroweberVersionsManager
         if ($data) {
             $data = @json_decode($data, true);
             if (isset($data['url'])) {
+
+                //  var_dump($data['url']);
 
                 MicroweberHelpers::download($data['url'], $this->tempZipFileExtra);
                 exec("unzip -o {$this->tempZipFileExtra} -d {$this->sharedDir}");
@@ -255,7 +265,7 @@ class MicroweberVersionsManager
                 $dirs = glob("{$sharedDir}/userfiles/templates/*", GLOB_ONLYDIR);
                 if ($dirs) {
                     $return = array();
-                    foreach ($dirs as $index=>$dir){
+                    foreach ($dirs as $index => $dir) {
                         $return[] = basename($dir);
                     }
 
