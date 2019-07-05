@@ -34,10 +34,14 @@ class MicroweberHelpers
             MicroweberHelpers::mkdirRecursive($dn);
         }
 
+        if(is_file($file)){
+            @unlink($file);
+        }
+
         set_time_limit(0);
         $fp = fopen($file, 'w+');
         $ch = curl_init(str_replace(" ", "%20", $url));
-        curl_setopt($ch, CURLOPT_TIMEOUT, 300);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 3000);
         curl_setopt($ch, CURLOPT_FILE, $fp);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         curl_exec($ch);
