@@ -135,7 +135,7 @@ class MicroweberVersionsManager
 
             if ($cache_file and $data) {
                 $dn = dirname($cache_file);
-                if(!is_dir($dn)){
+                if (!is_dir($dn)) {
                     MicroweberHelpers::mkdirRecursive($dn);
                     touch($cache_file);
                 }
@@ -197,25 +197,25 @@ class MicroweberVersionsManager
         if (!$key) {
             return;
         }
+        $urls = array();
+      //  $urls[] = 'http://update.microweberapi.com/?api_function=get_download_link&get_extra_content=1&license_key=' . urlencode($key);
+        $urls[] = 'http://update.microweberapi.com/?api_function=get_download_link&get_extra_content=1&name=templates&license_key=' . urlencode($key);
+        $urls[] = 'http://update.microweberapi.com/?api_function=get_download_link&get_extra_content=1&name=template_paid&license_key=' . urlencode($key);
 
-        $url = 'http://update.microweberapi.com/?api_function=get_download_link&get_extra_content=1&license_key=' . urlencode($key);
 
-        $data = @file_get_contents($url);
-        if ($data) {
-            $data = @json_decode($data, true);
-            if (isset($data['url'])) {
-
-                //  var_dump($data['url']);
-
-                MicroweberHelpers::download($data['url'], $this->tempZipFileExtra);
-                exec("unzip -o {$this->tempZipFileExtra} -d {$this->sharedDir}");
-                unlink($this->tempZipFileExtra);
-
+        foreach ($urls as $url) {
+            $data = @file_get_contents($url);
+            if ($data) {
+                $data = @json_decode($data, true);
+                if (isset($data['url'])) {
+                    MicroweberHelpers::download($data['url'], $this->tempZipFileExtra);
+                    exec("unzip -o {$this->tempZipFileExtra} -d {$this->sharedDir}");
+                    unlink($this->tempZipFileExtra);
+                }
             }
         }
-
-
     }
+
 
     public function isSymlinked()
     {
