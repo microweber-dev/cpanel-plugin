@@ -200,7 +200,7 @@ class MicroweberVersionsManager
         $urls = array();
       //  $urls[] = 'http://update.microweberapi.com/?api_function=get_download_link&get_extra_content=1&license_key=' . urlencode($key);
         $urls[] = 'http://update.microweberapi.com/?api_function=get_download_link&get_extra_content=1&name=templates&license_key=' . urlencode($key);
-        $urls[] = 'http://update.microweberapi.com/?api_function=get_download_link&get_extra_content=1&name=template_paid&license_key=' . urlencode($key);
+        $urls[] = 'http://update.microweberapi.com/?api_function=get_download_link&get_extra_content=1&name=templates_paid&license_key=' . urlencode($key);
 
 
         foreach ($urls as $url) {
