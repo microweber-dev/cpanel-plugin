@@ -25,11 +25,20 @@ class MicroweberStorage
 
     public function save($data)
     {
+        $save_branding = false;
+        if(isset($data['branding'])){
+            $save_branding = $data['branding'];
+        }
+
         if ($this->storage and is_array($this->storage)) {
             $data = array_merge($this->storage, $data);
         }
         if (is_array($data) and !empty($data)) {
             $data = array_map("trim", $data);
+        }
+
+        if($save_branding){
+            $data['branding'] = $save_branding;
         }
 
         $data = json_encode($data);
