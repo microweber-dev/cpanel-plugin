@@ -114,10 +114,10 @@ function mw_whmcs_remote_user_login($params = false)
     $postfields["email"] = $params['username'];
     $postfields["password2"] = $params['password'];
     $postfields["domain"] = site_url();
-
+ //dd($postfields);
 
     $result = mw_whmcs_remote_user_login_exec($postfields);
-
+   // dd($result);
     if (isset($result['hosting_data'])) {
         mw()->user_manager->session_set('mw_hosting_data', $result['hosting_data']);
     }
@@ -158,16 +158,22 @@ function mw_whmcs_remote_user_login($params = false)
 
         $upd['oauth_uid'] = $result['userid'];
         $upd['oauth_provider'] = 'mw_login';
+        if (!defined('MW_FORCE_USER_SAVE')) {
+            define('MW_FORCE_USER_SAVE',1);
+        }
 
         $s = save_user($upd);
 
 
-        if (intval($s) > 0) {
-            $login = mw()->user_manager->make_logged($s);
+      //  dd($s);
 
+        if (intval($s) > 0) {
+
+
+            $login = mw()->user_manager->make_logged($s);
+        //    dd($login);
 
             if (isset($login['success']) or isset($login['error'])) {
-
                 return $login;
             }
         }
@@ -198,6 +204,7 @@ function mw_whmcs_remote_user_login_exec($params)
 
 
 
+
     $postfields = $params;
     $ch = curl_init();
 
@@ -212,12 +219,22 @@ function mw_whmcs_remote_user_login_exec($params)
 
 
     curl_close($ch);
+
+
+
+//    var_dump($data);
+//    exit;
+
 //    print_r($url);
-//    print_r($postfields);
+////    print_r($postfields);
 //    print_r($data);
 //    exit;
-    $data = @json_decode($data, true);
 
+    //var_dump($data);
+
+    $data = @json_decode($data, true);
+//    var_dump($data);
+//    exit;
 
     return $data;
 
