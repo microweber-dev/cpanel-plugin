@@ -8,7 +8,7 @@
 Run the following commands in the Terminal:
 
 ```
-wget http://download.microweberapi.com/cpanel/microweber-cpanel.rpm
+wget http://download.microweberapi.com/cpanel-plugin/microweber-cpanel.rpm
 yum install microweber-cpanel.rpm
 ```
  
