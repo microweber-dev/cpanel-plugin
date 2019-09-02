@@ -25,7 +25,7 @@ yum install microweber-cpanel.rpm
 ### Update 
 
 ```
-wget http://download.microweberapi.com/cpanel/microweber-cpanel.rpm
+wget http://download.microweberapi.com/cpanel-plugin/microweber-cpanel.rpm
 rpm -Uvh microweber-cpanel.rpm
 ```
 
