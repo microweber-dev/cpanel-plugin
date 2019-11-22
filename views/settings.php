@@ -85,6 +85,8 @@ $supported_langs = isset($supported_langs) ? $supported_langs : '';
                 <h2>Language</h2>
                 <label>
                     <select name="language" class="form-control">
+                        <option <?php if (!$language) {     print 'selected'; } ?> value="">Default</option>
+
                         <?php foreach($supported_langs as $supported_lang){ ?>
                         <option <?php if ($language == $supported_lang) {
                             print 'selected';
