@@ -8,6 +8,8 @@ $auto_install = isset($settings['auto_install']) ? $settings['auto_install'] : '
 //$install_type = isset($settings['install_type']) && $settings['install_type'] == 'symlinked';
 $install_type = isset($settings['install_type']) ? $settings['install_type'] : '';
 $db_driver = isset($settings['db_driver']) ? $settings['db_driver'] : '';
+$language = isset($settings['language']) ? $settings['language'] : 'en';
+$supported_langs = isset($supported_langs) ? $supported_langs : '';
 
 
 ?>
@@ -59,9 +61,12 @@ $db_driver = isset($settings['db_driver']) ? $settings['db_driver'] : '';
                 <br>
             </div>
 
-            <h2>Database Driver</h2>
+
 
             <div>
+
+
+                <h2>Database Driver</h2>
                 <label>
                     <select name="db_driver" class="form-control">
 
@@ -76,8 +81,35 @@ $db_driver = isset($settings['db_driver']) ? $settings['db_driver'] : '';
                     </select>
                 </label>
 
-                <button type="submit" class="btn btn-primary" style="margin-top: -5px; margin-left: 10px;">Save</button>
+                <?php if($supported_langs){ ?>
+                <h2>Language</h2>
+                <label>
+                    <select name="language" class="form-control">
+                        <?php foreach($supported_langs as $supported_lang){ ?>
+                        <option <?php if ($language == $supported_lang) {
+                            print 'selected';
+                        } ?> value="<?php print ($supported_lang) ?>"><?php print strtoupper($supported_lang) ?>
+                        </option>
+                        <?php  } ?>
+                    </select>
+                </label>
+
+                <?php  } ?>
+
+
+
+
             </div>
+
+
+
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+        </div> <div class="col-md-4">
+        <button type="submit" class="btn btn-primary" style="margin-top: -5px; margin-left: 10px;">Save</button>
         </div>
     </div>
 </form>

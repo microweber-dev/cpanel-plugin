@@ -39,11 +39,11 @@ class MicroweberWhmcsConnector
 
 
         if ($settings and isset($settings['whmcs_url'])) {
-            return $settings['whmcs_url'];
+            return rtrim($settings['whmcs_url'],"/").'/';
         }
 
         if ($settings and isset($settings['url'])) {
-            return $settings['url'];
+            return rtrim($settings['url'],"/").'/';
         }
     }
 
@@ -55,11 +55,6 @@ class MicroweberWhmcsConnector
         if ($url_base) {
             $url = $url_base . "index.php?m=microweber_addon&function=get_domain_template_config&domain=" . $domain;
             $config = $this->_exec_request($url);
-
-
-
-
-
             if ($config) {
                 return $config;
             }

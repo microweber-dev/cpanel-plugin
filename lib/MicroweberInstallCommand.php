@@ -274,7 +274,7 @@ class MicroweberInstallCommand
                 $this->log('Linking extra paths');
 
                 foreach ($link_paths_extras as $link) {
-                    $link_src = $this->extras_dir .  $link;
+                    $link_src = $this->extras_dir . $link;
                     $link_dest = $user_public_html_folder . $link;
                     $this->symlink_recursive($link_src, $link_dest);
                 }
@@ -310,6 +310,9 @@ class MicroweberInstallCommand
             $exec .= " -t " . $default_template . " -d 1";
             if (isset($opts['config_only']) and $opts['config_only']) {
                 $exec .= " -c 1";
+            }
+            if (isset($opts['language']) and $opts['language']) {
+                $exec .= " -l ". $opts['language'];
             }
 
 
@@ -445,13 +448,12 @@ class MicroweberInstallCommand
             }
 
 
-
             $link_paths_extras = $this->sync_paths_extras;
             if (isset($link_paths_extras) and is_array($link_paths_extras) and !empty($link_paths_extras)) {
                 $this->log('Linking extra paths');
 
                 foreach ($link_paths_extras as $link) {
-                    $link_src = $this->extras_dir .  $link;
+                    $link_src = $this->extras_dir . $link;
                     $link_dest = $user_public_html_folder . $link;
                     $this->symlink_recursive($link_src, $link_dest);
                 }

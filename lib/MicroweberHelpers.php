@@ -81,4 +81,11 @@ class MicroweberHelpers
 
     }
 
+    public static function getFileExtension($path)
+    {
+        $ext = pathinfo($path, PATHINFO_EXTENSION);
+
+        return $ext;
+    }
+
 }

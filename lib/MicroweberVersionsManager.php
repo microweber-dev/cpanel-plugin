@@ -253,6 +253,31 @@ class MicroweberVersionsManager
 
     }
 
+    public function getSupportedLanguages()
+    {
+
+        $sharedDir = $this->sharedDir;
+
+
+        $languages = array();
+
+        $listDir = scandir($sharedDir. '/userfiles/modules/microweber/language');
+
+        foreach ($listDir as $file) {
+            $ext = MicroweberHelpers::getFileExtension($file);
+            if ($ext == 'json') {
+
+                $upperText = $file;
+                $upperText = str_replace('.json', false, $file);
+           //     $upperText = strtoupper($upperText);
+
+                $languages[trim(strtolower($upperText))] = trim($upperText);
+            }
+        }
+
+        return $languages;
+
+    }
 
     public function templatesList($sharedDir = false)
     {

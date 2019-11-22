@@ -1,5 +1,8 @@
 <?php
+
+
 require_once('/usr/local/cpanel/php/WHM.php');
+
 require_once(__DIR__ . '/../lib/MicroweberStorage.php');
 require_once(__DIR__ . '/../lib/MicroweberView.php');
 require_once(__DIR__ . '/../lib/MicroweberVersionsManager.php');
@@ -10,7 +13,6 @@ require_once(__DIR__ . '/../lib/MicroweberWhmcsConnector.php');
 $controller = new MicroweberAdminController();
 $versions = new MicroweberVersionsManager();
 $install_command = new MicroweberInstallCommand();
-
 
 $whmcs_connector = new MicroweberWhmcsConnector($install_command);
 
@@ -114,6 +116,7 @@ $latest_version = $versions->getLatestVersion();
 $latest_plugin_version = $versions->getLatestPluginVersion();
 $current_plugin_version = $versions->getCurrentPluginVersion();
 $current_templates = $versions->templatesList();
+$supported_langs = $versions->getSupportedLanguages();
 
 $latest_dl_date = $versions->getCurrentVersionLastDownloadDateTime();
 
@@ -185,7 +188,7 @@ $view->display();
             $view->assign('latest_plugin_version', $latest_plugin_version);
             $view->assign('current_plugin_version', $current_plugin_version);
             $view->assign('current_templates', $current_templates);
-            $view->display();
+             $view->display();
             ?>
         </div>
     </div>
@@ -198,6 +201,7 @@ $view->display();
             <?php
             $view = new MicroweberView(__DIR__ . '/../views/settings.php');
             $view->assign('settings', $settings);
+            $view->assign('supported_langs', $supported_langs);
             $view->display();
             ?>
         </div>

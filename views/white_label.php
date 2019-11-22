@@ -135,12 +135,39 @@ if (!isset($latest_plugin_version)) {
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="show_ads_bar" value="1" <?= (isset($branding['show_ads_bar']) AND $branding['show_ads_bar'] == 1) ? 'checked' : ''; ?>> Show ads bar for free accounts
+                            </label>
+                        </div>
+                    </div>
 
 
+
+                    <div class="form-group">
+                        <label for="custom_support_url" class="control-label">Enable login with WHMCS account ?</label>
+                        <input type="text" name="external_login_server_button_text" class="form-control" placeholder="Login with your account" value="<?= isset($branding['external_login_server_button_text']) ? $branding['external_login_server_button_text'] : ''; ?>">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="external_login_server_enable" value="1" <?= (isset($branding['external_login_server_enable']) AND $branding['external_login_server_enable'] == 1) ? 'checked' : ''; ?>> Allow login with WHMCS account
+                            </label>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <div class="checkbox">
+
+                        </div>
+                    </div>
 
                     <div class="">
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>
+
+
                 </div>
             </div>
         </form>

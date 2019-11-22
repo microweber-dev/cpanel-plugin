@@ -98,6 +98,7 @@ class MicroweberHooks
 
 
         $dbDriver = $this->getDbTypeForInstall();
+        $lang = $this->getLangForInstall();
 
         $this->log('Adding website to account');
         $dbHost = 'localhost';
@@ -128,13 +129,13 @@ class MicroweberHooks
 
 
 
-        $this->install($domain, $source_path, $installPath, $adminEmail, $adminUsername, $adminPassword, $dbHost, $dbDriver, $isSym, $config, $prepare_only, $template);
+        $this->install($domain, $source_path, $installPath, $adminEmail, $adminUsername, $adminPassword, $dbHost, $dbDriver, $isSym, $config, $prepare_only, $template,$lang);
     }
 
 
     // ----------------------
 
-    public function install($domain, $source_path, $installPath, $adminEmail, $adminUsername, $adminPassword, $dbHost = 'localhost', $dbDriver = 'mysql', $is_symlink = false, $extra_config = false, $prepare_only = true, $template = false)
+    public function install($domain, $source_path, $installPath, $adminEmail, $adminUsername, $adminPassword, $dbHost = 'localhost', $dbDriver = 'mysql', $is_symlink = false, $extra_config = false, $prepare_only = true, $template = false,$lang = false)
     {
         $cpapi = new MicroweberCpanelApi();
 
@@ -202,6 +203,12 @@ class MicroweberHooks
             $opts['config_only'] = false;
 
         }
+
+        if($lang){
+            $opts['language'] = $lang;
+        }
+
+
         $opts['default_template'] = 'dream'; //@todo get from settings
 
         if ($template) {
@@ -247,7 +254,12 @@ class MicroweberHooks
         $db_driver = isset($config['db_driver']) ? $config['db_driver'] : 'mysql';
         return $db_driver;
     }
-
+    private function getLangForInstall()
+    {
+        $config = $this->storage->read();
+        $language = isset($config['language']) ? $config['language'] : '';
+        return $language;
+    }
     private function checkIfAutoInstall()
     {
         $config = $this->storage->read();
