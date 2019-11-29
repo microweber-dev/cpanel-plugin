@@ -20,10 +20,17 @@ class MicroweberMarketplaceConnector
 	public function set_whmcs_url($url) {
 	    if (!empty($url)) {
             $this->whmcs_url = $url;
+            $this->update_package_urls();
+        }
+    }
 
+    public function update_package_urls() {
 
-            var_dump($url);
-            die();
+	    $whmcsUrl = $this->whmcs_url . '/index.php?m=microweber_addon&function=get_package_manager_urls';
+	    $whmcsPackageUrls = $this->_get_content_from_url($whmcsUrl);
+        $whmcsPackageUrls = json_decode($whmcsPackageUrls, TRUE);
+        if (is_array($whmcsPackageUrls) && !empty($whmcsPackageUrls)) {
+            $this->set_package_urls($whmcsPackageUrls);
         }
     }
 
