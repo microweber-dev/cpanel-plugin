@@ -1,28 +1,38 @@
 <?php
 
 require_once(__DIR__ . '/MicroweberHelpers.php');
-
+require_once(__DIR__ . '/MicroweberMarketplaceConnector.php');
 
 class MicroweberVersionsManager
 {
+    private $marketPlaceConnector = null;
+    private $marketPlaceConnectorSettings = null;
+    private $whmcsConnector = null;
+
     private $sharedDir = '/usr/share/microweber/latest';
-    private $sharedDir_default = '/usr/share/microweber/latest';
-    private $pluginDir = '/usr/local/cpanel/microweber';
+    private $sharedDirTemplate = '/usr/share/microweber/latest/userfiles/templates/';
+
     private $tempZipFile = null;
     private $tempZipFilePlugin = null;
     private $tempZipFileExtra = null;
 
     public function __construct($sharedDir = null)
     {
+        $this->whmcsConnector = new MicroweberWhmcsConnector();
+        $this->whmcsConnectorSettings = $this->whmcsConnector->getSettings();
+        $this->marketPlaceConnector = new MicroweberMarketplaceConnector();
+
+        if (isset($this->whmcsConnectorSettings['whmcs_url'])) {
+            $this->marketPlaceConnector->set_whmcs_url($this->whmcsConnectorSettings['whmcs_url']);
+        }
+
         if ($sharedDir) {
             $this->sharedDir = $sharedDir;
         }
 
-
         $this->tempZipFile = $this->sharedDir . '/mw-download.zip';
         $this->tempZipFilePlugin = $this->sharedDir . '/mw-cpanel-plugin.rpm';
         $this->tempZipFileExtra = $this->sharedDir . '/mw-extra.zip';
-
     }
 
     public function getCurrentVersionLastDownloadDateTime()
@@ -39,27 +49,28 @@ class MicroweberVersionsManager
 
     public function getCurrentVersion()
     {
-
         $version_file = file_exists($this->sharedDir . "/version.txt");
         $version = 'unknown';
         if ($version_file) {
             $version = file_get_contents($this->sharedDir . "/version.txt");
             $version = strip_tags($version);
         }
+
         return $version;
     }
 
 
     public function getCurrentPluginVersion()
     {
-
         $f = __DIR__ . DIRECTORY_SEPARATOR . '../version.txt';
         $version_file = file_exists($f);
         $version = 'unknown';
+
         if ($version_file) {
             $version = file_get_contents($f);
             $version = strip_tags($version);
         }
+
         return $version;
     }
 
@@ -83,7 +94,6 @@ class MicroweberVersionsManager
     public function getLatestVersionData($force_check = false)
     {
         $cache_file = '/usr/share/microweber/version_check_cache.txt';
-
 
         $current_time = time();
 
@@ -140,7 +150,6 @@ class MicroweberVersionsManager
                     touch($cache_file);
                 }
 
-
                 $fp = fopen($cache_file, 'w+');
                 fwrite($fp, $data);
                 fclose($fp);
@@ -150,9 +159,7 @@ class MicroweberVersionsManager
 
         if (!$data) return false;
 
-
         $data = @json_decode($data, true);
-
 
         return $data;
     }
@@ -168,10 +175,7 @@ class MicroweberVersionsManager
             MicroweberHelpers::mkdirRecursive($this->sharedDir);
         }
 
-
         $latest = $this->getLatestVersionData();
-
-
         if (!isset($latest['url'])) {
             return;
         }
@@ -197,20 +201,21 @@ class MicroweberVersionsManager
         if (!$key) {
             return;
         }
-        $urls = array();
-      //  $urls[] = 'http://update.microweberapi.com/?api_function=get_download_link&get_extra_content=1&license_key=' . urlencode($key);
-        $urls[] = 'http://update.microweberapi.com/?api_function=get_download_link&get_extra_content=1&name=templates&license_key=' . urlencode($key);
-        $urls[] = 'http://update.microweberapi.com/?api_function=get_download_link&get_extra_content=1&name=templates_paid&license_key=' . urlencode($key);
 
+        $templates = $this->marketPlaceConnector->get_templates_download_urls();
 
-        foreach ($urls as $url) {
-            $data = @file_get_contents($url);
-            if ($data) {
-                $data = @json_decode($data, true);
-                if (isset($data['url'])) {
-                    MicroweberHelpers::download($data['url'], $this->tempZipFileExtra);
-                    exec("unzip -o {$this->tempZipFileExtra} -d {$this->sharedDir}");
-                    unlink($this->tempZipFileExtra);
+        if (!empty($templates)) {
+            foreach ($templates as $template) {
+                if (isset($template['download_url'])) {
+
+                    $tempalteZip = $template['target_dir'] .'-latest.zip';
+                    $templateDir = $this->sharedDirTemplate . $template['target_dir'] . '/';
+                    $templateZipFullpath = $templateDir . $tempalteZip;
+
+                    MicroweberHelpers::download($template['download_url'], $templateZipFullpath);
+
+                    exec("unzip -o {$templateZipFullpath} -d {$templateDir}");
+                    unlink($templateZipFullpath);
                 }
             }
         }
@@ -226,8 +231,6 @@ class MicroweberVersionsManager
 
     public function downloadPlugin()
     {
-
-
         $data = $this->getLatestVersionData();
 
         if (isset($data['plugin'])
@@ -281,10 +284,10 @@ class MicroweberVersionsManager
 
     public function templatesList($sharedDir = false)
     {
-
         if (!$sharedDir) {
             $sharedDir = $this->sharedDir;
         }
+
         if (is_dir($sharedDir) and file_exists("{$sharedDir}/version.txt")) {
             if (is_dir("{$sharedDir}/userfiles/templates")) {
                 $dirs = glob("{$sharedDir}/userfiles/templates/*", GLOB_ONLYDIR);

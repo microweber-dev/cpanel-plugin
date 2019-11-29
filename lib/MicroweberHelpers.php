@@ -28,7 +28,6 @@ class MicroweberHelpers
 
     public static function download($url, $file)
     {
-
         $dn = dirname($file);
         if (!is_dir($dn)) {
             MicroweberHelpers::mkdirRecursive($dn);

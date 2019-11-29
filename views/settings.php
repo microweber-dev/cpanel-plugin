@@ -68,7 +68,7 @@ $supported_langs = isset($supported_langs) ? $supported_langs : '';
 
                 <h2>Database Driver</h2>
                 <label>
-                    <select name="db_driver" class="form-control">
+                    <select name="db_driver" class="form-control" style="width:230px;">
 
                         <option <?php if ($db_driver == 'mysql') {
                             print 'selected';
@@ -84,7 +84,7 @@ $supported_langs = isset($supported_langs) ? $supported_langs : '';
                 <?php if($supported_langs){ ?>
                 <h2>Language</h2>
                 <label>
-                    <select name="language" class="form-control">
+                    <select name="language" class="form-control" style="width:230px;">
                         <option <?php if (!$language) {     print 'selected'; } ?> value="">Default</option>
 
                         <?php foreach($supported_langs as $supported_lang){ ?>
@@ -98,20 +98,15 @@ $supported_langs = isset($supported_langs) ? $supported_langs : '';
 
                 <?php  } ?>
 
-
-
-
             </div>
-
-
-
 
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-        </div> <div class="col-md-4">
-        <button type="submit" class="btn btn-primary" style="margin-top: -5px; margin-left: 10px;">Save</button>
+        </div>
+        <div class="col-md-4">
+        <button type="submit" class="btn btn-primary" style="margin-top: 15px; width:230px; margin-left: 2px;">Save</button>
         </div>
     </div>
 </form>

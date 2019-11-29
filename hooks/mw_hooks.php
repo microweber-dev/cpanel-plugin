@@ -1,10 +1,6 @@
 #!/usr/local/cpanel/3rdparty/bin/php -q
 <?php
-
 $input = get_passed_data();
-
-
-
 
 include_once(__DIR__ . '/../lib/MicroweberHooks.php');
 
