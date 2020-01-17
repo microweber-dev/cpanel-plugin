@@ -101,6 +101,12 @@ Make sure your check on  And set `Symlink Protection` to "Off" under "Apache Con
 ![setup_symlink2.png](assets/setup_symlink2.png "")
 
  
+### For WHMCS setup
+
+Setup your connection to the [WHMCS module](https://github.com/microweber-dev/whmcs_plugin "") 
+
+
+![setup_whmcs_integration.png](assets/setup_whmcs_integration.png "")
 
 
 ## You are ready. 
