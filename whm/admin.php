@@ -38,6 +38,25 @@ if (isset($_GET['ajax_view'])) {
             $view->display();
 
             break;
+
+
+        case 'update_installs_with_new_settings':
+            $domains = $controller->get_installations_across_server();
+            $i = 0;
+            if (isset($settings['branding']) and $settings['branding'] and !empty($settings['branding'])) {
+                if ($domains) {
+                    foreach ($domains as $domain) {
+                        if (isset($domain['documentroot']) and $domain['documentroot']) {
+                            if (is_dir($domain['documentroot'] . '/storage/')) {
+                                $install_command->update_branding_file($domain['documentroot'], $settings['branding']);
+                                $i++;
+                            }
+                        }
+                    }
+                }
+            }
+            print $i . ' domains are updated.';
+            break;
     }
 
 
@@ -188,7 +207,7 @@ $view->display();
             $view->assign('latest_plugin_version', $latest_plugin_version);
             $view->assign('current_plugin_version', $current_plugin_version);
             $view->assign('current_templates', $current_templates);
-             $view->display();
+            $view->display();
             ?>
         </div>
     </div>

@@ -312,7 +312,7 @@ class MicroweberInstallCommand
                 $exec .= " -c 1";
             }
             if (isset($opts['language']) and $opts['language']) {
-                $exec .= " -l ". $opts['language'];
+                $exec .= " -l " . $opts['language'];
             }
 
 
@@ -589,10 +589,22 @@ class MicroweberInstallCommand
 
     }
 
+
+    public function update_branding_file($user_public_html_folder, $opts_branding)
+    {
+
+        $branding_file = $user_public_html_folder . '/storage/branding.json';
+        //if (!is_file($branding_file)) {
+        file_put_contents($branding_file, @json_encode($opts_branding));
+        // }
+
+    }
+
     public function log($msg)
     {
         if (is_object($this->logger) and method_exists($this->logger, 'log')) {
             $this->logger->log($msg);
         }
     }
+
 }

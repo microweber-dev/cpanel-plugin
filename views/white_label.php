@@ -157,6 +157,8 @@ if (!isset($latest_plugin_version)) {
 
 
 
+
+
                     <div class="form-group">
                         <div class="checkbox">
 
@@ -165,7 +167,12 @@ if (!isset($latest_plugin_version)) {
 
                     <div class="">
                         <button type="submit" class="btn btn-primary">Save</button>
+
+                        <a href="javascript:;" class="btn btn-link js-action-update-installations pull-right" data-toggle="tooltip" title="" data-original-title="Click to update existing installations with your new white label settings">Update</a>
                     </div>
+
+
+
 
 
                 </div>
