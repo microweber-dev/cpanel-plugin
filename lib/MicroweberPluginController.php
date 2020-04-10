@@ -101,7 +101,6 @@ class MicroweberPluginController
 
         } else {
 
-
             $dbNameLength = 15;
             $dbPrefix = $cpapi->makeDbPrefixFromUsername(false);
 
@@ -131,9 +130,7 @@ class MicroweberPluginController
 
         }
 
-
         //php artisan microweber:install admin@site.com admin password storage/database1.sqlite microweber microweber nopass sqlite -p site_ -t liteness -d 1
-
 
         $opts = array();
         $opts['source_folder'] = $sourcepath;

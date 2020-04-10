@@ -41,6 +41,9 @@ if (isset($_GET['ajax_view'])) {
 
 
         case 'update_installs_with_new_settings':
+
+            $install_command->update_permissions();
+
             $domains = $controller->get_installations_across_server();
             $i = 0;
             if (isset($settings['branding']) and $settings['branding'] and !empty($settings['branding'])) {

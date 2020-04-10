@@ -203,6 +203,7 @@ class MicroweberInstallCommand
                     $file_dest = $file;
                     $file = $mw_shared_dir . $file;
                     $newfile = "{$user_public_html_folder}{$file_dest}";
+
                     if (is_file($file)) {
                         $exec = "cp -f $file $newfile";
                         $output = exec($exec);
@@ -213,6 +214,7 @@ class MicroweberInstallCommand
                     }
                 }
             }
+
             if (isset($copy_external) and is_array($copy_external) and !empty($copy_external)) {
                 foreach ($copy_external as $source => $dest) {
                     $file = $source;
@@ -388,6 +390,10 @@ class MicroweberInstallCommand
 
     }
 
+    public function update_permissions()
+    {
+        shell_exec('chmod 755 -R ' . $this->shared_dir); 
+    }
 
 //
 //
