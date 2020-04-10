@@ -112,14 +112,23 @@ class MicroweberPluginController
             $dbPassword = $dbPass = $cpapi->randomPassword(12);
 
             $this->log('Creating database user ' . $dbUsername);
-            $cpapi->execUapi(false, 'Mysql', 'create_user', array('name' => $dbUsername, 'password' => $dbPass));
-
+            $createUser = $cpapi->execUapi(false, 'Mysql', 'create_user', array('name' => $dbUsername, 'password' => $dbPass));
+            if (isset($createUser['result']['errors']) && !empty($createUser['result']['errors'])) {
+                return array('error'=>true, 'messages'=>$createUser['result']['errors']);
+            }
 
             $this->log('Creating database ' . $dbName);
-            $cpapi->execUapi(false, 'Mysql', 'create_database', array('name' => $dbName));
+            $createMysql = $cpapi->execUapi(false, 'Mysql', 'create_database', array('name' => $dbName));
+            if (isset($createMysql['result']['errors']) && !empty($createMysql['result']['errors'])) {
+                return array('error'=>true, 'messages'=>$createMysql['result']['errors']);
+            }
 
             $this->log('Setting privileges ' . $dbUsername);
-            $cpapi->execUapi(false, 'Mysql', 'set_privileges_on_database', array('user' => $dbUsername, 'database' => $dbName, 'privileges' => 'ALL PRIVILEGES'));
+            $createPrivileges = $cpapi->execUapi(false, 'Mysql', 'set_privileges_on_database', array('user' => $dbUsername, 'database' => $dbName, 'privileges' => 'ALL PRIVILEGES'));
+            if (isset($createPrivileges['result']['errors']) && !empty($createPrivileges['result']['errors'])) {
+                return array('error'=>true, 'messages'=>$createPrivileges['result']['errors']);
+            }
+
         }
 
 

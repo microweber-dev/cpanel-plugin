@@ -26,20 +26,33 @@ if ($_POST) {
     switch ($action) {
         case 'install':
 
-
-
             $admin = $controller->install();
 
-            if (isset($domainData['domain'])) {
+            if (isset($admin['error'])) {
 
-                $txt = "<p style=\"margin: 10px 0;\"><a target='_blank' href='http://" . $domainData['domain'] . "' style='font-size: 17px; text-decoration: none; font-weight: bold; color: #5d5d5d;'>Click here to setup your website: " . $domainData['domain'] . "</a></p>";
-                print '<div class="alert alert-success" style="margin-top:20px;">
+                $txt = '';
+                foreach ($admin['messages'] as $message) {
+                    $txt .= $message . '<br />';
+                }
+
+                print '<div class="alert alert-danger" style="margin-top:20px;">
+                          <div class="alert-message">
+                         ' . $txt . '
+                        </div>
+                 </div>';
+
+            } else {
+                if (isset($domainData['domain'])) {
+
+                    $txt = "<p style=\"margin: 10px 0;\"><a target='_blank' href='http://" . $domainData['domain'] . "' style='font-size: 17px; text-decoration: none; font-weight: bold; color: #5d5d5d;'>Click here to setup your website: " . $domainData['domain'] . "</a></p>";
+                    print '<div class="alert alert-success" style="margin-top:20px;">
                           <div class="alert-message">
                           
                          ' . $txt . '
                           
                         </div>
                  </div>';
+                }
             }
 
             break;

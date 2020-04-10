@@ -18,7 +18,6 @@ class MicroweberAdminController
     {
         $this->cpapi = new MicroweberCpanelApi();;
         $this->logger = new MicroweberLogger();
-
     }
 
     public function get_installations_across_server()
@@ -39,6 +38,5 @@ class MicroweberAdminController
         }
         return $return;
     }
-
 
 }
