@@ -69,6 +69,7 @@ class MicroweberInstallCommand
             $is_symliked = $opts['is_symliked'];
         }
 
+        ini_set('memory_limit', '4095M'); // 4 GBs minus 1 MB
 
         if (true) {
 
@@ -124,6 +125,9 @@ class MicroweberInstallCommand
             $copy_files[] = 'config/view.php';
             $copy_files[] = 'config/workbench.php';
             $copy_files[] = 'config/hashing.php';
+            $copy_files[] = 'config/cors.php';
+            $copy_files[] = 'config/debugbar.php';
+            $copy_files[] = 'config/l5-swagger.php';
 
             if (isset($opts['source_folder'])) {
                 $mw_shared_dir = $opts['source_folder']; //add slash
@@ -307,7 +311,7 @@ class MicroweberInstallCommand
             $this->log('Performing php artisan microweber:install');
 
             $exec = "cd {$user_public_html_folder} ;";
-            $exec .= "php artisan microweber:install ";
+            $exec .= "php -d memory_limit=4095M artisan microweber:install ";
             $exec .= $contact_email . " " . $auth_user . " " . escapeshellarg($auth_pass) . " " . $database_host . " " . $database_name . " " . $database_user . " " . escapeshellarg($database_password) . " " . $database_driver . " -p " . $database_prefix;
             $exec .= " -t " . $default_template . " -d 1";
             if (isset($opts['config_only']) and $opts['config_only']) {
@@ -319,7 +323,10 @@ class MicroweberInstallCommand
 
 
             $message = $message . "\n\n\n" . $exec;
-            shell_exec($exec);
+
+            $output = shell_exec($exec);
+            $message = $message . "\n\n\n" . $output;
+
             if (!isset($opts['options']) and isset($install_options) and is_array($install_options) and !empty($install_options)) {
                 $opts['options'] = $install_options;
             }
@@ -327,9 +334,9 @@ class MicroweberInstallCommand
                 foreach ($opts['options'] as $option) {
                     if (isset($option['option_key']) and isset($option['option_value']) and isset($option['option_group'])) {
                         $exec = "cd {$user_public_html_folder} ; ";
-                        $exec .= " php artisan microweber:option \"{$option['option_key']}\" \"{$option['option_value']}\" \"{$option['option_group']}\"";
+                        $exec .= " php -d memory_limit=4095M artisan microweber:option \"{$option['option_key']}\" \"{$option['option_value']}\" \"{$option['option_group']}\"";
                         $message = $message . "\n\n\n" . $exec;
-                        $output = exec($exec);
+                        $output = shell_exec($exec);
                         $message = $message . "\n\n\n" . $output;
                     }
                 }
