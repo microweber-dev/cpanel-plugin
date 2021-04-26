@@ -128,6 +128,7 @@ class MicroweberInstallCommand
             $copy_files[] = 'config/cors.php';
             $copy_files[] = 'config/debugbar.php';
             $copy_files[] = 'config/l5-swagger.php';
+            $copy_files[] = 'config/permission.php';
 
             if (isset($opts['source_folder'])) {
                 $mw_shared_dir = $opts['source_folder']; //add slash

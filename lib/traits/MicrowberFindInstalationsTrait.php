@@ -63,8 +63,9 @@ trait MicrowberFindInstalationsTrait
                 continue;
             }
 
+            $whmcs_connector_module_dir = $mainDir . "/userfiles/modules/whmcs_connector";
 
-            //  echo $stat['ctime'];
+
 
 
             $version = $find_version->getCurrentVersion();
@@ -86,4 +87,8 @@ trait MicrowberFindInstalationsTrait
         }
         return $return;
     }
+
+
+
+
 }
