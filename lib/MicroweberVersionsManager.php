@@ -2,6 +2,7 @@
 
 require_once(__DIR__ . '/MicroweberHelpers.php');
 require_once(__DIR__ . '/MicroweberMarketplaceConnector.php');
+require_once(__DIR__ . '/traits/MicrowberFindInstalationsTrait.php');
 
 class MicroweberVersionsManager
 {
@@ -213,6 +214,14 @@ class MicroweberVersionsManager
                     $templateZipFullpath = $templateDir . $tempalteZip;
 
                     MicroweberHelpers::download($template['download_url'], $templateZipFullpath);
+
+
+                    if(is_dir($templateDir)){
+                        exec("rm -rf {$templateDir}");
+                        @mkdir($templateDir);
+                        exec("chmod 755 -R {$templateDir}");
+                    }
+
 
                     exec("unzip -o {$templateZipFullpath} -d {$templateDir}");
                     unlink($templateZipFullpath);

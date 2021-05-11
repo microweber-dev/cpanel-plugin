@@ -24,6 +24,7 @@ event_bind('on_load', function ($params = false) {
 
 
 event_bind('mw.user.before_login', function ($params = false) {
+
     return mw_whmcs_remote_user_login($params);
 });
 

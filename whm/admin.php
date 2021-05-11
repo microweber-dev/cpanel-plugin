@@ -46,6 +46,7 @@ if (isset($_GET['ajax_view'])) {
 
             $domains = $controller->get_installations_across_server();
             $i = 0;
+            $i1 = 0;
             if (isset($settings['branding']) and $settings['branding'] and !empty($settings['branding'])) {
                 if ($domains) {
                     foreach ($domains as $domain) {
@@ -58,7 +59,23 @@ if (isset($_GET['ajax_view'])) {
                     }
                 }
             }
-            print $i . ' domains are updated.';
+
+            if ($domains) {
+                foreach ($domains as $domain) {
+                    if (isset($domain['documentroot']) and $domain['documentroot']) {
+                        if (is_dir($domain['documentroot'] . '/config/')) {
+                            if (isset($domain['is_symlink']) and $domain['is_symlink']) {
+                                $install_command->update_config_files($domain['documentroot']);
+                                $i1++;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            print $i . ' domains are updated with branding. ';
+            print $i1 . ' symliked domains are updated with new config files. ';
             break;
     }
 

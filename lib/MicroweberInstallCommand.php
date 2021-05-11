@@ -36,6 +36,24 @@ class MicroweberInstallCommand
         'userfiles/elements/*',
         'userfiles/templates/*',
     );
+
+    public $sync_config_files = array(
+        'config/database.php',
+        'config/app.php',
+        'config/auth.php',
+        'config/cache.php',
+        'config/compile.php',
+        'config/filesystems.php',
+        'config/queue.php',
+        'config/services.php',
+        'config/view.php',
+        'config/workbench.php',
+        'config/hashing.php',
+        'config/cors.php',
+        'config/debugbar.php',
+        'config/l5-swagger.php',
+        'config/permission.php',
+    );
     public $sync_paths_extras = array(
         'userfiles/modules/*',
     );
@@ -113,22 +131,25 @@ class MicroweberInstallCommand
             $copy_files[] = 'bootstrap/app.php';
             $copy_files[] = 'bootstrap/autoload.php';
 
-            $copy_files[] = 'config/.htaccess';
-            $copy_files[] = 'config/database.php';
-            $copy_files[] = 'config/app.php';
-            $copy_files[] = 'config/auth.php';
-            $copy_files[] = 'config/cache.php';
-            $copy_files[] = 'config/compile.php';
-            $copy_files[] = 'config/filesystems.php';
-            $copy_files[] = 'config/queue.php';
-            $copy_files[] = 'config/services.php';
-            $copy_files[] = 'config/view.php';
-            $copy_files[] = 'config/workbench.php';
-            $copy_files[] = 'config/hashing.php';
-            $copy_files[] = 'config/cors.php';
-            $copy_files[] = 'config/debugbar.php';
-            $copy_files[] = 'config/l5-swagger.php';
-            $copy_files[] = 'config/permission.php';
+
+            $configs = $this->sync_config_files;
+            $copy_files = array_merge($copy_files,$configs);
+//            $copy_files[] = 'config/.htaccess';
+//            $copy_files[] = 'config/database.php';
+//            $copy_files[] = 'config/app.php';
+//            $copy_files[] = 'config/auth.php';
+//            $copy_files[] = 'config/cache.php';
+//            $copy_files[] = 'config/compile.php';
+//            $copy_files[] = 'config/filesystems.php';
+//            $copy_files[] = 'config/queue.php';
+//            $copy_files[] = 'config/services.php';
+//            $copy_files[] = 'config/view.php';
+//            $copy_files[] = 'config/workbench.php';
+//            $copy_files[] = 'config/hashing.php';
+//            $copy_files[] = 'config/cors.php';
+//            $copy_files[] = 'config/debugbar.php';
+//            $copy_files[] = 'config/l5-swagger.php';
+//            $copy_files[] = 'config/permission.php';
 
             if (isset($opts['source_folder'])) {
                 $mw_shared_dir = $opts['source_folder']; //add slash
@@ -400,7 +421,7 @@ class MicroweberInstallCommand
 
     public function update_permissions()
     {
-        shell_exec('chmod 755 -R ' . $this->shared_dir); 
+        shell_exec('chmod 755 -R ' . $this->shared_dir);
     }
 
 //
@@ -611,6 +632,37 @@ class MicroweberInstallCommand
         //if (!is_file($branding_file)) {
         file_put_contents($branding_file, @json_encode($opts_branding));
         // }
+
+    }
+
+    public function update_config_files($user_public_html_folder,$opts=[])
+    {
+        if(!$user_public_html_folder or !is_dir($user_public_html_folder)){
+            return;
+        }
+        $configs = $this->sync_config_files;
+
+        if (isset($opts['source_folder'])) {
+            $mw_shared_dir = $opts['source_folder']; //add slash
+        } else {
+            $mw_shared_dir = $this->shared_dir;
+        }
+
+        $copy_files = $configs;
+
+        if (isset($copy_files) and is_array($copy_files) and !empty($copy_files)) {
+            foreach ($copy_files as $file) {
+                $file = str_replace('..', '', $file);
+                $file_dest = $file;
+                $file = $mw_shared_dir . $file;
+                $newfile = "{$user_public_html_folder}/{$file_dest}";
+                if(!is_file($newfile)){
+                   $exec = "cp $file $newfile";
+                  $output = exec($exec);
+               }
+            }
+        }
+
 
     }
 
