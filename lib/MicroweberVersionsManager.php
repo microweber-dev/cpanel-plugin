@@ -209,14 +209,14 @@ class MicroweberVersionsManager
             foreach ($templates as $template) {
                 if (isset($template['download_url'])) {
 
-                    $tempalteZip = $template['target_dir'] .'-latest.zip';
+                    $tempalteZip = $template['target_dir'] . '-latest.zip';
                     $templateDir = $this->sharedDirTemplate . $template['target_dir'] . '/';
                     $templateZipFullpath = $templateDir . $tempalteZip;
 
                     MicroweberHelpers::download($template['download_url'], $templateZipFullpath);
 
 
-                    if(is_dir($templateDir)){
+                    if (is_dir($templateDir)) {
                         exec("rm -rf {$templateDir}");
                         @mkdir($templateDir);
                         exec("chmod 755 -R {$templateDir}");
@@ -273,20 +273,28 @@ class MicroweberVersionsManager
 
         $languages = array();
 
-        $listDir = scandir($sharedDir. '/userfiles/modules/microweber/language');
+       // $lang_dir = $sharedDir . '/userfiles/modules/microweber/language';
+        $lang_dir = $sharedDir . '/src/MicroweberPackages/Translation/resources/lang';
 
-        foreach ($listDir as $file) {
-            $ext = MicroweberHelpers::getFileExtension($file);
-            if ($ext == 'json') {
+        if (is_dir($lang_dir)) {
 
-                $upperText = $file;
-                $upperText = str_replace('.json', false, $file);
-           //     $upperText = strtoupper($upperText);
+            $listDir = scandir($lang_dir);
 
-                $languages[trim(strtolower($upperText))] = trim($upperText);
+            foreach ($listDir as $file) {
+                $ext = MicroweberHelpers::getFileExtension($file);
+                if ($ext == 'json') {
+
+                    $upperText = $file;
+                    $upperText = str_replace('.json', false, $file);
+                    //var_dump($upperText);
+                    //     $upperText = strtoupper($upperText);
+
+                   // $languages[trim(strtolower($upperText))] = trim($upperText);
+                  //  $languages[trim(strtolower($upperText))] = trim($upperText);
+                    $languages[$upperText] = trim($upperText);
+                }
             }
         }
-
         return $languages;
 
     }
