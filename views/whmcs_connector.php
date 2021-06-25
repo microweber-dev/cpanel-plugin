@@ -13,7 +13,7 @@
                        value="<?= isset($whmcs_connector_settings['whmcs_url']) ? $whmcs_connector_settings['whmcs_url'] : ''; ?>">
                 <br>
                 <small>You must install the Microweber WHMCS addon from <a
-                            href="https://github.com/microweber-dev/whmcs-plugin" target="_blank">this link</a>
+                            href="https://microweber.org/go/whmcs" target="_blank">this link</a>
                     and then enter the url of your WHMCS installation for example: https://members.example.com/
                 </small>
             </div>
