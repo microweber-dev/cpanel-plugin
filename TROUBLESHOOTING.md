@@ -28,9 +28,16 @@ Then run
 ```
 
 
-Set symlink enforce_symlinksifowner
+## Set symlink enforce_symlinksifowner
 
 ```
 sysctl -w fs.enforce_symlinksifowner=0
 ```
+ 
+## Enable exec
+
+Go to Home  > Software > MultiPHP Manager and enable exec command
+ 
+![enable_exec.png](assets/enable_exec.png "")
+
  

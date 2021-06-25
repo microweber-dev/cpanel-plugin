@@ -211,19 +211,38 @@ class MicroweberVersionsManager
 
                     $tempalteZip = $template['target_dir'] . '-latest.zip';
                     $templateDir = $this->sharedDirTemplate . $template['target_dir'] . '/';
-                    $templateZipFullpath = $templateDir . $tempalteZip;
+                    $downloadDir = $this->sharedDirTemplate .   '/tmp/';
+
+                    if (!is_dir($templateDir)) {
+                        MicroweberHelpers::mkdirRecursive($templateDir);
+                    }
+
+                    if (!is_dir($downloadDir)) {
+                        MicroweberHelpers::mkdirRecursive($downloadDir);
+                    }
+
+                  //  $templateZipFullpath = $templateDir . $tempalteZip;
+                    $templateZipFullpath = $downloadDir . $tempalteZip;
 
                     MicroweberHelpers::download($template['download_url'], $templateZipFullpath);
 
-
-                    if (is_dir($templateDir)) {
-                        exec("rm -rf {$templateDir}");
-                        @mkdir($templateDir);
-                        exec("chmod 755 -R {$templateDir}");
+                    if(!function_exists('exec')) {
+                        echo "exec is disabled";
+                        exit;
                     }
 
 
-                    exec("unzip -o {$templateZipFullpath} -d {$templateDir}");
+                    if (is_dir($templateDir)) {
+                        exec("rm -rf {$templateDir}/*");
+                    }
+
+                    if (!is_dir($templateDir)) {
+                        MicroweberHelpers::mkdirRecursive($templateDir);
+                        exec("chmod 755 -R {$templateDir}");
+
+                    }
+
+                    exec("unzip -o {$templateZipFullpath} -d {$templateDir}",$output);
                     unlink($templateZipFullpath);
                 }
             }
