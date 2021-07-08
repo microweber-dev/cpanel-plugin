@@ -25,6 +25,32 @@ class MicroweberInstallCommand
     }
 
 
+    public $sync_config_files = array(
+
+        'config/app.php',
+        'config/auth.php',
+        'config/cache.php',
+        'config/compile.php',
+        'config/database.php',
+        'config/debugbar.php',
+        'config/compile.php',
+        'config/cors.php',
+
+        'config/filesystems.php',
+        'config/queue.php',
+        'config/services.php',
+        'config/session.php',
+        'config/view.php',
+        'config/workbench.php',
+        'config/hashing.php',
+
+        'config/logging.php',
+        'config/mail.php',
+        'config/debugbar.php',
+        'config/l5-swagger.php',
+        'config/permission.php',
+    );
+
     public $sync_paths = array(
         'version.txt',
         'vendor',
@@ -35,24 +61,6 @@ class MicroweberInstallCommand
         'userfiles/modules/*',
         'userfiles/elements/*',
         'userfiles/templates/*',
-    );
-
-    public $sync_config_files = array(
-        'config/database.php',
-        'config/app.php',
-        'config/auth.php',
-        'config/cache.php',
-        'config/compile.php',
-        'config/filesystems.php',
-        'config/queue.php',
-        'config/services.php',
-        'config/view.php',
-        'config/workbench.php',
-        'config/hashing.php',
-        'config/cors.php',
-        'config/debugbar.php',
-        'config/l5-swagger.php',
-        'config/permission.php',
     );
     public $sync_paths_extras = array(
         'userfiles/modules/*',
@@ -185,7 +193,7 @@ class MicroweberInstallCommand
             if (isset($opts['default_template'])) {
                 $default_template = $opts['default_template'];
             } else {
-                $default_template = 'liteness';
+                $default_template = 'new-world';
             }
             $database_name = $opts['database_name'];
             $database_user = $opts['database_user'];
@@ -334,7 +342,7 @@ class MicroweberInstallCommand
 
             $exec = "cd {$user_public_html_folder} ;";
             $exec .= "php -d memory_limit=4095M artisan microweber:install ";
-            $exec .= $contact_email . " " . $auth_user . " " . escapeshellarg($auth_pass) . " " . $database_host . " " . $database_name . " " . $database_user . " " . escapeshellarg($database_password) . " " . $database_driver . " -p " . $database_prefix;
+            $exec .= escapeshellarg($contact_email) . " " . escapeshellarg($auth_user) . " " . escapeshellarg($auth_pass) . " " . escapeshellarg($database_host) . " " . escapeshellarg($database_name) . " " . escapeshellarg($database_user) . " " . escapeshellarg($database_password) . " " . $database_driver . " -p " . $database_prefix;
             $exec .= " -t " . $default_template . " -d 1";
             if (isset($opts['config_only']) and $opts['config_only']) {
                 $exec .= " -c 1";
