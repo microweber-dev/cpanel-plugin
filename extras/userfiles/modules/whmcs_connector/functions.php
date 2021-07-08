@@ -122,6 +122,11 @@ function mw_whmcs_remote_user_login($params = false)
 {
 
 
+
+    if (\Auth::check()) {
+        return;
+    }
+
     if ($params == false) {
         return;
     }
