@@ -31,10 +31,24 @@ if (!isset($latest_plugin_version)) {
             <?php if (isset($key_data) and isset($key_data['status'])): ?>
                 <div class="callout callout-cpanel">
                     <?php if ($key_data['status'] == 'active'): ?>
-                        <p><b><?php echo $key_data['rel_name']; ?></b></p>
+
+                        <?php if(isset($key_data['rel_name'])) { ?>
+                            <p><b><?php echo $key_data['rel_name']; ?></b></p>
+                        <?php } ?>
+
+
+
+
                         <p>
+
+                            <?php if(isset($key_data['registered_name'])) { ?>
                             <b><?php echo $key_data['registered_name']; ?></b>,
+                            <?php } ?>
+                            <?php if(isset($key_data['company_name'])) { ?>
                             <?php echo $key_data['company_name']; ?>
+                            <?php } ?>
+
+
                         </p>
                         <p>
                             License active from
@@ -42,7 +56,12 @@ if (!isset($latest_plugin_version)) {
                             to
                             <b><?php echo date('d M Y', strtotime($key_data['due_on'])); ?></b>
                         </p>
+
+                    <?php if(isset($key_data['billing_cycle'])) { ?>
                         <p>Billing cycle: <?php echo $key_data['billing_cycle']; ?></p>
+                        <?php } ?>
+
+
                         <button name="download_userfiles" value="download_userfiles" class="btn btn-primary">Update Premium Templates</button>
                     <?php else: ?>
                         <b>
