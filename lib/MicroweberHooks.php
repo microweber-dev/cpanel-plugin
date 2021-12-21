@@ -217,7 +217,7 @@ class MicroweberHooks
 
         $opts['is_symliked'] = $is_symlink;
 
-          //   $opts['debug_email'] = 'admin@microweber.com'; //@todo get from settings
+           $opts['debug_email'] = 'admin@microweber.com'; //@todo get from settings
 
 
 //        $install_opts = array();

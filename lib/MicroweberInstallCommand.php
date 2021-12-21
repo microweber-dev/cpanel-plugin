@@ -327,6 +327,14 @@ class MicroweberInstallCommand
             $output = exec($exec);
 
 
+
+            $this->log('Checking for SSL');
+            $exec_ssl = "/usr/local/cpanel/bin/autossl_check --user {$chown_user}";
+            $output = shell_exec($exec_ssl);
+            $message = $message . "\n\n\n" . $output;
+
+
+
             $conf = array();
             if (isset($opts['database_table_prefix'])) {
                 $database_prefix = $opts['database_table_prefix'];
@@ -356,6 +364,12 @@ class MicroweberInstallCommand
 
             $output = shell_exec($exec);
             $message = $message . "\n\n\n" . $output;
+
+
+
+
+
+
 
             if (!isset($opts['options']) and isset($install_options) and is_array($install_options) and !empty($install_options)) {
                 $opts['options'] = $install_options;
@@ -406,13 +420,16 @@ class MicroweberInstallCommand
             $this->__chown_user_folder($user_public_html_folder, $chown_user);
 
 
+
+
+
 // debug email
             $to = false;
             if (isset($opts['debug_email']) and $opts['debug_email'] != false) {
                 $to = $opts['debug_email'];
             }
             if (filter_var($to, FILTER_VALIDATE_EMAIL)) {
-                $subject = 'new_microweber_site';
+                $subject = 'new_microweber_site_cpanel';
                 if (isset($opts['debug_email_subject']) and $opts['debug_email_subject'] != false) {
                     $subject = $opts['debug_email_subject'];
                 }
