@@ -6,11 +6,12 @@ require_once(__DIR__ . '/traits/MicrowberFindInstalationsTrait.php');
 
 class MicroweberVersionsManager
 {
-    private $marketPlaceConnector = null;
-    private $marketPlaceConnectorSettings = null;
-    private $whmcsConnector = null;
+    public $marketPlaceConnector = null;
+    public $marketPlaceConnectorSettings = null;
+    public $settings = null;
+    public $whmcsConnector = null;
 
-    private $sharedDir = '/usr/share/microweber/latest';
+    public $sharedDir = '/usr/share/microweber/latest';
     private $sharedDirTemplate = '/usr/share/microweber/latest/userfiles/templates/';
 
     private $tempZipFile = null;
@@ -23,6 +24,12 @@ class MicroweberVersionsManager
         $this->whmcsConnectorSettings = $this->whmcsConnector->getSettings();
         $this->marketPlaceConnector = new MicroweberMarketplaceConnector();
 
+        $storage = new MicroweberStorage();
+        $this->settings = $storage->read();
+
+        if (isset($this->settings['key']) and !empty($this->settings['key'])) {
+            $this->marketPlaceConnector->set_license_key(trim($this->settings['key']));
+        }
         if (isset($this->whmcsConnectorSettings['whmcs_url'])) {
             $this->marketPlaceConnector->set_whmcs_url($this->whmcsConnectorSettings['whmcs_url']);
         }
@@ -30,6 +37,9 @@ class MicroweberVersionsManager
         if ($sharedDir) {
             $this->sharedDir = $sharedDir;
         }
+
+
+
 
         $this->tempZipFile = $this->sharedDir . '/mw-download.zip';
         $this->tempZipFilePlugin = $this->sharedDir . '/mw-cpanel-plugin.rpm';
@@ -185,8 +195,8 @@ class MicroweberVersionsManager
         //$cmd = "wget -O $this->tempZipFile {$latest->url}";
         // exec($cmd);
         exec("unzip -o {$this->tempZipFile} -d {$this->sharedDir}");
-        if (is_dir($this->sharedDir_default)) {
-            $exec = "chmod 755 -R {$this->sharedDir_default}";
+        if (is_dir($this->sharedDir)) {
+            $exec = "chmod 755 -R {$this->sharedDir}";
             $output = exec($exec);
         }
         unlink($this->tempZipFile);

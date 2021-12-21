@@ -35,7 +35,9 @@ if (!isset($latest_plugin_version)) {
                     <?php if (!$current_version): ?>
                         <h5>You dont have any downloaded version</h5>
                     <?php else: ?>
-                        <h5>Your version is: <?php print  $current_version ?></h5>
+                        <h5>Your version is: <?php print  $current_version ?>
+                               <button name="check_for_update_cms" value="check_for_update_cms" class="btn btn-text btn-xs">  <i class='fa fa-sync'></i>Check for update</button>
+                        </h5>
                     <?php endif; ?>
 
                     <?php if ($latest_version): ?>
@@ -63,7 +65,37 @@ if (!isset($latest_plugin_version)) {
 
                     <?php if (isset($current_templates) and $current_templates and is_array($current_templates)): ?>
                         <h5>Templates <em>(<?php print count($current_templates); ?>)</em>: <?php print implode(', ',$current_templates); ?></h5>
+                        <button name="check_marketplace_templates" value="check_marketplace_templates" class="btn btn-info btn-xs">  Marketplace templates</button>
                     <?php endif; ?>
+
+
+                    <?php if (isset($templates_from_marketplace) and $templates_from_marketplace and is_array($templates_from_marketplace)): ?>
+                        <table border="1" class="table-striped table">
+                            <?php foreach ($templates_from_marketplace as $template) { ?>
+                                <tr>
+                                    <?php if (isset($template['latest_version'])) { ?>
+                                        <td><?php print  $template['latest_version']['name'] ?></td>
+                                        <td><?php print  $template['latest_version']['version'] ?></td>
+                                        <td <?php if (isset($current_templates) and $current_templates and is_array($current_templates) and array_search($template['latest_version']['target-dir'],$current_templates)): ?>  class="success"   <?php endif; ?> >
+                                            <?php print  $template['latest_version']['target-dir'] ?>
+                                         </td>
+                                        <td>
+                                            <?php if (isset($template['latest_version']['dist'])) { ?>
+                                                <a href="<?php print  $template['latest_version']['dist']['url'] ?>"
+                                                   target="_blank"><?php print  $template['latest_version']['dist']['type'] ?></a>
+
+                                            <?php } ?>
+                                        </td>
+                                    <?php } ?>
+                                </tr>
+                            <?php } ?>
+                        </table>
+
+<br>
+                        <button name="download_userfiles" value="download_userfiles" class="btn btn-primary">Update Templates</button>
+
+                    <?php endif; ?>
+
                 </div>
 
                 <div class="col-md-4">

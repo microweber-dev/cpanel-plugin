@@ -11,76 +11,61 @@ class MicroweberMarketplaceConnector
         'https://packages.microweberapi.com/packages.json',
         'https://private-packages.microweberapi.com/packages.json'
     ];
-    public $package_urls_orig = [
-        'https://packages.microweberapi.com/packages.json',
-        'https://private-packages.microweberapi.com/packages.json'
-    ];
+
     /**
      * Set WHMCS Url
      * @var bool
      */
     public $whmcs_url = false;
+    public $license_key = false;
 
-    public function set_whmcs_url($url)
-    {
+    public function set_whmcs_url($url) {
         if (!empty($url)) {
             $this->whmcs_url = $url;
             $this->update_package_urls();
         }
     }
 
-    public function update_package_urls()
-    {
+    public function set_license_key($key) {
+        if (!empty($key)) {
+            $this->license_key = $key;
+         }
+    }
+
+    public function update_package_urls() {
 
         $whmcsUrl = $this->whmcs_url . '/index.php?m=microweber_addon&function=get_package_manager_urls';
         $whmcsPackageUrls = $this->_get_content_from_url($whmcsUrl);
-        $whmcsPackageUrls = json_decode($whmcsPackageUrls, TRUE);
-        $urls_with_link = [];
-
+        $whmcsPackageUrls = @json_decode($whmcsPackageUrls, TRUE);
         if (is_array($whmcsPackageUrls) && !empty($whmcsPackageUrls)) {
-            foreach ($whmcsPackageUrls as $whmcsPackageUrl) {
-                if (filter_var($whmcsPackageUrl, FILTER_VALIDATE_URL) !== FALSE) {
-                    $urls_with_link[] = $whmcsPackageUrl;
-
-                }
-            }
-
-
-        }
-
-        if ($urls_with_link) {
             $this->set_package_urls($whmcsPackageUrls);
         }
-
     }
 
-    public function add_package_urls($urls)
-    {
-           if (is_array($urls) && !empty($urls)) {
-            foreach ($urls as $url) {
+    public function add_package_urls($urls) {
+        if (is_array($urls) && !empty($urls)) {
+            foreach($urls as $url) {
                 $this->add_package_url($url);
             }
         }
     }
 
-    public function set_package_urls($urls)
-    {
+    public function set_package_urls($urls) {
         if (is_array($urls) && !empty($urls)) {
             $this->package_urls = [];
-            foreach ($urls as $url) {
+            foreach($urls as $url) {
                 $this->add_package_url($url);
             }
         }
     }
 
-    public function add_package_url($url)
-    {
+    public function add_package_url($url) {
 
         $url = trim($url);
         $url = str_replace(',', false, $url);
         $url = rtrim($url, "/") . '/';
 
-        if (!stristr($url, 'packages.json')) {
+        if (! stristr($url, 'packages.json')) {
             $url = ($url . "/") . 'packages.json';
         }
 
@@ -119,11 +104,9 @@ class MicroweberMarketplaceConnector
         $return = array();
         $packages = array();
         $packages_by_type = array();
-
-
         if ($this->package_urls) {
             foreach ($this->package_urls as $url) {
-                $package_manager_resp = $this->_get_content_from_url($url);
+                $package_manager_resp = $this->_get_content_from_url($url,$this->license_key);
                 $package_manager_resp = @json_decode($package_manager_resp, true);
                 if ($package_manager_resp and isset($package_manager_resp['packages']) and is_array($package_manager_resp['packages'])) {
                     $packages = array_merge($packages, $package_manager_resp['packages']);
@@ -142,14 +125,13 @@ class MicroweberMarketplaceConnector
                 if ($version_type and in_array($version_type, $allowed_package_types)) {
                     $package_is_allowed = true;
                     $return[$pk] = $package;
-                    if (!isset($packages_by_type[$version_type])) {
+                    if (! isset($packages_by_type[$version_type])) {
                         $packages_by_type[$version_type] = array();
                     }
                     $packages_by_type[$version_type][$pk] = $package;
                 }
             }
         }
-
         return $packages_by_type;
     }
 
@@ -170,7 +152,7 @@ class MicroweberMarketplaceConnector
                 $package_item_version = array_reverse($package_item_version);
                 $last_item = false;
                 foreach ($package_item_version as $package_item_version_key => $package_item_version_data) {
-                    if (!$last_item and $package_item_version_data and isset($package_item_version_data['version']) and $package_item_version_data['version'] != 'dev-master' and is_numeric($package_item_version_data['version'])) {
+                    if (! $last_item and $package_item_version_data and isset($package_item_version_data['version']) and $package_item_version_data['version'] != 'dev-master' and is_numeric($package_item_version_data['version'])) {
                         $last_item2 = $package_item_version_data;
                         $last_item = $last_item2;
                     }
@@ -202,13 +184,14 @@ class MicroweberMarketplaceConnector
         if (is_array($templates) && !empty($templates)) {
             foreach ($templates as $template) {
                 if (isset($template['latest_version'])) {
+                    if (isset($template['latest_version']['dist']) and isset($template['latest_version']['dist']['type']) and $template['latest_version']['dist']['type'] == 'zip') {
 
-                    $download_urls[] = [
-                        'name' => $template['latest_version']['name'],
-                        'target_dir' => $template['latest_version']['target-dir'],
-                        'download_url' => $template['latest_version']['dist']['url']
-                    ];
-
+                        $download_urls[] = [
+                            'name' => $template['latest_version']['name'],
+                            'target_dir' => $template['latest_version']['target-dir'],
+                            'download_url' => $template['latest_version']['dist']['url']
+                        ];
+                    }
                 }
             }
         }
@@ -221,20 +204,24 @@ class MicroweberMarketplaceConnector
      * @param unknown $url
      * @return unknown
      */
-    private function _get_content_from_url($url)
+    private function _get_content_from_url($url,$license_key=false)
     {
-        if (in_array('curl', get_loaded_extensions())) {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // Return data inplace of echoing on screen
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // Skip SSL Verification
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-            $data = curl_exec($ch);
-            curl_close($ch);
-            return $data;
-        } else {
-            return @file_get_contents($url);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // Return data inplace of echoing on screen
+        curl_setopt($ch, CURLOPT_URL, $url);
+        if($license_key){
+            ////Specify the username and password using the CURLOPT_USERPWD option.
+
+             curl_setopt($ch, CURLOPT_USERPWD, "license:" . base64_encode($license_key));
         }
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // Skip SSL Verification
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        return $data;
+
     }
 }

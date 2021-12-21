@@ -24,7 +24,7 @@ $extras_folder = $install_command->getExtrasDir();
 $storage = new MicroweberStorage();
 $keyData = array();
 $settings = $storage->read();
-
+$templates_from_marketplace = false;
 
 if (isset($_GET['ajax_view'])) {
 
@@ -104,7 +104,13 @@ if ($user_key) {
     $keyData = $controller->getLicenseData($user_key);
 }
 
+if (isset($_POST['check_for_update_cms'])) {
+ $versions->getLatestVersionData(true);
+}
 
+if (isset($_POST['check_marketplace_templates'])) {
+  $templates_from_marketplace = $versions->marketPlaceConnector->get_templates();
+}
 if (isset($_POST['download_cms'])) {
     $versions->download();
 }
@@ -230,6 +236,7 @@ $view->display();
             $view->assign('latest_plugin_version', $latest_plugin_version);
             $view->assign('current_plugin_version', $current_plugin_version);
             $view->assign('current_templates', $current_templates);
+            $view->assign('templates_from_marketplace', $templates_from_marketplace);
             $view->display();
             ?>
         </div>

@@ -52,11 +52,12 @@ Select the feature list, click on "edit" button and add the Microweber feature
 
 ### Setup EasyApache 4
 
-![easyapache_setup.png](assets/easyapache_setup.png "")
+Install PHP version 7.4 or later 
 
 Make sure you have the required php extensions enabled. 
 
-You need mb_string and iconv and other extesions ebabled. You can import the EasyApache4 Profile from this file [easyapache_profile.json](assets/easyapache_profile.json "")
+You need gd, dom, openssl, zip, curl, mb_string and iconv and other extensions to be enabled. 
+ 
 
 Then you have to provision the EasyApache Profile.
 
@@ -65,7 +66,7 @@ Then you have to provision the EasyApache Profile.
 ![easyapache_provision_confirm.png](assets/easyapache_provision_confirm.png "")
 
 
-Also please try to use PHP 7+, so the future versions of Microweber will work. 
+Please use PHP 7.4 or later. 
 
 
 ![easyapache_php_ver.png](assets/easyapache_php_ver.png "")
