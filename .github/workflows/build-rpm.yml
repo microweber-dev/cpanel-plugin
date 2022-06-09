@@ -17,7 +17,7 @@ jobs:
         sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
         dnf distro-sync -y
         yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils
-        yum install php -y
+        yum install php ncftpput  -y
 
     - name: Run build
       run:
@@ -26,6 +26,5 @@ jobs:
         php pack.php
         RPM_FILE="$(php update_repo.php)"
         ls -la
-        export CURLNAME="${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}"
-        curl -T $RPM_FILE -u "${CURLNAME}" ftp://{{ secrets.FTP_HOST }}
+        ncftpput -u ${{ secrets.FTP_USERNAME }} -p ${{ secrets.FTP_PASSWORD }} {{ secrets.FTP_HOST }} / $RPM_FILE
         echo "Uploaded file complete"
