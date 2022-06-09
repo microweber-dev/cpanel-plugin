@@ -17,6 +17,7 @@ jobs:
         sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
         dnf distro-sync -y
         yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils
+        yum install php -y
 
     - name: Run build
       run:
