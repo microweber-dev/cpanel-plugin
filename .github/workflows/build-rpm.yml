@@ -26,5 +26,6 @@ jobs:
         php pack.php
         RPM_FILE="$(php update_repo.php)"
         ls -la
-        curl -T $RPM_FILE "ftp://${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}@${{ secrets.FTP_HOST }}"
+        export CURLNAME="${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}"
+        curl -T $RPM_FILE -u "${CURLNAME}" "ftp://{{ secrets.FTP_HOST }}"
         echo "Uploaded file complete"
