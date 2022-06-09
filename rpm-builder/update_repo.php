@@ -57,10 +57,4 @@ if ($newname and is_file($newname)) {
     copy($newname, $yum_repo . '/microweber-cpanel.rpm');
 }
 
-var_dump($newname);
-
-//createrepo --update /srv/my/repo
-
-
-
-
+echo $newname;
