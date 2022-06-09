@@ -10,7 +10,15 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Install rpmbuild
-      run: deb http://cz.archive.ubuntu.com/ubuntu bionic main universe && sudo add-apt-repository universe && sudo apt-get update -y && sudo apt-get install rpm && sudo apt-get install dpkg-dev && sudo apt-get install apache2 &&  sudo apt-get install -y createrepo
+      run:
+        sudo add-apt-repository universe
+        sudo add-apt-repository multiverse
+        sudo add-apt-repository bionic
+        sudo apt-get update
+        sudo apt-get install rpm 
+        sudo apt-get install dpkg-dev
+        sudo apt-get install apache2
+        sudo apt-get install -y createrepo
 
     - name: Run build
       run:
