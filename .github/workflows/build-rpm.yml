@@ -8,12 +8,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
-    - name: Go to RPM build folder
-      run: cd rpm-builder/
 
     - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+      run:
+        |
+        cd rpm-builder/
+        composer install --prefer-dist --no-progress
 
     - name: Run build
-      run: php pack.php
+      run:
+        |
+        cd rpm-builder/
+        php pack.php
