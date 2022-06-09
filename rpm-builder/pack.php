@@ -27,10 +27,11 @@ exec($cleanup);
 
 $wget = "wget -q https://github.com/microweber-dev/cpanel-plugin/archive/master.zip -O {$workdir_plugin}master.zip";
 print $wget."\n\n";
-
 exec($wget);
+
+
 $unzip = "unzip -qqo {$workdir_plugin}master.zip -d {$workdir_plugin} ";
-print $wget."\n\n";
+print $unzip."\n\n";
 exec($unzip);
 
 $spec = new \wapmorgan\rpm\Spec();
