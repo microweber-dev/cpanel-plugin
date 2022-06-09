@@ -68,7 +68,7 @@ return [
     |
     */
 
-    'app_url' => null,
+    'app_url' => dirname($_SERVER['SCRIPT_URI']).'/index.cgi?router=',
 
     /*
     |--------------------------------------------------------------------------

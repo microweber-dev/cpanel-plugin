@@ -13,4 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\WhmAdminController::class, 'index']);
+Route::any('/', function (\Illuminate\Http\Request $request) {
+
+    $router = $request->get('router', false);
+    if (!$router) {
+        return app()->make(\App\Http\Controllers\WhmAdminController::class)->index($request);
+    }
+
+    return \App\Http\RequestRoute::fireRouteRequest($router, $request);
+
+});
+
+
+Route::get('/home',function () {
+    echo 'o iee';
+})->name('home');
