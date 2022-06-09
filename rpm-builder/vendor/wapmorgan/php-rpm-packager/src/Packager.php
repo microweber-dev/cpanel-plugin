@@ -52,6 +52,7 @@ class Packager {
     }
 
     public function run() {
+
         if (!is_dir($_SERVER['HOME'].'/rpmbuild/SOURCES'))
             mkdir($_SERVER['HOME'].'/rpmbuild/SOURCES', 0777);
         if (!is_dir($_SERVER['HOME'].'/rpmbuild/SPECS'))

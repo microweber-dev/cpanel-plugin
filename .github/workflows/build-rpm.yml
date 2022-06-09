@@ -13,4 +13,4 @@ jobs:
       run:
         |
         cd rpm-builder/
-        php pack.php
+        sudo php pack.php
