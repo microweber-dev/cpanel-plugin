@@ -13,6 +13,7 @@ jobs:
     - name: Install rpmbuild
       run:
         |
+        yum update
         yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils
 
     - name: Run build
