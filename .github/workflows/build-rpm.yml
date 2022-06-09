@@ -16,6 +16,7 @@ jobs:
         sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
         sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
         dnf distro-sync -y
+        dnf makecache --refresh
         dnf -y install ncftp
         yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils
         yum install php 
