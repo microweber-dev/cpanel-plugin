@@ -8,9 +8,7 @@ class WhmAdminController extends Controller
 {
     public function index(Request $request)
     {
-
-        dump($request);
-
+    //     dump($request);
         return view('welcome');
     }
 }
