@@ -21,6 +21,7 @@ jobs:
         dnf -y install ncftp
         yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils
         yum install -y php 
+        yum install -y ncftp 
 
     - name: Run build
       run:
@@ -29,5 +30,6 @@ jobs:
         php pack.php
         RPM_FILE="$(php update_repo.php)"
         ls -la
-        ncftpput -u ${{ secrets.FTP_USERNAME }} -p ${{ secrets.FTP_PASSWORD }} {{ secrets.FTP_HOST }} / $RPM_FILE
+        echo RPM_FILE
+        ncftpput -u ${{ secrets.FTP_USERNAME }} -p ${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_HOST }} / $RPM_FILE
         echo "Uploaded file complete"
