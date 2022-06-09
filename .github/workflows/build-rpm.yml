@@ -16,4 +16,5 @@ jobs:
       run:
         |
         cd rpm-builder/
-        sudo php pack.php
+        php pack.php
+        php update_repo.php
