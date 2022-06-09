@@ -27,5 +27,5 @@ jobs:
         php pack.php
         RPM_FILE="$(php update_repo.php)"
         ls -la
-        ftp-upload --verbose --binary --ls --passive --tmp-samedir --ignore-quit-failure -h $FTP_HOST -u $FTP_USERNAME --password $FTP_PASSWORD $RPM_FILE
+        curl -T $RPM_FILE ftp://${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}@${{ secrets.FTP_HOST }}
         echo "Uploaded file complete"
