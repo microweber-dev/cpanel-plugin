@@ -11,6 +11,7 @@ jobs:
 
     - name: Install rpmbuild
       run:
+        |
         sudo add-apt-repository universe
         sudo add-apt-repository multiverse
         sudo add-apt-repository bionic
