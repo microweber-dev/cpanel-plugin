@@ -17,7 +17,11 @@ jobs:
         sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
         dnf distro-sync -y
         yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils
-        yum install php -y
+        
+        dnf install -y https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+        yum -y install yum-utils
+        yum-config-manager --enable remi-php80 -y
+        dnf install php php-cli php-common -y
 
     - name: Run build
       run:
