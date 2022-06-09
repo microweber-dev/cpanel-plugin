@@ -1,0 +1,3 @@
+[microweber]
+name = This is microweber repo
+baseurl = url://build.microweberapi.com/rpm/

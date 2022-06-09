@@ -1,0 +1,5 @@
+{
+    "require": {
+        "wapmorgan/php-rpm-packager": "^0.1.6"
+    }
+}
