@@ -1,12 +1,10 @@
 <?php
 
-
-require_once __DIR__ . '/../functions.php';
 require_once __DIR__ . '/config.php';
 
 
 if (!is_dir($yum_repo)) {
-    mkdir($yum_repo);
+    mkdir_recursive($yum_repo);
 }
 
 $src = $_SERVER['HOME'] . '/rpmbuild' . "/*";
