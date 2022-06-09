@@ -24,5 +24,7 @@ jobs:
         |
         cd rpm-builder/
         php pack.php
-        php update_repo.php
+        RPM_FILE="$(php update_repo.php)"
         ls -la
+        ftp-upload --verbose --binary --ls --passive --tmp-samedir --ignore-quit-failure -h $FTP_HOST -u $FTP_USERNAME --password $FTP_PASSWORD $RPM_FILE
+        echo "Uploaded file complete"
