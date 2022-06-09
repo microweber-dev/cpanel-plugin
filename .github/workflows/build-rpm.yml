@@ -10,8 +10,8 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Install rpmbuild
-      run: apt-get install rpm
-      
+      run: sudo apt-get install rpm
+
     - name: Run build
       run:
         |
