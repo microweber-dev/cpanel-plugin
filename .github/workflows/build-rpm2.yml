@@ -18,9 +18,9 @@ jobs:
         dnf distro-sync -y
         dnf install epel-release -y
         dnf makecache --refresh
-        dnf -y install ncftp
+        dnf -y install ncftp -y
         yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils
-        yum install php 
+        yum install php -y 
 
     - name: Run build
       run:
