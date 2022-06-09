@@ -15,7 +15,6 @@ jobs:
         sudo add-apt-repository main
         sudo add-apt-repository universe
         sudo add-apt-repository multiverse
-        sudo add-apt-repository bionic
         sudo apt-get update
         sudo apt-get install rpm 
         sudo apt-get install dpkg-dev
