@@ -18,6 +18,7 @@ jobs:
         dnf distro-sync -y
         yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils
         yum install php -y
+        yum install ftp-upload -y
 
     - name: Run build
       run:
