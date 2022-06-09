@@ -20,7 +20,7 @@ jobs:
         dnf makecache --refresh
         dnf -y install ncftp
         yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils
-        yum install php 
+        yum install -y php 
 
     - name: Run build
       run:
