@@ -3,15 +3,15 @@
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/config.php';
 
-$workdir = __DIR__ . '/../../workdir/core/rpm/cpanel-microweber-' . time();
+$workdir = __DIR__ . '/workdir/core/rpm/cpanel-microweber-' . time();
 if(!is_dir($workdir)){
-    mkdir($workdir);
+    mkdir_recursive($workdir);
 }
 
 
-$workdir_plugin = __DIR__ . '/../../workdir/core/rpm/cpanel-plugin/';
+$workdir_plugin = __DIR__ . '/workdir/core/rpm/cpanel-plugin/';
 if(!is_dir($workdir_plugin)){
-    mkdir($workdir_plugin);
+    mkdir_recursive($workdir_plugin);
 }
 $workdir_plugin = realpath($workdir_plugin);
 if(!$workdir_plugin or !is_dir($workdir_plugin)){
