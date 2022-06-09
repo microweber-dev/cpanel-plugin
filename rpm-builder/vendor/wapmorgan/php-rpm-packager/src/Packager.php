@@ -54,9 +54,9 @@ class Packager {
     public function run() {
 
         if (!is_dir($_SERVER['HOME'].'/rpmbuild/SOURCES'))
-            mkdir($_SERVER['HOME'].'/rpmbuild/SOURCES', 0777);
+            mkdir_recursive($_SERVER['HOME'].'/rpmbuild/SOURCES', 0777);
         if (!is_dir($_SERVER['HOME'].'/rpmbuild/SPECS'))
-            mkdir($_SERVER['HOME'].'/rpmbuild/SPECS', 0777);
+            mkdir_recursive($_SERVER['HOME'].'/rpmbuild/SPECS', 0777);
 
         if (file_exists($this->getOutputPath())) {
             $iterator = new DirectoryIterator($this->getOutputPath());
@@ -69,7 +69,7 @@ class Packager {
         }
 
         if (!is_dir($this->getOutputPath()))
-            mkdir($this->getOutputPath(), 0777);
+            mkdir_recursive($this->getOutputPath(), 0777);
 
         foreach ($this->mountPoints as $path => $dest) {
             $this->pathToPath($path, $this->getOutputPath().DIRECTORY_SEPARATOR.$dest);
@@ -146,7 +146,7 @@ class Packager {
     private function copy($source, $dest) {
         $destFolder = dirname($dest);
         if (!file_exists($destFolder)) {
-            mkdir($destFolder, 0777, true);
+            mkdir_recursive($destFolder, 0777, true);
         }
         copy($source, $dest);
         if (fileperms($source) != fileperms($dest))
