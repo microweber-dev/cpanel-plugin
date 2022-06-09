@@ -1,0 +1,61 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "f55912a1f63c432b46716072e5452457",
+    "packages": [
+        {
+            "name": "wapmorgan/php-rpm-packager",
+            "version": "v0.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wapmorgan/php-rpm-packager.git",
+                "reference": "ae8c4ed43e74240c9d18b2a9a290c8b7e010b4aa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wapmorgan/php-rpm-packager/zipball/ae8c4ed43e74240c9d18b2a9a290c8b7e010b4aa",
+                "reference": "ae8c4ed43e74240c9d18b2a9a290c8b7e010b4aa",
+                "shasum": ""
+            },
+            "require": {
+                "ext-phar": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.6.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "wapmorgan\\rpm\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "description": "RPM packager for PHP applications.",
+            "keywords": [
+                "package building",
+                "packager",
+                "rpm"
+            ],
+            "support": {
+                "issues": "https://github.com/wapmorgan/php-rpm-packager/issues",
+                "source": "https://github.com/wapmorgan/php-rpm-packager/tree/master"
+            },
+            "time": "2017-01-24T11:57:49+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
+}
