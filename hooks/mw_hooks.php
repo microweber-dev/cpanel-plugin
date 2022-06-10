@@ -2,12 +2,12 @@
 <?php
 $input = get_passed_data();
 
-include_once(__DIR__ . '/../lib/MicroweberHooks.php');
+include_once(__DIR__ . '/FireHooks.php');
 
 // Any switches passed to this script 
 $switches = (count($argv) > 1) ? $argv : array();
 
-$controller = new MicroweberHooks($input);
+$controller = new FireHooks($input);
 $allowed = array('describe', 'add-account', 'remove-account');
 
 // Route controller

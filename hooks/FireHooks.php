@@ -1,5 +1,5 @@
 <?php
-
+/*
 use App\Cpanel\CpanelApi;
 use App\MicroweberInstallCommand;
 use App\MicroweberStorage;
@@ -11,29 +11,15 @@ include_once(__DIR__ . '/MicroweberVersionsManager.php');
 include_once(__DIR__ . '/MicroweberInstallCommand.php');
 include_once(__DIR__ . '/MicroweberCpanelApi.php');
 include_once(__DIR__ . '/MicroweberLogger.php');
-include_once(__DIR__ . '/MicroweberWhmcsConnector.php');
+include_once(__DIR__ . '/MicroweberWhmcsConnector.php');*/
 
-class MicroweberHooks
+class FireHooks
 {
     private $input;
-    private $storage;
-    public $logger;
-    public $installer;
-    public $whmcs_connector;
 
     public function __construct($input = false)
     {
         $this->input = $input;
-        $this->storage = new MicroweberStorage();
-        $this->logger = new MicroweberLogger();
-
-        $this->installer = new MicroweberInstallCommand();
-        $this->installer->logger = $this->logger;
-
-
-        $this->whmcs_connector = new MicroweberWhmcsConnector($this->installer);
-
-
     }
 
     // Embed hook attribute information.
@@ -56,7 +42,17 @@ class MicroweberHooks
         return json_encode(array($add_account, $remove_account));
     }
 
+    public function add_account()
+    {
+      ///  file_put_contents('/var/cpanel/microweber/add_account.txt', json_encode($this->input,JSON_PRETTY_PRINT));
+    }
+
     public function remove_account()
+    {
+      //  file_put_contents('/var/cpanel/microweber/remove_account.txt', json_encode($this->input,JSON_PRETTY_PRINT));
+    }
+
+ /*   public function remove_account()
     {
 
         $result = 1;
@@ -276,7 +272,7 @@ class MicroweberHooks
     {
         $config = $this->storage->read();
         return isset($config['install_type']) and $config['install_type'] == 'symlinked';
-    }
+    }*/
 
 
 }
