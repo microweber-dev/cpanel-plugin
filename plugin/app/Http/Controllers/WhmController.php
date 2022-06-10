@@ -8,6 +8,6 @@ class WhmController extends Controller
 {
     public function index(Request $request)
     {
-        return view('whm.home');
+        return view('whm.render-livewire');
     }
 }

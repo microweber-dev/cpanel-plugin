@@ -1,12 +1,12 @@
 @php
-    require_once('/usr/local/cpanel/php/WHM.php');
-    WHM::header('Microweber WHM Administration', 1, 1);
+    \App\WhmLayoutApi::header('Microweber WHM Administration', 1, 1);
 @endphp
 
+<div id="microweber-whm">
 <livewire:styles/>
 
-
 <div id="contentContainer">
+
     <div class="pageTitle" id="pageTitle-whm_marketplace">
         <h1><img class="whm-app-title__image" src="{{asset('img/mw-icon.svg')}}"
                  alt="">
@@ -33,12 +33,16 @@
     </div>
     <div id="navigation_affix_padding"></div>
 
-    @yield('content')
+    <div id="microweber-whm-livewire">
+        <livewire:whm-tabs />
+    </div>
 
 </div>
 
 <livewire:scripts/>
 
+</div>
+
 @php
-    WHM::footer();
+    \App\WhmLayoutApi::footer();
 @endphp

@@ -1,5 +1,10 @@
 <?php
 
+$scriptUri = '';
+if (isset($_SERVER['SCRIPT_URI'])) {
+    $scriptUri = $_SERVER['SCRIPT_URI'];
+}
+
 return [
 
     /*
@@ -54,7 +59,7 @@ return [
     |
     */
 
-    'asset_url' => dirname($_SERVER['SCRIPT_URI']),
+    'asset_url' => dirname( $scriptUri),
 
     /*
     |--------------------------------------------------------------------------
@@ -68,7 +73,7 @@ return [
     |
     */
 
-    'app_url' => dirname($_SERVER['SCRIPT_URI']).'/index.cgi?router=',
+    'app_url' => dirname( $scriptUri).'/index.cgi?router=',
 
     /*
     |--------------------------------------------------------------------------
