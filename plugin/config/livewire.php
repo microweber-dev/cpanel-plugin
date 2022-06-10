@@ -1,9 +1,16 @@
 <?php
 
+$appUrl = '';
 $scriptUri = '';
 if (isset($_SERVER['SCRIPT_URI'])) {
     $scriptUri = $_SERVER['SCRIPT_URI'];
+    $http = 'http://';
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+        $http = 'https://';
+    }
+    $appUrl = $http . $_SERVER['HOST'] . ':' . $_SERVER['SERVER_PORT'] . $scriptUri;
 }
+
 
 return [
 
@@ -73,7 +80,7 @@ return [
     |
     */
 
-    'app_url' => dirname( $scriptUri).'/index.cgi?router=',
+    'app_url' => $appUrl . '?router=',
 
     /*
     |--------------------------------------------------------------------------

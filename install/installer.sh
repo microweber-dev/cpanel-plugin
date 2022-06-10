@@ -10,6 +10,13 @@ if [ "$username" != "root" ]; then
     exit 1
 fi
 
+## Create plugin database
+plugin_database=`touch /usr/local/cpanel/microweber/plugin/database/database.sqlite`
+if [ -n "$plugin_database" ]; then
+    echo "Unable to make plugin_database"
+    echo "$plugin_database"
+fi
+
 ## Create symlinks
 
 echo "Creating dirs...";

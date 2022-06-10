@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Http\Livewire;
+
+use Rappasoft\LaravelLivewireTables\DataTableComponent;
+use Rappasoft\LaravelLivewireTables\Views\Column;
+use App\Models\AppInstallation;
+
+class WhmAppInstallationsTable extends DataTableComponent
+{
+    protected bool $offlineIndicatorStatus = false;
+    protected $model = AppInstallation::class;
+
+    public function configure(): void
+    {
+        $this->setPrimaryKey('id');
+        // $this->setDebugEnabled();
+        $this->setQueryStringDisabled();
+    }
+
+    public function columns(): array
+    {
+        return [
+            Column::make("Id", "id")
+                ->sortable(),
+            Column::make("Domain", "domain"),
+            Column::make("Version", "version"),
+            Column::make("Installation Path", "installation_path"),
+            Column::make("Symlink", "is_symlink"),
+            Column::make("Standalone", "is_standalone"),
+            Column::make("Created at", "created_at")
+                ->sortable(),
+            Column::make("Updated at", "updated_at")
+                ->sortable(),
+        ];
+    }
+}
