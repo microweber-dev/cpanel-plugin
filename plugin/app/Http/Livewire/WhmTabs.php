@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class WhmTabs extends Component
 {
-    public $component;
+    public $component = 'whm-installations';
 
     public function loadComponent($component)
     {

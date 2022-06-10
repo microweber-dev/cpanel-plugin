@@ -1,3 +1,3 @@
 <div>
-    settings
+    install
 </div>
