@@ -1,5 +1,7 @@
 <?php
 
+use App\Cpanel\CpanelApi;
+
 include_once(__DIR__ . '/MicroweberStorage.php');
 include_once(__DIR__ . '/MicroweberVersionsManager.php');
 include_once(__DIR__ . '/MicroweberInstallCommand.php');
@@ -66,7 +68,7 @@ class MicroweberHooks
     public function add_account()
     {
         $input = $this->input;
-        $cpapi = new MicroweberCpanelApi();
+        $cpapi = new CpanelApi();
 
 
         $domain = $input['data']['domain'];
@@ -137,7 +139,7 @@ class MicroweberHooks
 
     public function install($domain, $source_path, $installPath, $adminEmail, $adminUsername, $adminPassword, $dbHost = 'localhost', $dbDriver = 'mysql', $is_symlink = false, $extra_config = false, $prepare_only = true, $template = false,$lang = false)
     {
-        $cpapi = new MicroweberCpanelApi();
+        $cpapi = new CpanelApi();
 
         $source_folder = $source_path;
 

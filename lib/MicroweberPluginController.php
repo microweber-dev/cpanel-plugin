@@ -1,4 +1,7 @@
 <?php
+
+use App\Cpanel\CpanelApi;
+
 include_once(__DIR__ . '/MicroweberHooks.php');
 include_once(__DIR__ . '/MicroweberCpanelApi.php');
 include_once(__DIR__ . '/MicroweberLogger.php');
@@ -21,7 +24,7 @@ class MicroweberPluginController
     public function install()
     {
 
-        $cpapi = new MicroweberCpanelApi();
+        $cpapi = new CpanelApi();
 
 
         $settings_from_admin = new MicroweberStorage();
@@ -200,7 +203,7 @@ class MicroweberPluginController
 
     public function makeDBPrefix()
     {
-        $cpapi = new MicroweberCpanelApi();
+        $cpapi = new CpanelApi();
         return $cpapi->makeDbPrefixFromUsername(false);
     }
 

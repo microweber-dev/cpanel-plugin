@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\AppInstallation;
+use App\Cpanel\InstalledAppsScanner;
 use Illuminate\Console\Command;
 
 class AppInstallationsSync extends Command
@@ -39,14 +40,27 @@ class AppInstallationsSync extends Command
     public function handle()
     {
 
-        $newInstallation = new AppInstallation();
-        $newInstallation->name = '';
-        $newInstallation->domain = 'bobi.com';
-        $newInstallation->is_symlink = 1;
-        $newInstallation->is_standalone = 1;
-        $newInstallation->version = '1.1.12';
-        $newInstallation->installation_path = '';
-        $newInstallation->save();
+        $scanner = new InstalledAppsScanner();
+        $installations = $scanner->scanAllAccounts();
+
+        dd($installations);
+
+        if (empty($installations)) {
+            return;
+        }
+
+        foreach ($installations as $installation) {
+
+            $newInstallation = new AppInstallation();
+            $newInstallation->name = '';
+            $newInstallation->domain = 'bobi.com';
+            $newInstallation->is_symlink = 1;
+            $newInstallation->is_standalone = 1;
+            $newInstallation->version = '1.1.12';
+            $newInstallation->installation_path = '';
+            $newInstallation->save();
+
+        }
 
         return 0;
     }

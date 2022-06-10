@@ -1,14 +1,10 @@
 <?php
 
-require_once(__DIR__ . '/traits/MicrowberFindInstalationsTrait.php');
+namespace App\Cpanel;
 
-class MicroweberCpanelApi
+
+class CpanelApi
 {
-
-
-    use MicrowberFindInstalationsTrait;
-
-
     public function checkIfFeatureEnabled($user)
     {
         //$user = $this->input->data->user;
@@ -98,7 +94,7 @@ class MicroweberCpanelApi
     }
 
 
-    public function makeDbPrefixFromUsername($user=false)
+    public function makeDbPrefixFromUsername($user = false)
     {
 
         $restriction = $this->getMysqlRestrictions($user);
