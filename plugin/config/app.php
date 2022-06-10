@@ -52,9 +52,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => dirname($_SERVER['SCRIPT_URI']),
 
-    'asset_url' => env('ASSET_URL', null),
+    'asset_url' => dirname($_SERVER['SCRIPT_URI']),
 
     /*
     |--------------------------------------------------------------------------
