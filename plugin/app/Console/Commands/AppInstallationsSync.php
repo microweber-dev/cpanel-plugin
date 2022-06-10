@@ -42,9 +42,6 @@ class AppInstallationsSync extends Command
 
         $scanner = new InstalledAppsScanner();
         $installations = $scanner->scanAllAccounts();
-
-        dd($installations);
-
         if (empty($installations)) {
             return;
         }
@@ -52,12 +49,31 @@ class AppInstallationsSync extends Command
         foreach ($installations as $installation) {
 
             $newInstallation = new AppInstallation();
-            $newInstallation->name = '';
-            $newInstallation->domain = 'bobi.com';
-            $newInstallation->is_symlink = 1;
-            $newInstallation->is_standalone = 1;
-            $newInstallation->version = '1.1.12';
-            $newInstallation->installation_path = '';
+            $newInstallation->user = $installation['user'];
+            $newInstallation->domain = $installation['domain'];
+            $newInstallation->server_alias = $installation['serveralias'];
+            $newInstallation->server_admin = $installation['serveradmin'];
+            $newInstallation->port = $installation['port'];
+            $newInstallation->server_name = $installation['servername'];
+            $newInstallation->home_dir = $installation['homedir'];
+            $newInstallation->type = $installation['type'];
+            $newInstallation->group = $installation['group'];
+            $newInstallation->ip = $installation['ip'];
+            $newInstallation->document_root = $installation['documentroot'];
+            $newInstallation->owner = $installation['owner'];
+
+            $newInstallation->symlink_target = $installation['symlink_target'];
+
+            if ($installation['is_symlink'] > 0){
+                $newInstallation->is_symlink = 1;
+                $newInstallation->is_standalone = 0;
+            } else {
+                $newInstallation->is_symlink = 0;
+                $newInstallation->is_standalone = 1;
+            }
+
+            $newInstallation->version = $installation['version'];
+            $newInstallation->php_version = $installation['phpversion'];
             $newInstallation->save();
 
         }

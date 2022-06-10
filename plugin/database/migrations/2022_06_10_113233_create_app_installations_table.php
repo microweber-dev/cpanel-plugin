@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\AppInstallation;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,12 +16,23 @@ class CreateAppInstallationsTable extends Migration
     {
         Schema::create('app_installations', function (Blueprint $table) {
             $table->id();
-            $table->text('name')->nullable();
             $table->text('domain')->nullable();
+            $table->text('user')->nullable();
+            $table->text('owner')->nullable();
+            $table->text('server_alias')->nullable();
+            $table->text('server_admin')->nullable();
+            $table->text('server_name')->nullable();
+            $table->text('ip')->nullable();
+            $table->text('document_root')->nullable();
+            $table->text('home_dir')->nullable();
+            $table->integer('is_symlink')->nullable();
+            $table->integer('is_standalone')->nullable();
+            $table->text('symlink_target')->nullable();
+            $table->text('port')->nullable();
+            $table->text('type')->nullable();
+            $table->text('group')->nullable();
             $table->text('version')->nullable();
-            $table->text('installation_path')->nullable();
-            $table->text('is_symlink')->nullable();
-            $table->text('is_standalone')->nullable();
+            $table->text('php_version')->nullable();
             $table->timestamps();
         });
     }

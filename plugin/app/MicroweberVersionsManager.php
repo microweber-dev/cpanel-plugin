@@ -1,8 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/MicroweberHelpers.php');
-require_once(__DIR__ . '/MicroweberMarketplaceConnector.php');
-require_once(__DIR__ . '/traits/MicrowberFindInstalationsTrait.php');
+namespace App;
 
 class MicroweberVersionsManager
 {
@@ -37,8 +35,6 @@ class MicroweberVersionsManager
         if ($sharedDir) {
             $this->sharedDir = $sharedDir;
         }
-
-
 
 
         $this->tempZipFile = $this->sharedDir . '/mw-download.zip';
@@ -221,7 +217,7 @@ class MicroweberVersionsManager
 
                     $tempalteZip = $template['target_dir'] . '-latest.zip';
                     $templateDir = $this->sharedDirTemplate . $template['target_dir'] . '/';
-                    $downloadDir = $this->sharedDirTemplate .   '/tmp/';
+                    $downloadDir = $this->sharedDirTemplate . '/tmp/';
 
                     if (!is_dir($templateDir)) {
                         MicroweberHelpers::mkdirRecursive($templateDir);
@@ -231,12 +227,12 @@ class MicroweberVersionsManager
                         MicroweberHelpers::mkdirRecursive($downloadDir);
                     }
 
-                  //  $templateZipFullpath = $templateDir . $tempalteZip;
+                    //  $templateZipFullpath = $templateDir . $tempalteZip;
                     $templateZipFullpath = $downloadDir . $tempalteZip;
 
                     MicroweberHelpers::download($template['download_url'], $templateZipFullpath);
 
-                    if(!function_exists('exec')) {
+                    if (!function_exists('exec')) {
                         echo "exec is disabled";
                         exit;
                     }
@@ -252,7 +248,7 @@ class MicroweberVersionsManager
 
                     }
 
-                    exec("unzip -o {$templateZipFullpath} -d {$templateDir}",$output);
+                    exec("unzip -o {$templateZipFullpath} -d {$templateDir}", $output);
                     unlink($templateZipFullpath);
                 }
             }
@@ -302,7 +298,7 @@ class MicroweberVersionsManager
 
         $languages = array();
 
-       // $lang_dir = $sharedDir . '/userfiles/modules/microweber/language';
+        // $lang_dir = $sharedDir . '/userfiles/modules/microweber/language';
         $lang_dir = $sharedDir . '/src/MicroweberPackages/Translation/resources/lang';
 
         if (is_dir($lang_dir)) {
@@ -318,8 +314,8 @@ class MicroweberVersionsManager
                     //var_dump($upperText);
                     //     $upperText = strtoupper($upperText);
 
-                   // $languages[trim(strtolower($upperText))] = trim($upperText);
-                  //  $languages[trim(strtolower($upperText))] = trim($upperText);
+                    // $languages[trim(strtolower($upperText))] = trim($upperText);
+                    //  $languages[trim(strtolower($upperText))] = trim($upperText);
                     $languages[$upperText] = trim($upperText);
                 }
             }

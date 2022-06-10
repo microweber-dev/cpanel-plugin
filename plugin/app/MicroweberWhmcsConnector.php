@@ -1,5 +1,7 @@
 <?php
 
+namespace App;
+
 class MicroweberWhmcsConnector
 {
     public $installer;
@@ -39,11 +41,11 @@ class MicroweberWhmcsConnector
 
 
         if ($settings and isset($settings['whmcs_url'])) {
-            return rtrim($settings['whmcs_url'],"/").'/';
+            return rtrim($settings['whmcs_url'], "/") . '/';
         }
 
         if ($settings and isset($settings['url'])) {
-            return rtrim($settings['url'],"/").'/';
+            return rtrim($settings['url'], "/") . '/';
         }
     }
 

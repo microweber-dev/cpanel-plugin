@@ -2,6 +2,8 @@
 
 namespace App\Cpanel;
 
+use App\MicroweberVersionsManager;
+
 class InstalledAppsScanner
 {
     private $cpanelApi;
@@ -19,7 +21,7 @@ class InstalledAppsScanner
         if ($accounts and isset($accounts['data']) and isset($accounts['data']['acct'])) {
             foreach ($accounts['data']['acct'] as $account) {
                 if (isset($account['user'])) {
-                    $user_domains = $this->scanAccount($account['user']);
+                    $user_domains = $this->scanByUsername($account['user']);
                 }
                 if (isset($user_domains) and $user_domains) {
                     $return = array_merge($return, $user_domains);

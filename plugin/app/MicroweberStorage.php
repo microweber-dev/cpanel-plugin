@@ -1,5 +1,6 @@
 <?php
 
+namespace App;
 class MicroweberStorage
 {
     private $file;
@@ -26,7 +27,7 @@ class MicroweberStorage
     public function save($data)
     {
         $save_branding = false;
-        if(isset($data['branding'])){
+        if (isset($data['branding'])) {
             $save_branding = $data['branding'];
         }
 
@@ -37,7 +38,7 @@ class MicroweberStorage
             $data = array_map("trim", $data);
         }
 
-        if($save_branding){
+        if ($save_branding) {
             $data['branding'] = $save_branding;
         }
 

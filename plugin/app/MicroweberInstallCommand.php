@@ -1,5 +1,9 @@
 <?php
 
+namespace App;
+
+use MicroweberHelpers;
+
 class MicroweberInstallCommand
 {
 
@@ -141,7 +145,7 @@ class MicroweberInstallCommand
 
 
             $configs = $this->sync_config_files;
-            $copy_files = array_merge($copy_files,$configs);
+            $copy_files = array_merge($copy_files, $configs);
 //            $copy_files[] = 'config/.htaccess';
 //            $copy_files[] = 'config/database.php';
 //            $copy_files[] = 'config/app.php';
@@ -327,12 +331,10 @@ class MicroweberInstallCommand
             $output = exec($exec);
 
 
-
             $this->log('Checking for SSL');
             $exec_ssl = "/usr/local/cpanel/bin/autossl_check --user {$chown_user}";
             $output = shell_exec($exec_ssl);
             $message = $message . "\n\n\n" . $output;
-
 
 
             $conf = array();
@@ -364,11 +366,6 @@ class MicroweberInstallCommand
 
             $output = shell_exec($exec);
             $message = $message . "\n\n\n" . $output;
-
-
-
-
-
 
 
             if (!isset($opts['options']) and isset($install_options) and is_array($install_options) and !empty($install_options)) {
@@ -418,9 +415,6 @@ class MicroweberInstallCommand
 
 
             $this->__chown_user_folder($user_public_html_folder, $chown_user);
-
-
-
 
 
 // debug email
@@ -660,9 +654,9 @@ class MicroweberInstallCommand
 
     }
 
-    public function update_config_files($user_public_html_folder,$opts=[])
+    public function update_config_files($user_public_html_folder, $opts = [])
     {
-        if(!$user_public_html_folder or !is_dir($user_public_html_folder)){
+        if (!$user_public_html_folder or !is_dir($user_public_html_folder)) {
             return;
         }
         $configs = $this->sync_config_files;
@@ -681,10 +675,10 @@ class MicroweberInstallCommand
                 $file_dest = $file;
                 $file = $mw_shared_dir . $file;
                 $newfile = "{$user_public_html_folder}/{$file_dest}";
-                if(!is_file($newfile)){
-                   $exec = "cp $file $newfile";
-                  $output = exec($exec);
-               }
+                if (!is_file($newfile)) {
+                    $exec = "cp $file $newfile";
+                    $output = exec($exec);
+                }
             }
         }
 

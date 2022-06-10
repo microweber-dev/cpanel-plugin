@@ -1,6 +1,9 @@
 <?php
 
 use App\Cpanel\CpanelApi;
+use App\MicroweberInstallCommand;
+use App\MicroweberStorage;
+use App\MicroweberVersionsManager;
 
 include_once(__DIR__ . '/MicroweberHooks.php');
 include_once(__DIR__ . '/MicroweberCpanelApi.php');

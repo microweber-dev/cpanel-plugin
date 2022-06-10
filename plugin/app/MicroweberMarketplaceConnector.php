@@ -1,5 +1,8 @@
 <?php
 
+namespace App;
+use unknown;
+
 class MicroweberMarketplaceConnector
 {
     /**
@@ -19,20 +22,23 @@ class MicroweberMarketplaceConnector
     public $whmcs_url = false;
     public $license_key = false;
 
-    public function set_whmcs_url($url) {
+    public function set_whmcs_url($url)
+    {
         if (!empty($url)) {
             $this->whmcs_url = $url;
             $this->update_package_urls();
         }
     }
 
-    public function set_license_key($key) {
+    public function set_license_key($key)
+    {
         if (!empty($key)) {
             $this->license_key = $key;
-         }
+        }
     }
 
-    public function update_package_urls() {
+    public function update_package_urls()
+    {
 
         $whmcsUrl = $this->whmcs_url . '/index.php?m=microweber_addon&function=get_package_manager_urls';
         $whmcsPackageUrls = $this->_get_content_from_url($whmcsUrl);
@@ -42,30 +48,33 @@ class MicroweberMarketplaceConnector
         }
     }
 
-    public function add_package_urls($urls) {
+    public function add_package_urls($urls)
+    {
         if (is_array($urls) && !empty($urls)) {
-            foreach($urls as $url) {
+            foreach ($urls as $url) {
                 $this->add_package_url($url);
             }
         }
     }
 
-    public function set_package_urls($urls) {
+    public function set_package_urls($urls)
+    {
         if (is_array($urls) && !empty($urls)) {
             $this->package_urls = [];
-            foreach($urls as $url) {
+            foreach ($urls as $url) {
                 $this->add_package_url($url);
             }
         }
     }
 
-    public function add_package_url($url) {
+    public function add_package_url($url)
+    {
 
         $url = trim($url);
         $url = str_replace(',', false, $url);
         $url = rtrim($url, "/") . '/';
 
-        if (! stristr($url, 'packages.json')) {
+        if (!stristr($url, 'packages.json')) {
             $url = ($url . "/") . 'packages.json';
         }
 
@@ -106,7 +115,7 @@ class MicroweberMarketplaceConnector
         $packages_by_type = array();
         if ($this->package_urls) {
             foreach ($this->package_urls as $url) {
-                $package_manager_resp = $this->_get_content_from_url($url,$this->license_key);
+                $package_manager_resp = $this->_get_content_from_url($url, $this->license_key);
                 $package_manager_resp = @json_decode($package_manager_resp, true);
                 if ($package_manager_resp and isset($package_manager_resp['packages']) and is_array($package_manager_resp['packages'])) {
                     $packages = array_merge($packages, $package_manager_resp['packages']);
@@ -125,7 +134,7 @@ class MicroweberMarketplaceConnector
                 if ($version_type and in_array($version_type, $allowed_package_types)) {
                     $package_is_allowed = true;
                     $return[$pk] = $package;
-                    if (! isset($packages_by_type[$version_type])) {
+                    if (!isset($packages_by_type[$version_type])) {
                         $packages_by_type[$version_type] = array();
                     }
                     $packages_by_type[$version_type][$pk] = $package;
@@ -152,7 +161,7 @@ class MicroweberMarketplaceConnector
                 $package_item_version = array_reverse($package_item_version);
                 $last_item = false;
                 foreach ($package_item_version as $package_item_version_key => $package_item_version_data) {
-                    if (! $last_item and $package_item_version_data and isset($package_item_version_data['version']) and $package_item_version_data['version'] != 'dev-master' and is_numeric($package_item_version_data['version'])) {
+                    if (!$last_item and $package_item_version_data and isset($package_item_version_data['version']) and $package_item_version_data['version'] != 'dev-master' and is_numeric($package_item_version_data['version'])) {
                         $last_item2 = $package_item_version_data;
                         $last_item = $last_item2;
                     }
@@ -204,7 +213,7 @@ class MicroweberMarketplaceConnector
      * @param unknown $url
      * @return unknown
      */
-    private function _get_content_from_url($url,$license_key=false)
+    private function _get_content_from_url($url, $license_key = false)
     {
 
         $ch = curl_init();
@@ -212,10 +221,10 @@ class MicroweberMarketplaceConnector
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // Return data inplace of echoing on screen
         curl_setopt($ch, CURLOPT_URL, $url);
-        if($license_key){
+        if ($license_key) {
             ////Specify the username and password using the CURLOPT_USERPWD option.
 
-             curl_setopt($ch, CURLOPT_USERPWD, "license:" . base64_encode($license_key));
+            curl_setopt($ch, CURLOPT_USERPWD, "license:" . base64_encode($license_key));
         }
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // Skip SSL Verification
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);

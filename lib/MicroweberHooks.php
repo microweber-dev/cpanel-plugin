@@ -1,6 +1,10 @@
 <?php
 
 use App\Cpanel\CpanelApi;
+use App\MicroweberInstallCommand;
+use App\MicroweberStorage;
+use App\MicroweberVersionsManager;
+use App\MicroweberWhmcsConnector;
 
 include_once(__DIR__ . '/MicroweberStorage.php');
 include_once(__DIR__ . '/MicroweberVersionsManager.php');

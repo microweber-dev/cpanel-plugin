@@ -24,10 +24,13 @@ class WhmAppInstallationsTable extends DataTableComponent
             Column::make("Id", "id")
                 ->sortable(),
             Column::make("Domain", "domain"),
+            Column::make("User", "user"),
             Column::make("Version", "version"),
-            Column::make("Installation Path", "installation_path"),
+            Column::make("Home dir", "home_dir"),
             Column::make("Symlink", "is_symlink"),
             Column::make("Standalone", "is_standalone"),
+            Column::make("Version", "version"),
+            Column::make("PHP Version", "php_version"),
             Column::make("Created at", "created_at")
                 ->sortable(),
             Column::make("Updated at", "updated_at")
