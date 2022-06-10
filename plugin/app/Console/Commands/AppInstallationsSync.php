@@ -39,7 +39,6 @@ class AppInstallationsSync extends Command
      */
     public function handle()
     {
-
         $scanner = new InstalledAppsScanner();
         $installations = $scanner->scanAllAccounts();
         if (empty($installations)) {
@@ -48,33 +47,43 @@ class AppInstallationsSync extends Command
 
         foreach ($installations as $installation) {
 
-            $newInstallation = new AppInstallation();
-            $newInstallation->user = $installation['user'];
-            $newInstallation->domain = $installation['domain'];
-            $newInstallation->server_alias = $installation['serveralias'];
-            $newInstallation->server_admin = $installation['serveradmin'];
-            $newInstallation->port = $installation['port'];
-            $newInstallation->server_name = $installation['servername'];
-            $newInstallation->home_dir = $installation['homedir'];
-            $newInstallation->type = $installation['type'];
-            $newInstallation->group = $installation['group'];
-            $newInstallation->ip = $installation['ip'];
-            $newInstallation->document_root = $installation['documentroot'];
-            $newInstallation->owner = $installation['owner'];
+            $findInstallation = AppInstallation::where('user', $installation['user'])
+                    ->where('domain',$installation['domain'])
+                    ->where('server_name',$installation['servername'])
+                    ->where('home_dir',$installation['homedir'])
+                    ->where('document_root',$installation['documentroot'])
+                    ->first();
 
-            $newInstallation->symlink_target = $installation['symlink_target'];
-
-            if ($installation['is_symlink'] > 0){
-                $newInstallation->is_symlink = 1;
-                $newInstallation->is_standalone = 0;
-            } else {
-                $newInstallation->is_symlink = 0;
-                $newInstallation->is_standalone = 1;
+            if ($findInstallation == null) {
+                $findInstallation = new AppInstallation();
             }
 
-            $newInstallation->version = $installation['version'];
-            $newInstallation->php_version = $installation['phpversion'];
-            $newInstallation->save();
+            $findInstallation->user = $installation['user'];
+            $findInstallation->domain = $installation['domain'];
+            $findInstallation->server_alias = $installation['serveralias'];
+            $findInstallation->server_admin = $installation['serveradmin'];
+            $findInstallation->port = $installation['port'];
+            $findInstallation->server_name = $installation['servername'];
+            $findInstallation->home_dir = $installation['homedir'];
+            $findInstallation->type = $installation['type'];
+            $findInstallation->group = $installation['group'];
+            $findInstallation->ip = $installation['ip'];
+            $findInstallation->document_root = $installation['documentroot'];
+            $findInstallation->owner = $installation['owner'];
+
+            $findInstallation->symlink_target = $installation['symlink_target'];
+
+            if ($installation['is_symlink'] > 0){
+                $findInstallation->is_symlink = 1;
+                $findInstallation->is_standalone = 0;
+            } else {
+                $findInstallation->is_symlink = 0;
+                $findInstallation->is_standalone = 1;
+            }
+
+            $findInstallation->version = $installation['version'];
+            $findInstallation->php_version = $installation['phpversion'];
+            $findInstallation->save();
 
         }
 
