@@ -1,14 +1,14 @@
-<?php
+@php
 require_once('/usr/local/cpanel/php/WHM.php');
-WHM::header('Microweber Settings', 1, 1);
-?>
+WHM::header('Microweber WHM Administration', 1, 1);
+@endphp
 
 <livewire:styles />
 
-<livewire:counter />
+@yield('content')
 
 <livewire:scripts />
 
-<?php
+@php
 WHM::footer();
-?>
+@endphp
