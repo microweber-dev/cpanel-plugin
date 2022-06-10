@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Setting;
+use App\Models\Option;
 use Livewire\Component;
 
 class WhmSettings extends Component
@@ -15,7 +15,7 @@ class WhmSettings extends Component
     {
         if (!empty($this->state)) {
             foreach ($this->state as $key=>$value) {
-                Setting::updateSetting($key, $value);
+                Option::updateOption($key, $value);
             }
         }
 
@@ -25,6 +25,6 @@ class WhmSettings extends Component
     public function mount()
     {
        // mount state
-        $this->state = array_merge($this->state, Setting::getAll());
+        $this->state = array_merge($this->state, Option::getAll());
     }
 }

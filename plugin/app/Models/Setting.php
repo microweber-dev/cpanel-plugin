@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Setting extends Model
+class Option extends Model
 {
     use HasFactory;
 
-    public static function updateSetting($key, $value) {
+    public static function updateOption($key, $value) {
 
-        $find = static::where('setting_key', $key)->first();
+        $find = static::where('option_key', $key)->first();
         if ($find == null) {
             $find = new static();
-            $find->setting_key = $key;
+            $find->option_key = $key;
         }
 
-        $find->setting_value = $value;
+        $find->option_value = $value;
         return $find->save();
 
     }
@@ -25,20 +25,20 @@ class Setting extends Model
 
     public static function getAll()
     {
-        $settings = [];
+        $options = [];
 
-        foreach (static::get() as $setting) {
-            $settings[$setting->setting_key] = $setting->setting_value;
+        foreach (static::get() as $option) {
+            $options[$option->option_key] = $option->option_value;
         }
 
-        return $settings;
+        return $options;
     }
 
-    public function getSetting($key)
+    public function getOption($key)
     {
-        $find = static::where('setting_key', $key)->first();
+        $find = static::where('option_key', $key)->first();
         if ($find != null) {
-          return $find->setting_value;
+          return $find->option_value;
         }
 
         return false;
