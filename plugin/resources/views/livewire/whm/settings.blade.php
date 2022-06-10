@@ -77,7 +77,4 @@
         </div>
     </form>
 
-<script src="//cdn.startbootstrap.com/sb-forms-latest.js"></script>
-
-
 </div>
