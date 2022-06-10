@@ -31,7 +31,6 @@ class RequestRoute extends Request
             } else {
                 $server['x-no-throttle'] = $params["x-no-throttle"];
                 unset($params["x-no-throttle"]);
-
             }
             return new RequestRoute($query, $request, $attributes, $cookies, $files, $server, $content);
         };
