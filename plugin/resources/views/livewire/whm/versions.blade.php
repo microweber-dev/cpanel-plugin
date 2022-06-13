@@ -5,13 +5,25 @@
     <span>Latest download date:</span> <b>{{$latestDownloadDateOfApp}}</b><br />
     <br />
 
-    <h5>Available Templates ({{count($availableTemplatesOfApp)}})</h5>
-    @if(!empty($availableTemplatesOfApp))
-    @foreach($availableTemplatesOfApp as $template)
-    {{$template['name']}} ({{$template['version']}})
+    <h5>Available Templates ({{count($supportedTemplates)}})</h5>
+    @if(!empty($supportedTemplates))
+    @foreach($supportedTemplates as $template)
+    {{$template['name']}} ({{$template['version']}}) &nbsp;
     @endforeach
     @else
         No templates installed
+    @endif
+
+    <br />
+    <br />
+
+    <h5>Available Languages ({{count($supportedLanguages)}})</h5>
+    @if(!empty($supportedLanguages))
+    @foreach($supportedLanguages as $language=>$languageName)
+    {{$languageName}} &nbsp;
+    @endforeach
+    @else
+        No languages installed
     @endif
 
     <br />

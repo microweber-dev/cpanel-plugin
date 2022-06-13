@@ -11,12 +11,9 @@ class WhmVersions extends Component
     public $currentVersionOfApp = 0;
     public $latestVersionOfApp = 0;
     public $latestDownloadDateOfApp = 0;
-    public $availableTemplatesOfApp = [
-        'new-world'=>[
-            'name'=>'New World',
-            'version'=>'1.2',
-        ]
-    ];
+
+    public $supportedTemplates = [];
+    public $supportedLanguages = [];
 
     public function checkForUpdate()
     {
@@ -35,8 +32,8 @@ class WhmVersions extends Component
         $sharedPath = new MicroweberSharedPathHelper();
         $sharedPath->setPath(config('whm-cpanel.sharedPaths.app'));
 
-        $languages = $sharedPath->getSupportedLanguages();
-        $templates = $sharedPath->getSupportedTemplates();
+        $this->supportedLanguages = $sharedPath->getSupportedLanguages();
+        $this->supportedTemplates = $sharedPath->getSupportedTemplates();
 
         return view('livewire.whm.versions');
     }
