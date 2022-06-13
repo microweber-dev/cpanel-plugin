@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use MicroweberPackages\SharedServerScripts\MicroweberDownloader;
 
 class WhmVersions extends Component
 {
@@ -16,8 +17,14 @@ class WhmVersions extends Component
         ]
     ];
 
+    public $appSharedPath = '/usr/share/microweber/latest';
+
     public function checkForUpdate()
     {
+        $downloader = new MicroweberDownloader();
+        $status = $downloader->download(config('whm-cpanel.sharedPaths.app'));
+
+        dd($status);
 
     }
 
