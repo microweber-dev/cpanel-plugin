@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7bb040eb4e624aa63290fcf781061ba6",
+    "content-hash": "09a5d4278ffa4178824606dfdcaa03b4",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1732,6 +1732,109 @@
                 }
             ],
             "time": "2022-04-07T21:38:12+00:00"
+        },
+        {
+            "name": "microweber-packages/composer-client",
+            "version": "1.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/microweber-packages/composer-client.git",
+                "reference": "f7a3d4343c501e33ffc8e47e65d8155e218e7bbf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/microweber-packages/composer-client/zipball/f7a3d4343c501e33ffc8e47e65d8155e218e7bbf",
+                "reference": "f7a3d4343c501e33ffc8e47e65d8155e218e7bbf",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.0 || ^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MicroweberPackages\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Microweber",
+                    "email": "info@microweber.com"
+                },
+                {
+                    "name": "Bozhidar Slaveykov",
+                    "email": "bobi@microweber.com"
+                }
+            ],
+            "description": "Composer Client",
+            "homepage": "http://microweber.com",
+            "support": {
+                "email": "support@microweber.com",
+                "issues": "https://github.com/microweber-packages/composer-client/issues",
+                "source": "https://github.com/microweber-packages/composer-client/tree/1.9"
+            },
+            "time": "2022-06-08T15:26:57+00:00"
+        },
+        {
+            "name": "microweber-packages/shared-server-scripts",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/microweber-packages/shared-server-scripts.git",
+                "reference": "7dff96a5a5204e949f6d987ba215cd470acbe7cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/microweber-packages/shared-server-scripts/zipball/7dff96a5a5204e949f6d987ba215cd470acbe7cb",
+                "reference": "7dff96a5a5204e949f6d987ba215cd470acbe7cb",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.2",
+                "symfony/process": "^5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.0 || ^9.0",
+                "symfony/var-dumper": "^5.4"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MicroweberPackages\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Microweber",
+                    "email": "info@microweber.com"
+                },
+                {
+                    "name": "Bozhidar Slaveykov",
+                    "email": "bobi@microweber.com"
+                }
+            ],
+            "description": "Shared server scripts",
+            "homepage": "http://microweber.com",
+            "support": {
+                "email": "support@microweber.com",
+                "issues": "https://github.com/microweber-packages/shared-server-scripts/issues",
+                "source": "https://github.com/microweber-packages/shared-server-scripts/tree/main"
+            },
+            "time": "2022-06-13T14:28:54+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -8111,7 +8214,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "microweber-packages/shared-server-scripts": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

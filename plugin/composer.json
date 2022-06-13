@@ -12,6 +12,8 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.10",
+        "microweber-packages/composer-client": "^1.9",
+        "microweber-packages/shared-server-scripts": "dev-main",
         "rappasoft/laravel-livewire-tables": "^2.7"
     },
     "require-dev": {
