@@ -4,21 +4,19 @@
         <div class="mb-3">
             <label class="form-label" for="defaultInstallationTemplate">Default Installation template</label>
             <select class="form-select" wire:model="state.installation_template" id="defaultInstallationTemplate" aria-label="Default Installation template">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
+
+                @foreach($supportedTemplates as $template=>$templateName)
+                <option value="{{$template}}">{{$templateName}}</option>
+                @endforeach
+
             </select>
         </div>
         <div class="mb-3">
             <label class="form-label" for="defaultInstallationLanguage">Default Installation language</label>
             <select class="form-select" wire:model="state.installation_language" id="defaultInstallationLanguage" aria-label="Default Installation language">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
+                @foreach($supportedLanguages as $language=>$languageName)
+                    <option value="{{$language}}">{{$languageName}}</option>
+                @endforeach
             </select>
         </div>
         <div class="mb-3">
