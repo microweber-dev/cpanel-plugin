@@ -17,14 +17,15 @@ class WhmVersions extends Component
         ]
     ];
 
-    public $appSharedPath = '/usr/share/microweber/latest';
-
     public function checkForUpdate()
     {
+        $sharedAppPath = config('whm-cpanel.sharedPaths.app');
+        if(!is_dir(dirname($sharedAppPath))) {
+            mkdir(dirname($sharedAppPath));
+        }
+
         $downloader = new MicroweberDownloader();
         $status = $downloader->download(config('whm-cpanel.sharedPaths.app'));
-
-        dd($status);
 
     }
 
