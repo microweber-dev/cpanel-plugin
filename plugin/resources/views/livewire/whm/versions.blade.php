@@ -22,7 +22,7 @@
     </button>
 
 
-    <div wire:loading wire:target="checkForUpdate()">
+    <div wire:loading wire:target="checkForUpdate">
         Downloading ...
     </div>
 
