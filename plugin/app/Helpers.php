@@ -1,10 +1,8 @@
 <?php
+namespace App;
 
-
-class MicroweberHelpers
+class Helpers
 {
-
-
     public static function mkdirRecursive($pathname)
     {
         if ($pathname == '') {
@@ -30,10 +28,10 @@ class MicroweberHelpers
     {
         $dn = dirname($file);
         if (!is_dir($dn)) {
-            MicroweberHelpers::mkdirRecursive($dn);
+            Helpers::mkdirRecursive($dn);
         }
 
-        if(is_file($file)){
+        if (is_file($file)) {
             @unlink($file);
         }
 
