@@ -21,4 +21,9 @@
         Check for updates
     </button>
 
+
+    <div wire:loading wire:target="checkForUpdate()">
+        Downloading ...
+    </div>
+
 </div>
