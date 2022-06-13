@@ -16,6 +16,11 @@ class WhmVersions extends Component
         ]
     ];
 
+    public function checkForUpdate()
+    {
+
+    }
+
     public function render()
     {
         return view('livewire.whm.versions');

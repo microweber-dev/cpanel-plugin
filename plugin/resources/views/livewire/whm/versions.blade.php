@@ -1,9 +1,9 @@
 <div>
     <h5>Microweber version</h5>
-    <span>Your version is: </span> <b>{{$currentVersionOfApp}}</b> <br>
-    <span>Latest version is:</span> <b>{{$latestVersionOfApp}}</b> <br>
-    <span>Latest download date:</span> <b>{{$latestDownloadDateOfApp}}</b><br>
-    <br>
+    <span>Your version is: </span> <b>{{$currentVersionOfApp}}</b> <br />
+    <span>Latest version is:</span> <b>{{$latestVersionOfApp}}</b> <br />
+    <span>Latest download date:</span> <b>{{$latestDownloadDateOfApp}}</b><br />
+    <br />
 
     <h5>Available Templates ({{count($availableTemplatesOfApp)}})</h5>
     @if(!empty($availableTemplatesOfApp))
@@ -14,8 +14,11 @@
         No templates installed
     @endif
 
-    <br>
-    <br>
-    <button class="btn btn-outline-success" wire:click="checkForUpdate()" style="width:200px;">Check for updates</button>
+    <br />
+    <br />
+
+    <button class="btn btn-outline-success" wire:click="checkForUpdate()" wire:loading.attr="disabled">
+        Check for updates
+    </button>
 
 </div>
