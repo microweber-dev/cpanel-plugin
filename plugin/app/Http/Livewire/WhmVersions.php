@@ -34,6 +34,9 @@ class WhmVersions extends Component
 
         $this->supportedLanguages = $sharedPath->getSupportedLanguages();
         $this->supportedTemplates = $sharedPath->getSupportedTemplates();
+        $this->latestVersionOfApp = $sharedPath->getCurrentVersion();
+        $this->currentVersionOfApp = $sharedPath->getCurrentVersion();
+        $this->latestDownloadDateOfApp = $sharedPath->getLastDownloadDate();
 
         return view('livewire.whm.versions');
     }
