@@ -1,6 +1,6 @@
 <div>
 
-    @if(!$validWhitelabel)
+    @if(!$activeWhitelabel)
         <div>
             <h4>Use White Label license to grow your business!</h4>
             <p>The <b>Whitelabel</b> gives you the right to rebrand <b>Microweber CMS</b> with your own logo.</p>
@@ -30,7 +30,7 @@
         </div>
     @endif
 
-    @if($validWhitelabel)
+    @if($activeWhitelabel)
 
     <div class="alert alert-primary">
         <p>
@@ -41,9 +41,17 @@
             Registraion on: 2021-06-23 <br>
         </p>
 
-        <a href="#" onclick="return confirm('Are you sure want to delete whitelabel license key?');">
-            Remove Whitelabel Key
-        </a>
+
+
+        @if($confirmRemoveLicense)
+            <button wire:click="removeLicense()" class="btn btn-outline-dark btn-sm">
+                Are you sure want to delete whitelabel license key?
+            </button>
+        @else
+            <button wire:click="confirmRemoveLicense()" class="btn btn-outline-danger btn-sm">
+                Remove Whitelabel Key
+            </button>
+        @endif
 
     </div>
 

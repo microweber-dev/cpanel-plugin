@@ -9,9 +9,10 @@ use MicroweberPackages\ComposerClient\Client;
 class WhmWhitelabel extends Component
 {
     public $state = [];
-    public $validWhitelabel = false;
+    public $activeWhitelabel = false;
     public $validationMessageWhitelabelKey = false;
     public $whitelabelLicenseKey = '';
+    public $confirmRemoveLicense = false;
 
     public function render()
     {
@@ -24,6 +25,18 @@ class WhmWhitelabel extends Component
         return view('livewire.whm.whitelabel');
     }
 
+    public function confirmRemoveLicense()
+    {
+        $this->confirmRemoveLicense = true;
+    }
+
+    public function removeLicense()
+    {
+        $this->activeWhitelabel = true;
+        Option::updateOption('wl_license_key', '');
+        Option::updateOption('wl_license_key_status', '');
+    }
+
     public function validateLicense()
     {
         $composerClient = new Client();
@@ -34,7 +47,7 @@ class WhmWhitelabel extends Component
             Option::updateOption('wl_license_key_status', 'valid');
 
             $this->validationMessageWhitelabelKey = 'License key is valid.';
-            $this->validWhitelabel = true;
+            $this->activeWhitelabel = true;
         } else {
             $this->validationMessageWhitelabelKey = 'License key is not valid.';
         }
@@ -48,7 +61,7 @@ class WhmWhitelabel extends Component
 
         $licenseKeyStatus = Option::getOption('wl_license_key_status');
         if ($licenseKeyStatus == 'valid') {
-            $this->validWhitelabel = true;
+            $this->activeWhitelabel = true;
         }
 
     }
