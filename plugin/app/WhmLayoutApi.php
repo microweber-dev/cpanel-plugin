@@ -16,7 +16,7 @@ if (is_file('/usr/local/cpanel/php/WHM.php')) {
         public static  function header($params1,$params2,$params3) {
 
         }
-        
+
         public static  function footer() {
 
         }
