@@ -36,7 +36,7 @@ $appConfig = [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => 'development', //env('APP_ENV', 'production'),
 
     /*
     |--------------------------------------------------------------------------
@@ -129,7 +129,7 @@ $appConfig = [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => 'base64:baaq7HHZn0bTnEXNmZxNAesJtEHHOBSbf7BidU02H+s=', // env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
 
