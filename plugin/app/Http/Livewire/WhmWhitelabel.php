@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Option;
 use Livewire\Component;
+use MicroweberPackages\ComposerClient\Client;
 
 class WhmWhitelabel extends Component
 {
@@ -24,8 +25,10 @@ class WhmWhitelabel extends Component
 
     public function validateLicense()
     {
+        $composerClient = new Client();
+        $consumeLicense = $composerClient->consumeLicense($this->whitelabelLicenseKey);
 
-        
+        dd($consumeLicense);
     }
 
     public function mount()
