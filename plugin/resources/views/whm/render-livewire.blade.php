@@ -13,8 +13,7 @@
 <div id="contentContainer">
 
     <div class="pageTitle mt-3" id="pageTitle-whm_marketplace">
-        <h5><img class="whm-app-title__image" src="{{asset('img/mw-icon.svg')}}"
-                 alt="">
+        <h5><img class="whm-app-title__image" src="{{asset('img/mw-icon.svg')}}" style="max-width:50px" alt="">
             <span>Microweber - Drag & drop website builder</span>
         </h5>
     </div>

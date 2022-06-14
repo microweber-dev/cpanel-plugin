@@ -10,7 +10,12 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form id="whitelabel-form" style="width: 550px;">
+                    <div id="whitelabel-form" style="width: 550px;">
+
+                        @if($validationMessageWhitelabelKey)
+                            <div class="alert alert-danger">{{$validationMessageWhitelabelKey}}</div>
+                        @endif
+
                         <div class="mb-3">
                             <label class="form-label" for="whiteLabelKey">White Label Key </label>
                             <input class="form-control" id="whiteLabelKey" type="text" wire:model.defer="whitelabelLicenseKey" placeholder="Place your microweber White Label key..." />
@@ -18,7 +23,7 @@
                         <div>
                             <button class="btn btn-outline-primary" wire:click="validateLicense()" type="submit">Validate License</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
 
@@ -36,12 +41,13 @@
             Registraion on: 2021-06-23 <br>
         </p>
 
-        <a href="#">Change Whitelabel key</a> <br>
-        <a href="#" onclick="return confirm('Are you sure want to delete whitelabel license key?');">Remove Whitelabel Key</a>
+        <a href="#" onclick="return confirm('Are you sure want to delete whitelabel license key?');">
+            Remove Whitelabel Key
+        </a>
 
     </div>
 
-    <form id="whitelabel-form">
+    <div id="whitelabel-form">
 
         <div class="mb-3">
             <label class="form-label" for="brandName">Brand Name</label>
@@ -121,6 +127,5 @@
             <label class="form-label" for="enterAdminColorsSass">Enter &quot;Admin colors&quot; sass</label>
             <textarea class="form-control" id="enterAdminColorsSass" wire:model="state.wl_admin_colors_sass" type="text" placeholder='Enter "Admin colors" sass' style="height: 10rem;" data-sb-validations=""></textarea>
         </div>
-    </form>
     @endif
 </div>
