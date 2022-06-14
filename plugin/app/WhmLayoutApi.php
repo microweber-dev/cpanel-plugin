@@ -13,5 +13,12 @@ if (is_file('/usr/local/cpanel/php/WHM.php')) {
 } else {
     class WhmLayoutApi {
 
+        public static  function header($params1,$params2,$params3) {
+
+        }
+        
+        public static  function footer() {
+
+        }
     }
 }
