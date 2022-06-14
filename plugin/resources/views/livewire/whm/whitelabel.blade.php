@@ -13,7 +13,7 @@
                     <form id="whitelabel-form" style="width: 550px;">
                         <div class="mb-3">
                             <label class="form-label" for="whiteLabelKey">White Label Key </label>
-                            <input class="form-control" id="whiteLabelKey" type="text" wire:model="whitelabelLicenseKey" placeholder="Place your microweber White Label key..." />
+                            <input class="form-control" id="whiteLabelKey" type="text" wire:model.defer="whitelabelLicenseKey" placeholder="Place your microweber White Label key..." />
                         </div>
                         <div>
                             <button class="btn btn-outline-primary" wire:click="validateLicense()" type="submit">Validate License</button>
