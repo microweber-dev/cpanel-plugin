@@ -6,7 +6,7 @@
             <select class="form-select" wire:model="state.installation_template" id="defaultInstallationTemplate" aria-label="Default Installation template">
 
                 @foreach($supportedTemplates as $template)
-                <option value="{{$template['targetPath']}}">{{$template['name']}}</option>
+                <option value="{{$template['targetDir']}}">{{$template['name']}}</option>
                 @endforeach
 
             </select>
