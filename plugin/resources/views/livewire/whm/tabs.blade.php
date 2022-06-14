@@ -4,7 +4,14 @@
         <li class="nav-item"><a class="nav-link @if($component=='whm-installations') active @endif" href="#" wire:click="loadComponent('whm-installations')">Installations</a></li>
         <li class="nav-item"><a class="nav-link @if($component=='whm-install') active @endif" href="#" wire:click="loadComponent('whm-install')">Install</a></li>
         <li class="nav-item"><a class="nav-link @if($component=='whm-versions') active @endif" href="#" wire:click="loadComponent('whm-versions')">Versions</a></li>
-        <li class="nav-item"><a class="nav-link @if($component=='whm-whitelabel') active @endif" href="#" wire:click="loadComponent('whm-whitelabel')">White Label</a></li>
+        <li class="nav-item">
+            <a style="width: 150px;" class="nav-link @if($component=='whm-whitelabel') active @endif" href="#" wire:click="loadComponent('whm-whitelabel')">
+                White Label
+                <span class="badge badge-success" style="font-size: 7px;padding-top: ;position: ;margin-top: ;position: absolute;margin-top: 6px;margin-left: 7px;background: #0d6efd;">
+                    PRO
+                </span>
+            </a>
+        </li>
         <li class="nav-item"><a class="nav-link @if($component=='whm-settings') active @endif" href="#" wire:click="loadComponent('whm-settings')">Settings</a></li>
     </ul>
 

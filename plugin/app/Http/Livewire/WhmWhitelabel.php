@@ -8,6 +8,7 @@ use Livewire\Component;
 class WhmWhitelabel extends Component
 {
     public $state = [];
+    public $validWhitelabel = false;
 
     public function render()
     {
@@ -24,5 +25,6 @@ class WhmWhitelabel extends Component
     {
         // mount state
         $this->state = array_merge($this->state, Option::getAll());
+
     }
 }
