@@ -44,8 +44,8 @@ class WhmWhitelabel extends Component
         $consumeLicense = $composerClient->consumeLicense($this->whitelabelLicenseKey);
         if ($consumeLicense['valid']) {
 
-            Option::updateOption('license_key', $this->whitelabelLicenseKey);
-            Option::updateOption('license_key_status', 'valid');
+            Option::updateOption('license_key', $this->whitelabelLicenseKey, 'whitelabel_license');
+            Option::updateOption('license_key_status', 'valid', 'whitelabel_license');
 
             $this->validationMessageWhitelabelKey = 'License key is valid.';
             $this->activeWhitelabel = true;
