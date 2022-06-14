@@ -1,8 +1,7 @@
 <div>
 
     @if(!$validWhitelabel)
-        <div class="pul-card__main-content">
-
+        <div>
             <h4>Use White Label license to grow your business!</h4>
             <p>The <b>Whitelabel</b> gives you the right to rebrand <b>Microweber CMS</b> with your own logo.</p>
             <p>You can sell it to your clients under your own brand. There is no limitation of number of installations.</p>
@@ -14,10 +13,10 @@
                     <form id="whitelabel-form" style="width: 550px;">
                         <div class="mb-3">
                             <label class="form-label" for="whiteLabelKey">White Label Key </label>
-                            <input class="form-control" id="whiteLabelKey" type="text" placeholder="Place your microweber White Label key..." />
+                            <input class="form-control" id="whiteLabelKey" type="text" wire:model="whitelabelLicenseKey" placeholder="Place your microweber White Label key..." />
                         </div>
                         <div>
-                            <button class="btn btn-outline-primary" id="submitButton" type="submit">Validate License</button>
+                            <button class="btn btn-outline-primary" wire:click="validateLicense()" type="submit">Validate License</button>
                         </div>
                     </form>
                 </div>

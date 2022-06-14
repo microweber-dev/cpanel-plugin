@@ -9,6 +9,7 @@ class WhmWhitelabel extends Component
 {
     public $state = [];
     public $validWhitelabel = false;
+    public $whitelabelLicenseKey = '';
 
     public function render()
     {
@@ -21,10 +22,15 @@ class WhmWhitelabel extends Component
         return view('livewire.whm.whitelabel');
     }
 
+    public function validateLicense()
+    {
+
+        
+    }
+
     public function mount()
     {
         // mount state
         $this->state = array_merge($this->state, Option::getAll());
-
     }
 }
