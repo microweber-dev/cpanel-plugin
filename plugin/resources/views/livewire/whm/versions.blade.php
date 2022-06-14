@@ -8,7 +8,7 @@
     <h5>Available Templates ({{count($supportedTemplates)}})</h5>
     @if(!empty($supportedTemplates))
     @foreach($supportedTemplates as $template)
-    {{$template['name']}} ({{$template['version']}}) &nbsp;
+        {{$template['name']}} (v{{$template['version']}}) &nbsp;
     @endforeach
     @else
         No templates installed
@@ -20,7 +20,7 @@
     <h5>Available Languages ({{count($supportedLanguages)}})</h5>
     @if(!empty($supportedLanguages))
     @foreach($supportedLanguages as $language=>$languageName)
-    {{$languageName}} &nbsp;
+         {{$languageName}} &nbsp;
     @endforeach
     @else
         No languages installed
@@ -32,7 +32,6 @@
     <button class="btn btn-outline-success" wire:click="checkForUpdate()" wire:loading.attr="disabled">
         Check for updates
     </button>
-
 
     <div wire:loading wire:target="checkForUpdate">
         Downloading ...
