@@ -18,7 +18,7 @@ class WhmSettings extends Component
     {
         if (!empty($this->state)) {
             foreach ($this->state as $key=>$value) {
-                Option::updateOption($key, $value);
+                Option::updateOption($key, $value, 'settings');
             }
         }
 
@@ -34,6 +34,6 @@ class WhmSettings extends Component
         $this->supportedTemplates = $sharedPath->getSupportedTemplates();
 
        // mount state
-        $this->state = array_merge($this->state, Option::getAll());
+        $this->state = array_merge($this->state, Option::getAll('settings'));
     }
 }

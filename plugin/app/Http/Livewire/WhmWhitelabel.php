@@ -18,7 +18,7 @@ class WhmWhitelabel extends Component
     {
         if (!empty($this->state)) {
             foreach ($this->state as $key=>$value) {
-                Option::updateOption($key, $value);
+                Option::updateOption($key, $value, 'whitelabel');
             }
         }
 
@@ -32,9 +32,10 @@ class WhmWhitelabel extends Component
 
     public function removeLicense()
     {
-        $this->activeWhitelabel = true;
-        Option::updateOption('wl_license_key', '');
-        Option::updateOption('wl_license_key_status', '');
+        Option::updateOption('license_key', false,'whitelabel_license');
+        Option::updateOption('license_key_status', false,'whitelabel_license');
+
+        $this->activeWhitelabel = false;
     }
 
     public function validateLicense()
@@ -43,8 +44,8 @@ class WhmWhitelabel extends Component
         $consumeLicense = $composerClient->consumeLicense($this->whitelabelLicenseKey);
         if ($consumeLicense['valid']) {
 
-            Option::updateOption('wl_license_key', $this->whitelabelLicenseKey);
-            Option::updateOption('wl_license_key_status', 'valid');
+            Option::updateOption('license_key', $this->whitelabelLicenseKey);
+            Option::updateOption('license_key_status', 'valid');
 
             $this->validationMessageWhitelabelKey = 'License key is valid.';
             $this->activeWhitelabel = true;
@@ -57,10 +58,9 @@ class WhmWhitelabel extends Component
     public function mount()
     {
         // mount state
-        $this->state = array_merge($this->state, Option::getAll());
+        $this->state = array_merge($this->state, Option::getAll('whitelabel'));
 
-        $licenseKeyStatus = Option::getOption('wl_license_key_status');
-        if ($licenseKeyStatus == 'valid') {
+        if (Option::getOption('license_key_status', 'whitelabel_license') == 'valid') {
             $this->activeWhitelabel = true;
         }
 

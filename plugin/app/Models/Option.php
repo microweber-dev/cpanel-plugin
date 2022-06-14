@@ -9,38 +9,54 @@ class Option extends Model
 {
     use HasFactory;
 
-    public static function updateOption($key, $value) {
+    /**
+     * @param $key
+     * @param $value
+     * @param $group
+     * @return bool
+     */
+    public static function updateOption($key, $value, $group) {
 
-        $find = static::where('option_key', $key)->first();
+        $find = static::where('option_key', $key)->where('option_group', $group)->first();
         if ($find == null) {
             $find = new static();
             $find->option_key = $key;
+            $find->option_group = $group;
         }
 
         $find->option_value = $value;
-        return $find->save();
 
+        return $find->save();
     }
 
 
-    public static function getAll()
+    /**
+     * @param $group
+     * @return array
+     */
+    public static function getAll($group = 'default')
     {
         $options = [];
-
-        foreach (static::get() as $option) {
+        foreach (static::where('option_group', $group)->get() as $option) {
             $options[$option->option_key] = $option->option_value;
         }
-
         return $options;
     }
 
-    public function getOption($key)
+    /**
+     * @param $key
+     * @param $group
+     * @param $default
+     * @return false|mixed
+     */
+    public static function getOption($key, $group = 'default', $default = false)
     {
-        $find = static::where('option_key', $key)->first();
-        if ($find != null) {
+        $find = static::where('option_key', $key)->where('option_group', $group)->first();
+
+        if ($find !== null) {
           return $find->option_value;
         }
 
-        return false;
+        return $default;
     }
 }
