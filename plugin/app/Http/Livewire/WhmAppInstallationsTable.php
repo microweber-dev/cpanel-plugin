@@ -11,6 +11,8 @@ class WhmAppInstallationsTable extends DataTableComponent
     protected bool $offlineIndicatorStatus = false;
     protected $model = AppInstallation::class;
 
+    protected $listeners = ['refreshInstallations' => '$refresh'];
+
     public function configure(): void
     {
         $this->setPrimaryKey('id');

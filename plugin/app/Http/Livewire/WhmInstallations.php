@@ -7,8 +7,6 @@ use Livewire\Component;
 
 class WhmInstallations extends Component
 {
-    protected $listeners = ['refreshComponent' => '$refresh'];
-    
     public function render()
     {
         return view('livewire.whm.installations');
@@ -18,6 +16,6 @@ class WhmInstallations extends Component
     {
         dispatch(new AppInstallationsSync());
 
-        $this->emit('refreshComponent');
+        $this->emit('refreshInstallations');
     }
 }
