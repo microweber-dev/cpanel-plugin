@@ -10,7 +10,6 @@ if (isset($_SERVER['SCRIPT_URI'])) {
     $appUrl = $http . $_SERVER['HOST'] . ':' . $_SERVER['SERVER_PORT'] . $scriptUri;
 }
 
-
 $appConfig = [
 
     /*
