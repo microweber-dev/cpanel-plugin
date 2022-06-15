@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use MicroweberPackages\SharedServerScripts\MicroweberDownloader;
-use MicroweberPackages\SharedServerScripts\MicroweberSharedPathHelper;
+use MicroweberPackages\SharedServerScripts\MicroweberAppPathHelper;
 
 class WhmVersions extends Component
 {
@@ -29,7 +29,7 @@ class WhmVersions extends Component
 
     public function render()
     {
-        $sharedPath = new MicroweberSharedPathHelper();
+        $sharedPath = new MicroweberAppPathHelper();
         $sharedPath->setPath(config('whm-cpanel.sharedPaths.app'));
 
         $this->supportedLanguages = $sharedPath->getSupportedLanguages();

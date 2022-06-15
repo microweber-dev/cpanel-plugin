@@ -3,6 +3,7 @@
 namespace App\Cpanel;
 
 use App\MicroweberVersionsManager;
+use MicroweberPackages\SharedServerScripts\MicroweberAppPathHelper;
 
 class InstalledAppsScanner
 {
@@ -73,38 +74,26 @@ class InstalledAppsScanner
 
         $return = array();
         foreach ($allDomains as $key => $domain) {
-            $mainDir = $domain['documentroot'];
-            $find_version = new MicroweberVersionsManager($mainDir);
-            $config_file = $mainDir . "/config/microweber.php";
-            $config = file_exists($config_file);
-            $is_symlink = $find_version->isSymlinked();
-            $symlink_target = false;
-            if ($is_symlink) {
-                $symlink_target = readlink($mainDir . "/src");
-                $symlink_target = dirname($symlink_target);
-            }
-            if (!$config) {
-                continue;
-            }
 
-            $whmcs_connector_module_dir = $mainDir . "/userfiles/modules/whmcs_connector";
+            $documentRoot = $domain['documentroot'];
 
-            $version = $find_version->getCurrentVersion();
-            if ($version) {
-                $filectime = filectime($config_file);
-                $format = "Y-m-d H:i:s";
-                $domain['created_at'] = date($format, $filectime);
-                $domain['version'] = $version;
-                if ($is_symlink) {
-                    $domain['is_symlink'] = 1;
-                    $domain['symlink_target'] = $symlink_target;
-                } else {
-                    $domain['is_symlink'] = 0;
-                    $domain['symlink_target'] = false;
+            $sharedPathHelper = new MicroweberAppPathHelper();
+            $sharedPathHelper->setPath($documentRoot);
 
-                }
-                $return[$key] = $domain;
+            $isSymlink = $sharedPathHelper->isSymlink();
+
+            $domain['created_at'] = $sharedPathHelper->getCreatedAt();
+            $domain['version'] = $sharedPathHelper->getCurrentVersion();
+            if ($isSymlink) {
+                $domain['is_symlink'] = 1;
+                $domain['symlink_target'] = true;
+            } else {
+                $domain['is_symlink'] = 0;
+                $domain['symlink_target'] = false;
+
             }
+            $return[$key] = $domain;
+
         }
         return $return;
     }

@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Option;
 use Livewire\Component;
-use MicroweberPackages\SharedServerScripts\MicroweberSharedPathHelper;
+use MicroweberPackages\SharedServerScripts\MicroweberAppPathHelper;
 
 class WhmSettings extends Component
 {
@@ -27,7 +27,7 @@ class WhmSettings extends Component
 
     public function mount()
     {
-        $sharedPath = new MicroweberSharedPathHelper();
+        $sharedPath = new MicroweberAppPathHelper();
         $sharedPath->setPath(config('whm-cpanel.sharedPaths.app'));
 
         $this->supportedLanguages = $sharedPath->getSupportedLanguages();
