@@ -32,15 +32,13 @@ class WhmVersions extends Component
             ]);
         }
 
-
+        $downloader = new MicroweberDownloader();
+        $downloader->setComposerClient($composerClient);
+        $status = $downloader->download(config('whm-cpanel.sharedPaths.app'));
+        
         $downloader = new MicroweberTemplatesDownloader();
         $downloader->setComposerClient($composerClient);
         $status = $downloader->download(config('whm-cpanel.sharedPaths.templates'));
-
-/*
-        $downloader = new MicroweberDownloader();
-        $downloader->setComposerClient($composerClient);
-        $status = $downloader->download(config('whm-cpanel.sharedPaths.app'));*/
 
     }
 
