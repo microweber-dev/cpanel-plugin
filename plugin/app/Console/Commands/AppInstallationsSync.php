@@ -52,6 +52,7 @@ class AppInstallationsSync extends Command
                     ->where('server_name',$installation['servername'])
                     ->where('home_dir',$installation['homedir'])
                     ->where('document_root',$installation['documentroot'])
+                    ->where('path',$installation['path'])
                     ->first();
 
             if ($findInstallation == null) {
@@ -69,6 +70,7 @@ class AppInstallationsSync extends Command
             $findInstallation->group = $installation['group'];
             $findInstallation->ip = $installation['ip'];
             $findInstallation->document_root = $installation['documentroot'];
+            $findInstallation->path = $installation['path'];
             $findInstallation->owner = $installation['owner'];
 
             $findInstallation->symlink_target = $installation['symlink_target'];

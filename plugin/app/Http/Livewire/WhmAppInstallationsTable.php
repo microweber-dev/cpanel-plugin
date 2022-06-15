@@ -30,7 +30,7 @@ class WhmAppInstallationsTable extends DataTableComponent
             Column::make("Domain", "domain"),
             Column::make("User", "user"),
             Column::make("Version", "version"),
-            Column::make("Home dir", "home_dir"),
+            Column::make("Path", "path"),
             Column::make("Symlink", "is_symlink"),
             Column::make("Standalone", "is_standalone"),
             Column::make("Version", "version"),

@@ -72,36 +72,52 @@ class InstalledAppsScanner
             }
         }
 
-        $return = array();
-        foreach ($allDomains as $key => $domain) {
+        $installations = array();
+        foreach ($allDomains as $domain) {
 
-            $documentRoot = $domain['documentroot'];
+            $rii = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($domain['documentroot']));
+            foreach ($rii as $file) {
 
-            $sharedPathHelper = new MicroweberAppPathHelper();
-            $sharedPathHelper->setPath($documentRoot);
+                if (!$file->isFile()) {
+                    continue;
+                }
 
-            $createdAt = $sharedPathHelper->getCreatedAt();
-            if (!$createdAt) {
-                continue;
+                $skip = true;
+                if (strpos($file->getPathname(), '/config/microweber.php') !== false) {
+                    $skip = false;
+                }
+                if ($skip) {
+                    continue;
+                }
+
+                $scanPath = dirname(dirname($file->getPathname())) . '/';
+
+                $sharedPathHelper = new MicroweberAppPathHelper();
+                $sharedPathHelper->setPath($scanPath);
+                $createdAt = $sharedPathHelper->getCreatedAt();
+
+                if (!$createdAt) {
+                    continue;
+                }
+
+                $isSymlink = $sharedPathHelper->isSymlink();
+
+                $domain['path'] = $scanPath;
+                $domain['created_at'] = $createdAt;
+                $domain['version'] = $sharedPathHelper->getCurrentVersion();
+
+                if ($isSymlink) {
+                    $domain['is_symlink'] = 1;
+                    $domain['symlink_target'] = true;
+                } else {
+                    $domain['is_symlink'] = 0;
+                    $domain['symlink_target'] = false;
+                }
+
+                $installations[] = $domain;
             }
-
-            $isSymlink = $sharedPathHelper->isSymlink();
-
-            $domain['created_at'] = $createdAt;
-            $domain['version'] = $sharedPathHelper->getCurrentVersion();
-
-            if ($isSymlink) {
-                $domain['is_symlink'] = 1;
-                $domain['symlink_target'] = true;
-            } else {
-                $domain['is_symlink'] = 0;
-                $domain['symlink_target'] = false;
-            }
-
-            $return[$key] = $domain;
-
         }
 
-        return $return;
+        return $installations;
     }
 }

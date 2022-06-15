@@ -25,6 +25,7 @@ class CreateAppInstallationsTable extends Migration
             $table->text('ip')->nullable();
             $table->text('document_root')->nullable();
             $table->text('home_dir')->nullable();
+            $table->text('path')->nullable();
             $table->integer('is_symlink')->nullable();
             $table->integer('is_standalone')->nullable();
             $table->text('symlink_target')->nullable();
