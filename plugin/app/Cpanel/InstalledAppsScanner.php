@@ -4,6 +4,7 @@ namespace App\Cpanel;
 
 use App\MicroweberVersionsManager;
 use MicroweberPackages\SharedServerScripts\MicroweberAppPathHelper;
+use MicroweberPackages\SharedServerScripts\MicroweberInstallationsRecursiveScanner;
 
 class InstalledAppsScanner
 {
@@ -75,38 +76,16 @@ class InstalledAppsScanner
         $installations = array();
         foreach ($allDomains as $domain) {
 
-            $rii = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($domain['documentroot']));
-            foreach ($rii as $file) {
+           $recursiveScan = new MicroweberInstallationsRecursiveScanner();
+           $recursiveScan->setPath($domain['documentroot']);
 
-                if (!$file->isFile()) {
-                    continue;
-                }
+           foreach ($recursiveScan->scan() as $installation) {
 
-                $skip = true;
-                if (strpos($file->getPathname(), '/config/microweber.php') !== false) {
-                    $skip = false;
-                }
-                if ($skip) {
-                    continue;
-                }
+                $domain['path'] = $installation['path'];
+                $domain['created_at'] = $installation['created_at'];
+                $domain['version'] = $installation['version'];
 
-                $scanPath = dirname(dirname($file->getPathname())) . '/';
-
-                $sharedPathHelper = new MicroweberAppPathHelper();
-                $sharedPathHelper->setPath($scanPath);
-                $createdAt = $sharedPathHelper->getCreatedAt();
-
-                if (!$createdAt) {
-                    continue;
-                }
-
-                $isSymlink = $sharedPathHelper->isSymlink();
-
-                $domain['path'] = $scanPath;
-                $domain['created_at'] = $createdAt;
-                $domain['version'] = $sharedPathHelper->getCurrentVersion();
-
-                if ($isSymlink) {
+                if ($installation['is_symlink']) {
                     $domain['is_symlink'] = 1;
                     $domain['symlink_target'] = true;
                 } else {
