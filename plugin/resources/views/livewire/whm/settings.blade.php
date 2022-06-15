@@ -1,16 +1,6 @@
 <div>
 
-    <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-        <div class="mb-3">
-            <label class="form-label" for="defaultInstallationTemplate">Default Installation template</label>
-            <select class="form-select" wire:model="state.installation_template" id="defaultInstallationTemplate" aria-label="Default Installation template">
-
-                @foreach($supportedTemplates as $template)
-                <option value="{{$template['targetDir']}}">{{$template['name']}}</option>
-                @endforeach
-
-            </select>
-        </div>
+    <div id="settings-form">
         <div class="mb-3">
             <label class="form-label" for="defaultInstallationLanguage">Default Installation language</label>
             <select class="form-select" wire:model="state.installation_language" id="defaultInstallationLanguage" aria-label="Default Installation language">
@@ -20,13 +10,21 @@
             </select>
         </div>
         <div class="mb-3">
+            <label class="form-label" for="defaultInstallationTemplate">Default Installation template</label>
+            <select class="form-select" wire:model="state.installation_template" id="defaultInstallationTemplate" aria-label="Default Installation template">
+                @foreach($supportedTemplates as $template)
+                <option value="{{$template['targetDir']}}">{{$template['name']}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="mb-3">
             <label class="form-label d-block">Default Installation type</label>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" id="default" type="radio" wire:model="state.installation_type" value="default" name="installation_type" data-sb-validations="required" />
+                <input class="form-check-input" id="default" type="radio" wire:model="state.installation_type" value="default" name="installation_type" />
                 <label class="form-check-label" for="default">Default</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" id="symLinkedSavesABigAmountOfDiskSpace" type="radio" wire:model="state.installation_type" value="symlinked" name="installation_type" data-sb-validations="required" />
+                <input class="form-check-input" id="symLinkedSavesABigAmountOfDiskSpace" type="radio" wire:model="state.installation_type" value="symlinked" name="installation_type" />
                 <label class="form-check-label" for="symLinkedSavesABigAmountOfDiskSpace">Sym-Linked <small>(saves a big amount of disk space)</small></label>
             </div>
             <div class="invalid-feedback" data-sb-feedback="defaultInstallationType:required">One option is required.</div>
@@ -73,6 +71,6 @@
                 <label class="form-check-label" for="allowResellersToUseTheirOwnWhiteLabel">Allow resellers to use their own White Label?</label>
             </div>
         </div>
-    </form>
+    </div>
 
 </div>
