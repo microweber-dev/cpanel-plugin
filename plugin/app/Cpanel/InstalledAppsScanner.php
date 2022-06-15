@@ -80,21 +80,28 @@ class InstalledAppsScanner
             $sharedPathHelper = new MicroweberAppPathHelper();
             $sharedPathHelper->setPath($documentRoot);
 
+            $createdAt = $sharedPathHelper->getCreatedAt();
+            if (!$createdAt) {
+                continue;
+            }
+
             $isSymlink = $sharedPathHelper->isSymlink();
 
-            $domain['created_at'] = $sharedPathHelper->getCreatedAt();
+            $domain['created_at'] = $createdAt;
             $domain['version'] = $sharedPathHelper->getCurrentVersion();
+
             if ($isSymlink) {
                 $domain['is_symlink'] = 1;
                 $domain['symlink_target'] = true;
             } else {
                 $domain['is_symlink'] = 0;
                 $domain['symlink_target'] = false;
-
             }
+
             $return[$key] = $domain;
 
         }
+
         return $return;
     }
 }
