@@ -2,9 +2,12 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Option;
 use Livewire\Component;
+use MicroweberPackages\ComposerClient\Client;
 use MicroweberPackages\SharedServerScripts\MicroweberDownloader;
 use MicroweberPackages\SharedServerScripts\MicroweberAppPathHelper;
+use MicroweberPackages\SharedServerScripts\MicroweberTemplatesDownloader;
 
 class WhmVersions extends Component
 {
@@ -22,8 +25,22 @@ class WhmVersions extends Component
             mkdir(dirname($sharedAppPath));
         }
 
+        $composerClient = new Client();
+        if (Option::getOption('license_key_status', 'whitelabel_license') == 'valid') {
+            $composerClient->addLicense([
+                'local_key' => Option::getOption('license_key', 'whitelabel_license')
+            ]);
+        }
+
+
+        $downloader = new MicroweberTemplatesDownloader();
+        $downloader->setComposerClient($composerClient);
+        $status = $downloader->download(config('whm-cpanel.sharedPaths.templates'));
+
+/*
         $downloader = new MicroweberDownloader();
-        $status = $downloader->download(config('whm-cpanel.sharedPaths.app'));
+        $downloader->setComposerClient($composerClient);
+        $status = $downloader->download(config('whm-cpanel.sharedPaths.app'));*/
 
     }
 
