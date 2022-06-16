@@ -1,23 +1,35 @@
 <div>
-    <h3>Choose installation options</h3>
+    <h4>Choose installation options</h4>
     <p>
         Random values will be generated if fields are left blank.
     </p>
 
-    <div id="install-form">
-        <div class="mb-3">
-            <label class="form-label" for="domain">Domain</label>
-            <select class="form-select" id="domain" wire:model.defer="installationDomain"  aria-label="Domain">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
+    <div id="install-form" class="mt-3">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label" for="domain">Domain</label>
+                    <select class="form-select" id="domain" wire:model.defer="installationDomain">
+                        @foreach($domains as $domain)
+                        <option value="1">{{$domain['domain']}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label" for="domain">Domain</label>
+                    <select class="form-select" id="domain" wire:model.defer="installationDomain">
+                        @foreach($domains as $domain)
+                        <option value="1">{{$domain['domain']}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="installationLanguage">Installation language</label>
-            <select class="form-select" wire:model.defer="installationLanguage" id="installationLanguage" aria-label="Installation language">
+            <select class="form-select" wire:model.defer="installationLanguage" id="installationLanguage">
                 @foreach($supportedLanguages as $language=>$languageName)
                     <option value="{{$language}}">{{$languageName}}</option>
                 @endforeach
@@ -25,7 +37,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label" for="installationTemplate">Installation template</label>
-            <select class="form-select" wire:model.defer="installationTemplate" id="installationTemplate" aria-label="Installation template">
+            <select class="form-select" wire:model.defer="installationTemplate" id="installationTemplate">
                 @foreach($supportedTemplates as $template)
                     <option value="{{$template['targetDir']}}">{{$template['name']}}</option>
                 @endforeach
@@ -46,7 +58,7 @@
 
         <div class="mb-3">
             <label class="form-label" for="databaseDriver">Database Driver</label>
-            <select class="form-select" id="databaseDriver" name="installation_database_driver" wire:model.defer="installationDatabaseDriver" aria-label="Database Driver">
+            <select class="form-select" id="databaseDriver" name="installation_database_driver" wire:model.defer="installationDatabaseDriver">
                 <option value="sqlite">SQLite</option>
                 <option value="mysql">MySql</option>
             </select>

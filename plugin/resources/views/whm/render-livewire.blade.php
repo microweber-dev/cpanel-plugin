@@ -4,11 +4,40 @@
 
 <div id="microweber-whm">
 
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 
-<livewire:styles/>
+<livewire:styles />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;500&display=swap" rel="stylesheet">
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    font-weight:300;
+    font-size:15px;
+}
+.nav-tabs > li > a {
+    font-weight:300;
+}
+.nav-tabs > li > a {
+    color: #4592ff;
+}
+.nav-tabs > li > a:hover {
+    color: #4592ff;
+}
+a {
+    text-decoration:none;
+    color: #4592ff;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    font-weight:bold;
+}
+.btn {
+    border-radius: 16px;
+}
+</style>
 
 <div id="contentContainer">
 

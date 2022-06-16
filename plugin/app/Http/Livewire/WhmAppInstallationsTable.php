@@ -29,14 +29,12 @@ class WhmAppInstallationsTable extends DataTableComponent
          //   Column::make("Id", "id")->sortable(),
             Column::make("Domain", "domain"),
             Column::make("User", "user"),
-            Column::make("Version", "version"),
             Column::make("Path", "path"),
-            Column::make("Symlink", "is_symlink"),
-            Column::make("Standalone", "is_standalone"),
             Column::make("Version", "version"),
-            Column::make("PHP Version", "php_version"),
-            Column::make("Created at", "created_at")->sortable(),
-            Column::make("Updated at", "updated_at")->sortable(),
+           // Column::make("Symlink", "is_symlink"),
+        //    Column::make("PHP", "php_version"),
+        //    Column::make("Created at", "created_at")->sortable(),
+         //   Column::make("Updated at", "updated_at")->sortable(),
         ];
     }
 
