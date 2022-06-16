@@ -12,6 +12,7 @@ class WhmInstall extends Component
     public $supportedTemplates = [];
     public $supportedLanguages = [];
 
+    public $installationDomainName;
     public $installationLanguage;
     public $installationTemplate;
     public $installationType;
@@ -25,7 +26,7 @@ class WhmInstall extends Component
     public function render()
     {
 
-        if (empty($this->installationAdminEmail)) {
+        if (!empty($this->installationDomainName)) {
             $this->installationAdminEmail = 'admin@' . $this->installationDomainName;
         }
 

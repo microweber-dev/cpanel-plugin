@@ -10,10 +10,10 @@
 
         <div class="input-group mb-3">
             <label class="input-group-text">Domain</label>
-            <select class="form-select" id="domain" wire:model.defer="installationDomain" style="height: 38px;">
+            <select class="form-select" id="domain" wire:model="installationDomainName" style="height: 38px;">
                 <option>Select domain...</option>
                 @foreach($domains as $domain)
-                    <option value="1">{{$domain['domain']}}</option>
+                    <option value="{{$domain['domain']}}">{{$domain['domain']}}</option>
                 @endforeach
             </select>
             <span class="input-group-text" style="height: 38px;">/</span>
@@ -65,15 +65,15 @@
 
         <div class="mb-3">
             <label class="form-label" for="adminEmail">Admin Email</label>
-            <input class="form-control" id="adminEmail" type="email" wire:model.defer="installationAdminEmail" placeholder="Admin Email" />
+            <input class="form-control" id="adminEmail" type="email" wire:model="installationAdminEmail" placeholder="Admin Email" />
         </div>
         <div class="mb-3">
             <label class="form-label" for="adminUsername">Admin Username</label>
-            <input class="form-control" id="adminUsername" type="text" wire:model.defer="installationAdminUsername" placeholder="Admin Username" />
+            <input class="form-control" id="adminUsername" type="text" wire:model="installationAdminUsername" placeholder="Admin Username" />
         </div>
         <div class="mb-3">
             <label class="form-label" for="adminPassword">Admin Password</label>
-            <input class="form-control" id="adminPassword" type="password" wire:model.defer="installationAdminPassword" placeholder="Admin Password" />
+            <input class="form-control" id="adminPassword" type="password" wire:model="installationAdminPassword" placeholder="Admin Password" />
         </div>
 
         <button class="btn btn-outline-success btn-block mt-4" wire:click="install()" type="button">Install</button>
