@@ -49,7 +49,7 @@ a {
     box-shadow: rgb(234, 234, 234) 0px 0px 18px;
 }
 .nav-tabs {
-    --bs-nav-tabs-border-width: 4px;
+    --bs-nav-tabs-border-width: 3px;
     border-bottom: 3px solid #efefef;
 }
 .nav-tabs .nav-item .nav-link {
