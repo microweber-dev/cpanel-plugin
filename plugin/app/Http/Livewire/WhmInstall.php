@@ -57,5 +57,10 @@ class WhmInstall extends Component
     public function install()
     {
 
+        $cpanelApi = new CpanelApi();
+
+        file_put_contents("/home/bobimicroweber/public_html/text-file.txt", rand(1,9));
+
+
     }
 }

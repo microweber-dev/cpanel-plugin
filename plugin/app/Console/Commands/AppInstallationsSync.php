@@ -89,6 +89,16 @@ class AppInstallationsSync extends Command
 
         }
 
+        // Search for deleted installations
+        $getAppInstallations = AppInstallation::all();
+        if ($getAppInstallations != null) {
+            foreach ($getAppInstallations as $appInstallation) {
+                if(!is_file($appInstallation['path'].'/config/microweber.php')) {
+                    $appInstallation->delete();
+                }
+            }
+        }
+
         return 0;
     }
 }
