@@ -27,6 +27,12 @@ class WhmInstall extends Component
     {
 
         if (!empty($this->installationDomainName)) {
+
+            $cpanelApi = new CpanelApi();
+            $accounts = $cpanelApi->execApi1('listaccts', array('search' =>$this->installationDomainName, 'searchtype' => 'domain'));
+
+            dd($accounts); 
+
             $this->installationAdminEmail = 'admin@' . $this->installationDomainName;
         }
 
