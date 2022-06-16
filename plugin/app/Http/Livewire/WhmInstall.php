@@ -11,6 +11,14 @@ class WhmInstall extends Component
     public $supportedTemplates = [];
     public $supportedLanguages = [];
 
+    public $installationLanguage;
+    public $installationTemplate;
+    public $installationType;
+    public $installationDatabaseDriver;
+    public $installationAdminEmail;
+    public $installationAdminUsername;
+    public $installationAdminPassword;
+
     public function render()
     {
         return view('livewire.whm.install');
