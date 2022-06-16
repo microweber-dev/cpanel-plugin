@@ -51,7 +51,7 @@
                 <option value="mysql">MySql</option>
             </select>
         </div>
-        
+
         <div class="mb-3">
             <label class="form-label" for="adminEmail">Admin Email</label>
             <input class="form-control" id="adminEmail" type="email" placeholder="Admin Email" />

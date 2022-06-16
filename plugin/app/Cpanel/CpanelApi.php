@@ -115,46 +115,4 @@ class CpanelApi
         return implode($pass);
     }
 
-
-//    public function findInstalations($username = false)
-//    {
-//
-//        $allDomains = array();
-//        $domaindata = $this->execUapi($username, 'DomainInfo', 'domains_data', array('format' => 'hash'));
-//        if ($domaindata) {
-//            $domaindata = $domaindata['cpanelresult']['result']['data'];
-//            if (isset($domaindata['main_domain'])) {
-//                $allDomains = array_merge($allDomains, $domaindata['main_domain']);
-//            }
-//            if (isset($domaindata['addon_domains'])) {
-//                $allDomains = array_merge($allDomains, $domaindata['addon_domains']);
-//            }
-//            if (isset($domaindata['sub_domains'])) {
-//                $allDomains = array_merge($allDomains, $domaindata['sub_domains']);
-//            }
-//        }
-//
-//
-//        $return = array();
-//        foreach ($allDomains as $key => $domain) {
-//
-//            $mainDir = $domain['documentroot'];
-//            $config = file_exists("$mainDir/config/microweber.php");
-//            $version_file = file_exists("$mainDir/version.txt");
-//            if (!$config) {
-//                continue;
-//            }
-//            if (!$version_file) {
-//                $version = 'unknown';
-//            } else {
-//                $version = file_get_contents("$mainDir/version.txt");
-//
-//            }
-//            $domain['version'] = $version;
-//            $return[$key] = $domain;
-//        }
-//        return $return;
-//    }
-
-
 }
