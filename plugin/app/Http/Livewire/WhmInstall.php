@@ -24,6 +24,11 @@ class WhmInstall extends Component
 
     public function render()
     {
+
+        if (empty($this->installationAdminEmail)) {
+            $this->installationAdminEmail = 'admin@' . $this->installationDomainName;
+        }
+
         return view('livewire.whm.install');
     }
 
@@ -45,6 +50,11 @@ class WhmInstall extends Component
 
         $this->supportedLanguages = $sharedPath->getSupportedLanguages();
         $this->supportedTemplates = $sharedPath->getSupportedTemplates();
+
+    }
+
+    public function install()
+    {
 
     }
 }

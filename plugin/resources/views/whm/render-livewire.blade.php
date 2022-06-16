@@ -17,22 +17,58 @@ body {
     font-family: 'Poppins', sans-serif;
     font-weight:300;
     font-size:15px;
+    background: #f9fbfd;
+}
+.h5, h5 {
+    font-weight: 300;
+}
+.nav-tabs > li {
+    margin:0px;
 }
 .nav-tabs > li > a {
     font-weight:300;
+    color: #2d82c4;
+    border:0px;
+    margin:0px;
 }
-.nav-tabs > li > a {
-    color: #4592ff;
+.nav-tabs .nav-link {
+    border:0px;
 }
 .nav-tabs > li > a:hover {
-    color: #4592ff;
+    color: #2d82c4;
+}
+a:focus {
+    outline:0px;
 }
 a {
     text-decoration:none;
-    color: #4592ff;
+    color: #2d82c4;
+}
+.card {
+    border:0px;
+    box-shadow: rgb(234, 234, 234) 0px 0px 18px;
+}
+.nav-tabs {
+    --bs-nav-tabs-border-width: 4px;
+    border-bottom: 3px solid #efefef;
+}
+.nav-tabs .nav-item .nav-link {
+    font-weight:500;
+    color:#000000;
+    border-bottom: 3px solid #efefef;
+}
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+    border-bottom: 3px solid #2d82c4;
+    color:#2d82c4;
+    background: none;
 }
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    font-weight:bold;
+    background:none !important;
+    border-top:0px !important;
+    border-right:0px !important;
+    border-left:0px !important;
+    border-bottom: 3px solid #2d82c4;
+    color:#2d82c4;
 }
 .btn {
     border-radius: 16px;
@@ -41,21 +77,21 @@ a {
 
 <div id="contentContainer">
 
-    <div class="pageTitle mt-3" id="pageTitle-whm_marketplace">
+    <div class="pageTitle mt-5" id="pageTitle-whm_marketplace">
         <h5><img class="whm-app-title__image" src="{{asset('img/mw-icon.svg')}}" style="max-width:50px" alt="">
             <span>Microweber - Drag & drop website builder</span>
         </h5>
     </div>
 
-    <nav aria-label="breadcrumb" class="mt-3 mb-5">
+    <nav aria-label="breadcrumb" class="mt-3 mb-4">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
             <li class="breadcrumb-item"><a href="#">Plugins</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Microweber</li>
+            <li class="breadcrumb-item active" aria-current="page"><b>Microweber Plugin</b></li>
         </ol>
     </nav>
 
-    <div id="microweber-whm-livewire" class="mt-4">
+    <div id="microweber-whm-livewire" class="mt-3">
         <livewire:whm-tabs />
     </div>
 

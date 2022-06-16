@@ -1,33 +1,28 @@
-<div>
-    <h4>Choose installation options</h4>
-    <p>
-        Random values will be generated if fields are left blank.
-    </p>
+<div class="row justify-content-center my-5">
+    <div class="col-sm-12 col-md-6 col-lg-6 my-4">
 
-    <div id="install-form" class="mt-3">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label class="form-label" for="domain">Domain</label>
-                    <select class="form-select" id="domain" wire:model.defer="installationDomain">
-                        @foreach($domains as $domain)
-                        <option value="1">{{$domain['domain']}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label class="form-label" for="domain">Domain</label>
-                    <select class="form-select" id="domain" wire:model.defer="installationDomain">
-                        @foreach($domains as $domain)
-                        <option value="1">{{$domain['domain']}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
+        <center>
+            <h5><b>Choose installation options</b></h5>
+            <p>
+                Random values will be generated if fields are left blank.
+            </p>
+        </center>
+
+        <div class="input-group mb-3">
+            <label class="input-group-text">Domain</label>
+            <select class="form-select" id="domain" wire:model.defer="installationDomain" style="height: 38px;">
+                <option>Select domain...</option>
+                @foreach($domains as $domain)
+                    <option value="1">{{$domain['domain']}}</option>
+                @endforeach
+            </select>
+            <span class="input-group-text" style="height: 38px;">/</span>
+            <input type="text" class="form-control" style="height: 38px;">
         </div>
-        <div class="mb-3">
+
+        <br />
+        <center> <h5><b>Installation Details</b></h5></center>
+        <div class="mb-3 mt-4">
             <label class="form-label" for="installationLanguage">Installation language</label>
             <select class="form-select" wire:model.defer="installationLanguage" id="installationLanguage">
                 @foreach($supportedLanguages as $language=>$languageName)
@@ -64,6 +59,10 @@
             </select>
         </div>
 
+        <br />
+        <center> <h5><b>Admin Login Details</b></h5></center>
+        <br />
+
         <div class="mb-3">
             <label class="form-label" for="adminEmail">Admin Email</label>
             <input class="form-control" id="adminEmail" type="email" wire:model.defer="installationAdminEmail" placeholder="Admin Email" />
@@ -77,7 +76,6 @@
             <input class="form-control" id="adminPassword" type="password" wire:model.defer="installationAdminPassword" placeholder="Admin Password" />
         </div>
 
-        <button class="btn btn-outline-success" wire:click="install()" type="button">Install</button>
+        <button class="btn btn-outline-success btn-block mt-4" wire:click="install()" type="button">Install</button>
     </div>
-
 </div>
