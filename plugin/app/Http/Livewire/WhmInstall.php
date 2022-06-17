@@ -6,6 +6,7 @@ use App\Cpanel\CpanelApi;
 use App\Models\Option;
 use Livewire\Component;
 use MicroweberPackages\SharedServerScripts\MicroweberAppPathHelper;
+use MicroweberPackages\SharedServerScripts\MicroweberInstaller;
 
 class WhmInstall extends Component
 {
@@ -27,12 +28,6 @@ class WhmInstall extends Component
     {
 
         if (!empty($this->installationDomainName)) {
-
-            $cpanelApi = new CpanelApi();
-            $accounts = $cpanelApi->execApi1('listaccts', array('search' =>$this->installationDomainName, 'searchtype' => 'domain'));
-
-            dd($accounts['data']['acct']);
-
             $this->installationAdminEmail = 'admin@' . $this->installationDomainName;
         }
 
@@ -41,16 +36,9 @@ class WhmInstall extends Component
 
     public function mount()
     {
-        $cpanelApi = new CpanelApi();
-        $accounts = $cpanelApi->execApi1('listaccts', array('search' => '', 'searchtype' => 'user'));
 
-        if ($accounts and isset($accounts['data']) and isset($accounts['data']['acct'])) {
-            foreach ($accounts['data']['acct'] as $account) {
-                if (isset($account['user'])) {
-                    $this->domains[] = $account;
-                }
-            }
-        }
+        $cpanelApi = new CpanelApi();
+        $this->domains = $cpanelApi->getAllDomains();
 
         $sharedPath = new MicroweberAppPathHelper();
         $sharedPath->setPath(config('whm-cpanel.sharedPaths.app'));
@@ -62,10 +50,27 @@ class WhmInstall extends Component
 
     public function install()
     {
+        if (empty($this->installationDomainName)) {
+            return;
+        }
 
         $cpanelApi = new CpanelApi();
+        $hostingAccounts = $cpanelApi->getHostingDetailsByDomainName($this->installationDomainName);
+        if (!empty($hostingAccounts)) {
 
-        file_put_contents("/home/bobimicroweber/public_html/text-file.txt", rand(1,9));
+            $install = new MicroweberInstaller();
+            $install->setPath($hostingAccounts['documentroot']);
+            $install->setSourcePath(config('whm-cpanel.sharedPaths.app'));
+            $install->setSymlinkInstallation();
+            $install->setAdminUsername($this->installationAdminUsername);
+            $install->setAdminPassword($this->installationAdminPassword);
+            $install->setAdminEmail($this->installationAdminEmail);
+            $run = $install->run();
+
+            dd($run);
+            
+            file_put_contents($hostingAccounts['documentroot'] . "done.txt", rand(1, 9));
+        }
 
 
     }

@@ -103,6 +103,42 @@ class CpanelApi
 
     }
 
+    public function getAllDomains()
+    {
+        $cpanelApi = new CpanelApi();
+        $accounts = $cpanelApi->execApi1('listaccts', array('search' => '', 'searchtype' => 'user'));
+
+        $domains = [];
+        if ($accounts and isset($accounts['data']) and isset($accounts['data']['acct'])) {
+            foreach ($accounts['data']['acct'] as $account) {
+                if (isset($account['user'])) {
+                    $domains[] = $account;
+                }
+            }
+        }
+        return $domains;
+    }
+
+    public function getHostingDetailsByDomainName($domainName)
+    {
+        $details = [];
+        $accounts = $this->execApi1('listaccts', array('search' => $domainName, 'searchtype' => 'domain'));
+
+        if ($accounts and isset($accounts['data']) and isset($accounts['data']['acct'])) {
+            foreach ($accounts['data']['acct'] as $account) {
+                $domainData = $this->execUapi($account['user'], 'DomainInfo', 'domains_data', array('format' => 'hash'));
+                if (isset($domainData['result']['data']['main_domain'])) {
+                    $mainDomain = $domainData['result']['data']['main_domain'];
+                    if ($mainDomain['domain'] == $domainName) {
+                        $details = $mainDomain;
+                    }
+                }
+            }
+        }
+
+        return $details;
+    }
+
     public function randomPassword($length = 16)
     {
         $alphabet = '!@#abcdef^@%^&*[]-ghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
