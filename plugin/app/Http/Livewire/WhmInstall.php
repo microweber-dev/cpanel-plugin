@@ -64,10 +64,19 @@ class WhmInstall extends Component
             $install->enableChownAfterInstall();
             $install->setPath($hostingAccounts['documentroot'].'/'.$this->installationDomainPath);
             $install->setSourcePath(config('whm-cpanel.sharedPaths.app'));
-            $install->setSymlinkInstallation();
+
+            $install->setLanguage($this->installationLanguage);
+            $install->setTemplate($this->installationTemplate);
+
+            if ($this->installationType == 'symlinked') {
+                $install->setSymlinkInstallation();
+            }
+
+            $install->setDatabaseDriver($this->installationDatabaseDriver);
+            $install->setAdminEmail($this->installationAdminEmail);
             $install->setAdminUsername($this->installationAdminUsername);
             $install->setAdminPassword($this->installationAdminPassword);
-            $install->setAdminEmail($this->installationAdminEmail);
+            
             $run = $install->run();
 
             return $run;
