@@ -166,7 +166,7 @@ class CpanelApi
         }
 
         $setPrivileges = $this->execUapi($owner, 'Mysql', 'set_privileges_on_database', array('user' => $dbUsername, 'database' => $dbName, 'privileges' => 'ALL PRIVILEGES'));
-        if ($createDatabase['result']['status'] != 1) {
+        if ($setPrivileges['result']['status'] != 1) {
             return false;
         }
 
