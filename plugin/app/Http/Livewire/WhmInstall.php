@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Console\Commands\AppInstallationsScan;
 use App\Cpanel\CpanelApi;
-use App\Models\Option;
 use Livewire\Component;
 use MicroweberPackages\SharedServerScripts\MicroweberSharedPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberInstaller;
