@@ -14,8 +14,7 @@
         "livewire/livewire": "^2.10",
         "microweber-packages/composer-client": "^1.9",
         "microweber-packages/shared-server-scripts": "dev-main",
-        "rappasoft/laravel-livewire-tables": "^2.7",
-        "symfony/filesystem": "^6.0"
+        "rappasoft/laravel-livewire-tables": "^2.7"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
