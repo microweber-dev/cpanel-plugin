@@ -60,6 +60,8 @@ class WhmInstall extends Component
         if (!empty($hostingAccounts)) {
 
             $install = new MicroweberInstaller();
+            $install->setChownUser($hostingAccounts['user']);
+            $install->enableChownAfterInstall();
             $install->setPath($hostingAccounts['documentroot'].'/'.$this->installationDomainPath);
             $install->setSourcePath(config('whm-cpanel.sharedPaths.app'));
             $install->setSymlinkInstallation();
