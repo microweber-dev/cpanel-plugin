@@ -59,6 +59,11 @@ class WhmInstall extends Component
         $hostingAccounts = $cpanelApi->getHostingDetailsByDomainName($this->installationDomainName);
         if (!empty($hostingAccounts)) {
 
+
+
+
+
+            die();
             $install = new MicroweberInstaller();
             $install->setChownUser($hostingAccounts['user']);
             $install->enableChownAfterInstall();
@@ -76,7 +81,7 @@ class WhmInstall extends Component
             $install->setAdminEmail($this->installationAdminEmail);
             $install->setAdminUsername($this->installationAdminUsername);
             $install->setAdminPassword($this->installationAdminPassword);
-            
+
             $run = $install->run();
 
             return $run;
