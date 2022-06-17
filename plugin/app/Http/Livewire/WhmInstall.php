@@ -60,6 +60,19 @@ class WhmInstall extends Component
         $hostingAccounts = $cpanelApi->getHostingDetailsByDomainName($this->installationDomainName);
         if (!empty($hostingAccounts)) {
 
+            $dbPrefix = $cpanelApi->makeDbPrefixFromUsername($hostingAccounts['user']);
+            $dbPassword = $cpanelApi->randomPassword(12);
+            $dbUsername = $dbName = $dbPrefix . 'mw'.date('mdHis');
+
+            if ($this->installationDatabaseDriver == 'mysql') {
+                $createDatabase = $cpanelApi->createDatabaseWithUser($hostingAccounts['user'], $dbName, $dbUsername, $dbPassword);
+                if (!$createDatabase) {
+                    // Can't create database
+                    return;
+                }
+            }
+
+
             $install = new MicroweberInstaller();
             $install->setChownUser($hostingAccounts['user']);
             $install->enableChownAfterInstall();
@@ -74,6 +87,13 @@ class WhmInstall extends Component
             }
 
             $install->setDatabaseDriver($this->installationDatabaseDriver);
+
+            if ($this->installationDatabaseDriver == 'mysql') {
+                $install->setDatabaseUsername($dbUsername);
+                $install->setDatabasePassword($dbPassword);
+                $install->setDatabaseName($dbName);
+            }
+
             $install->setAdminEmail($this->installationAdminEmail);
             $install->setAdminUsername($this->installationAdminUsername);
             $install->setAdminPassword($this->installationAdminPassword);

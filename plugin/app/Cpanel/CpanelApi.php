@@ -96,11 +96,8 @@ class CpanelApi
 
     public function makeDbPrefixFromUsername($user = false)
     {
-
         $restriction = $this->getMysqlRestrictions($user);
-
         return $restriction['prefix'];
-
     }
 
     public function getAllDomainsByUser($user)
@@ -154,6 +151,26 @@ class CpanelApi
         }
 
         return $details;
+    }
+
+    public function createDatabaseWithUser($owner, $dbName, $dbUsername, $dbPassword)
+    {
+        $createUser = $this->execUapi($owner, 'Mysql', 'create_user', array('name' => $dbUsername, 'password' => $dbPassword));
+        if ($createUser['result']['status'] != 1) {
+            return false;
+        }
+
+        $createDatabase = $this->execUapi($owner, 'Mysql', 'create_database', array('name' => $dbName));
+        if ($createDatabase['result']['status'] != 1) {
+            return false;
+        }
+
+        $setPrivileges = $this->execUapi($owner, 'Mysql', 'set_privileges_on_database', array('user' => $dbUsername, 'database' => $dbName, 'privileges' => 'ALL PRIVILEGES'));
+        if ($createDatabase['result']['status'] != 1) {
+            return false;
+        }
+
+        return true;
     }
 
     public function randomPassword($length = 16)
