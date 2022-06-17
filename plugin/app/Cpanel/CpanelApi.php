@@ -103,6 +103,27 @@ class CpanelApi
 
     }
 
+    public function getAllDomainsByUser($user)
+    {
+        $domains = [];
+
+        $domainData = $this->execUapi($user, 'DomainInfo', 'domains_data', array('format' => 'hash'));
+
+        if (isset($domainData['result']['data']['main_domain'])) {
+            $domains[] = $domainData['result']['data']['main_domain'];
+        }
+
+        if (isset($domainData['result']['data']['sub_domains'])) {
+            $domains = array_merge($domains, $domainData['result']['data']['sub_domains']);
+        }
+
+        if (isset($domainData['result']['data']['addon_domains'])) {
+            $domains = array_merge($domains, $domainData['result']['data']['addon_domains']);
+        }
+
+        return $domains;
+    }
+
     public function getAllDomains()
     {
         $cpanelApi = new CpanelApi();
@@ -111,27 +132,23 @@ class CpanelApi
         $domains = [];
         if ($accounts and isset($accounts['data']) and isset($accounts['data']['acct'])) {
             foreach ($accounts['data']['acct'] as $account) {
-                if (isset($account['user'])) {
-                    $domains[] = $account;
-                }
+                $domains = array_merge($domains, $this->getAllDomainsByUser($account['user']));
             }
         }
+
         return $domains;
     }
 
     public function getHostingDetailsByDomainName($domainName)
     {
         $details = [];
-        $accounts = $this->execApi1('listaccts', array('search' => $domainName, 'searchtype' => 'domain'));
 
-        if ($accounts and isset($accounts['data']) and isset($accounts['data']['acct'])) {
-            foreach ($accounts['data']['acct'] as $account) {
-                $domainData = $this->execUapi($account['user'], 'DomainInfo', 'domains_data', array('format' => 'hash'));
-                if (isset($domainData['result']['data']['main_domain'])) {
-                    $mainDomain = $domainData['result']['data']['main_domain'];
-                    if ($mainDomain['domain'] == $domainName) {
-                        $details = $mainDomain;
-                    }
+        $allDomains = $this->getAllDomains();
+
+        if (!empty($allDomains)) {
+            foreach ($allDomains as $domain) {
+                if ($domain['domain'] == $domainName) {
+                    $details = $domain;
                 }
             }
         }
