@@ -67,7 +67,7 @@ class WhmInstall extends Component
             $install->setAdminEmail($this->installationAdminEmail);
             $run = $install->run();
 
-            dd($run);
+            dd($run); 
 
             file_put_contents($hostingAccounts['documentroot'] . "done.txt", rand(1, 9));
         }
