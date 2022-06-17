@@ -3,7 +3,6 @@
 namespace App\Cpanel;
 
 use App\MicroweberVersionsManager;
-use MicroweberPackages\SharedServerScripts\MicroweberAppPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberInstallationsRecursiveScanner;
 
 class InstalledAppsScanner
