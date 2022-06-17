@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Console\Commands\AppInstallationsSync;
+use App\Console\Commands\AppInstallationsScan;
 use Livewire\Component;
 
 class WhmInstallations extends Component
@@ -14,7 +14,7 @@ class WhmInstallations extends Component
 
     public function scan()
     {
-        dispatch(new AppInstallationsSync());
+        dispatch(new AppInstallationsScan());
 
         $this->emit('refreshInstallations');
     }

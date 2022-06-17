@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Console\Commands\AppInstallationsScan;
 use App\Cpanel\CpanelApi;
 use App\Models\Option;
 use Livewire\Component;
@@ -59,11 +60,6 @@ class WhmInstall extends Component
         $hostingAccounts = $cpanelApi->getHostingDetailsByDomainName($this->installationDomainName);
         if (!empty($hostingAccounts)) {
 
-
-
-
-
-            die();
             $install = new MicroweberInstaller();
             $install->setChownUser($hostingAccounts['user']);
             $install->enableChownAfterInstall();
@@ -83,6 +79,8 @@ class WhmInstall extends Component
             $install->setAdminPassword($this->installationAdminPassword);
 
             $run = $install->run();
+
+            dispatch(new AppInstallationsScan());
 
             return $run;
         }

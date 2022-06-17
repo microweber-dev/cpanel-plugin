@@ -6,14 +6,14 @@ use App\Models\AppInstallation;
 use App\Cpanel\InstalledAppsScanner;
 use Illuminate\Console\Command;
 
-class AppInstallationsSync extends Command
+class AppInstallationsScan extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'plugin:whm-app-installations-sync';
+    protected $signature = 'plugin:whm-app-installations-scan';
 
     /**
      * The console command description.
@@ -63,7 +63,7 @@ class AppInstallationsSync extends Command
             $findInstallation->domain = $installation['domain'];
             $findInstallation->server_alias = $installation['serveralias'];
             $findInstallation->server_admin = $installation['serveradmin'];
-            $findInstallation->port = $installation['port'];
+           // $findInstallation->port = $installation['port'];
             $findInstallation->server_name = $installation['servername'];
             $findInstallation->home_dir = $installation['homedir'];
             $findInstallation->type = $installation['type'];
