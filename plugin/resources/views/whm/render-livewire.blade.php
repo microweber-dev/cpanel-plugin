@@ -79,7 +79,7 @@ a {
 
     <div class="pageTitle mt-5" id="pageTitle-whm_marketplace">
         <h5><img class="whm-app-title__image" src="{{asset('img/mw-icon.svg')}}" style="max-width:50px" alt="">
-            <span>Microweber - Drag & drop website builder</span>
+            <span>Microweber - Drag & Drop CMS</span>
         </h5>
     </div>
 

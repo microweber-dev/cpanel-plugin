@@ -77,5 +77,10 @@
         </div>
 
         <button class="btn btn-outline-success btn-block mt-4" wire:click="install()" type="button">Install</button>
+
+        <div wire:loading wire:target="install">
+            Installing ...
+        </div>
+
     </div>
 </div>
