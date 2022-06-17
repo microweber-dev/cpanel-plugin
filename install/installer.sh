@@ -10,6 +10,9 @@ if [ "$username" != "root" ]; then
     exit 1
 fi
 
+find /usr/local/cpanel/microweber/plugin/vendor/microweber-packages/shared-server-scripts/shell-scripts -type f -iname "*.sh" -exec chmod +x {} \;
+
+
 ## Create plugin database
 plugin_database=`touch /usr/local/cpanel/microweber/plugin/database/database.sqlite`
 if [ -n "$plugin_database" ]; then
