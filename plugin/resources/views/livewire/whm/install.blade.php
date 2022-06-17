@@ -17,7 +17,7 @@
                 @endforeach
             </select>
             <span class="input-group-text" style="height: 38px;">/</span>
-            <input type="text" class="form-control" style="height: 38px;">
+            <input type="text" class="form-control" wire:model="installationDomainPath" style="height: 38px;">
         </div>
 
         <br />

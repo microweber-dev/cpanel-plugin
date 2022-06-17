@@ -14,6 +14,7 @@ class WhmInstall extends Component
     public $supportedLanguages = [];
 
     public $installationDomainName;
+    public $installationDomainPath;
     public $installationLanguage;
     public $installationTemplate;
     public $installationType;
@@ -59,7 +60,7 @@ class WhmInstall extends Component
         if (!empty($hostingAccounts)) {
 
             $install = new MicroweberInstaller();
-            $install->setPath($hostingAccounts['documentroot']);
+            $install->setPath($hostingAccounts['documentroot'].'/'.$this->installationDomainPath);
             $install->setSourcePath(config('whm-cpanel.sharedPaths.app'));
             $install->setSymlinkInstallation();
             $install->setAdminUsername($this->installationAdminUsername);
