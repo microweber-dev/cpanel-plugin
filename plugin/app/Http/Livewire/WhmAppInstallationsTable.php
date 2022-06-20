@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\AppInstallation;
+use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 
 class WhmAppInstallationsTable extends DataTableComponent
@@ -31,16 +32,26 @@ class WhmAppInstallationsTable extends DataTableComponent
             Column::make("User", "user"),
             Column::make("Path", "path"),
             Column::make("Version", "version"),
-           // Column::make("Symlink", "is_symlink"),
-        //    Column::make("PHP", "php_version"),
-        //    Column::make("Created at", "created_at")->sortable(),
-         //   Column::make("Updated at", "updated_at")->sortable(),
+            LinkColumn::make('View','view')
+                ->title(function($row){
+                    return 'View';
+                })
+                ->location(function($row) {
+                    return 'index.cgi?route=installation/' . $row->id;
+                })
+                ->attributes(function($row) {
+                    return [
+                        'class' => 'btn btn-outline-dark btn-sm',
+                    ];
+                }),
         ];
     }
 
     public function builder() : Builder
     {
         $query = AppInstallation::query();
+
+        $query->select(['*']);
 
         if ($this->hasSearch()) {
             $search = $this->getSearch();

@@ -13,6 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('/installation/{id}',function ($id) {
+    echo 'o iee';
+})->name('installation.view');
+
+
+
+Route::get('/home',function () {
+    echo 'o iee';
+})->name('home');
+
+
 Route::any('/', function (\Illuminate\Http\Request $request) {
 
     $router = $request->get('router', false);
@@ -23,8 +35,3 @@ Route::any('/', function (\Illuminate\Http\Request $request) {
     return \App\Http\RequestRoute::fireRouteRequest($router, $request);
 
 });
-
-
-Route::get('/home',function () {
-    echo 'o iee';
-})->name('home');
