@@ -14,11 +14,11 @@ class WhmInstall extends Component
     public $supportedLanguages = [];
 
     public $installationDomainName;
-    public $installationDomainPath;
-    public $installationLanguage;
-    public $installationTemplate;
-    public $installationType;
-    public $installationDatabaseDriver;
+    public $installationDomainPath = '';
+    public $installationLanguage = 'en';
+    public $installationTemplate = 'new-world';
+    public $installationType = 'symlink';
+    public $installationDatabaseDriver = 'sqlite';
     public $installationAdminEmail;
     public $installationAdminUsername;
     public $installationAdminPassword;

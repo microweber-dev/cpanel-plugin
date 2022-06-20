@@ -25,6 +25,7 @@
         <div class="mb-3 mt-4">
             <label class="form-label" for="installationLanguage">Installation language</label>
             <select class="form-select" wire:model.defer="installationLanguage" id="installationLanguage">
+                <option>Select language...</option>
                 @foreach($supportedLanguages as $language=>$languageName)
                     <option value="{{$language}}">{{$languageName}}</option>
                 @endforeach
@@ -33,6 +34,7 @@
         <div class="mb-3">
             <label class="form-label" for="installationTemplate">Installation template</label>
             <select class="form-select" wire:model.defer="installationTemplate" id="installationTemplate">
+                <option>Select template...</option>
                 @foreach($supportedTemplates as $template)
                     <option value="{{$template['targetDir']}}">{{$template['name']}}</option>
                 @endforeach
