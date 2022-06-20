@@ -14,6 +14,7 @@ class WhmInstallationView extends Component
 {
     public $appInstallation;
     public $appInstallationTemplates = [];
+    public $appInstallationModules = [];
     public $appInstallationLanguages = [];
     public $appInstallationVersion = [];
     public $appInstallationCreatedAt = [];
@@ -33,6 +34,7 @@ class WhmInstallationView extends Component
         $appPathHelper = new MicroweberAppPathHelper();
         $appPathHelper->setPath($findInstallation->path);
         $this->appInstallationTemplates = $appPathHelper->getSupportedTemplates();
+        $this->appInstallationModules = $appPathHelper->getSupportedModules();
         $this->appInstallationLanguages = $appPathHelper->getSupportedLanguages();
         $this->appInstallationVersion = $appPathHelper->getCurrentVersion();
         $this->appInstallationCreatedAt = $appPathHelper->getCreatedAt();

@@ -42,7 +42,21 @@
             <button class="btn btn-outline-danger">Uninstall</button>
 
         </div>
-        <div class="tab-pane" id="modules" role="tabpanel" aria-labelledby="modules-tab" tabindex="0">.p..</div>
+        <div class="tab-pane" id="modules" role="tabpanel" aria-labelledby="modules-tab" tabindex="0">
+
+            <br />
+
+            <h5>Installed Modules ({{count($appInstallationModules)}})</h5>
+            @if(!empty($appInstallationModules))
+                @foreach($appInstallationModules as $module)
+                    {{$module['name']}} (v{{$module['version']}}) &nbsp;
+                @endforeach
+            @else
+                No modules installed
+            @endif
+
+
+        </div>
         <div class="tab-pane" id="templates" role="tabpanel" aria-labelledby="templates-tab" tabindex="0">
 
             <br />
