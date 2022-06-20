@@ -27,7 +27,10 @@ Route::any('/', function (\Illuminate\Http\Request $request) {
     $router = $request->get('router', false);
 
     if (!$router) {
-        return app()->make(\App\Http\Controllers\WhmRenderLivewireController::class)->index($request);
+        return app()->make(\App\Http\Controllers\WhmRenderLivewireController::class)->render([
+            'componentName'=> 'whm-tabs',
+            'componentParams'=> [],
+        ]);
     }
 
     return \App\Http\RequestRoute::fireRouteRequest($router, $request);
