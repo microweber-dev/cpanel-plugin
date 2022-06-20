@@ -64,7 +64,7 @@ $appConfig = [
 
     'url' =>  $appUrl,
 
-    'asset_url' =>  dirname( $scriptUri),
+    'asset_url' =>  dirname($appUrl),
 
     /*
     |--------------------------------------------------------------------------

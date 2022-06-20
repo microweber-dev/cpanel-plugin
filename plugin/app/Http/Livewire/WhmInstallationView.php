@@ -8,18 +8,10 @@ use Livewire\Component;
 use MicroweberPackages\SharedServerScripts\MicroweberSharedPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberInstaller;
 
-class WhmViewInstallation extends Component
+class WhmInstallationView extends Component
 {
-
     public function render()
     {
         return view('livewire.whm.view_installation');
-    }
-
-    public function mount()
-    {
-
-
-
     }
 }

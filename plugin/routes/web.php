@@ -13,25 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::get('/installation/{id}',function ($id) {
-    echo 'o iee';
+
+    return app()->make(\App\Http\Controllers\WhmRenderLivewireController::class)->render([
+        'componentName'=> 'whm-installation-view',
+        'componentParams'=> ['id'=>$id],
+    ]);
+
 })->name('installation.view');
-
-
-
-Route::get('/home',function () {
-    echo 'o iee';
-})->name('home');
-
 
 Route::any('/', function (\Illuminate\Http\Request $request) {
 
     $router = $request->get('router', false);
+
     if (!$router) {
-        return app()->make(\App\Http\Controllers\WhmController::class)->index($request);
+        return app()->make(\App\Http\Controllers\WhmRenderLivewireController::class)->index($request);
     }
 
     return \App\Http\RequestRoute::fireRouteRequest($router, $request);
-
 });
