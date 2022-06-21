@@ -26,16 +26,23 @@ class WhmVersions extends Component
             mkdir(dirname($sharedAppPath));
         }
 
+
+        // The module connector must have own instance of composer client
+        $composerClient = new Client();
+        $composerClient->packageServers = [
+            'https://market.microweberapi.com/packages/microweberserverpackages/packages.json'
+        ];
+        $downloader = new MicroweberModuleConnectorsDownloader();
+        $downloader->setComposerClient($composerClient);
+        $status = $downloader->download(config('whm-cpanel.sharedPaths.modules'));
+
+
         $composerClient = new Client();
         if (Option::getOption('license_key_status', 'whitelabel_license') == 'valid') {
             $composerClient->addLicense([
                 'local_key' => Option::getOption('license_key', 'whitelabel_license')
             ]);
         }
-
-        $downloader = new MicroweberModuleConnectorsDownloader();
-        $downloader->setComposerClient($composerClient);
-        $status = $downloader->download(config('whm-cpanel.sharedPaths.modules'));
 
         $downloader = new MicroweberTemplatesDownloader();
         $downloader->setComposerClient($composerClient);
@@ -44,7 +51,7 @@ class WhmVersions extends Component
         $downloader = new MicroweberDownloader();
         $downloader->setComposerClient($composerClient);
         $status = $downloader->download(config('whm-cpanel.sharedPaths.app'));
-        
+
     }
 
     public function render()
