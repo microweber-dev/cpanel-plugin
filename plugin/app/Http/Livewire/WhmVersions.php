@@ -6,6 +6,7 @@ use App\Models\Option;
 use Livewire\Component;
 use MicroweberPackages\ComposerClient\Client;
 use MicroweberPackages\SharedServerScripts\MicroweberDownloader;
+use MicroweberPackages\SharedServerScripts\MicroweberModuleConnectorsDownloader;
 use MicroweberPackages\SharedServerScripts\MicroweberSharedPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberTemplatesDownloader;
 
@@ -32,14 +33,18 @@ class WhmVersions extends Component
             ]);
         }
 
-        $downloader = new MicroweberDownloader();
+        $downloader = new MicroweberModuleConnectorsDownloader();
         $downloader->setComposerClient($composerClient);
-        $status = $downloader->download(config('whm-cpanel.sharedPaths.app'));
+        $status = $downloader->download(config('whm-cpanel.sharedPaths.modules'));
 
         $downloader = new MicroweberTemplatesDownloader();
         $downloader->setComposerClient($composerClient);
         $status = $downloader->download(config('whm-cpanel.sharedPaths.templates'));
 
+        $downloader = new MicroweberDownloader();
+        $downloader->setComposerClient($composerClient);
+        $status = $downloader->download(config('whm-cpanel.sharedPaths.app'));
+        
     }
 
     public function render()
