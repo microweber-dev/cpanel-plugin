@@ -13,9 +13,9 @@ use MicroweberPackages\SharedServerScripts\MicroweberInstaller;
 class WhmInstallationView extends Component
 {
     public $appInstallation;
-    public $appInstallationTemplates = [];
-    public $appInstallationModules = [];
-    public $appInstallationLanguages = [];
+    public $appSupportedTemplates = [];
+    public $appSupportedModules = [];
+    public $appSupportedLanguages = [];
     public $appInstallationVersion = [];
     public $appInstallationCreatedAt = [];
 
@@ -33,9 +33,10 @@ class WhmInstallationView extends Component
 
         $appPathHelper = new MicroweberAppPathHelper();
         $appPathHelper->setPath($findInstallation->path);
-        $this->appInstallationTemplates = $appPathHelper->getSupportedTemplates();
-        $this->appInstallationModules = $appPathHelper->getSupportedModules();
-        $this->appInstallationLanguages = $appPathHelper->getSupportedLanguages();
+
+        $this->appSupportedTemplates = $appPathHelper->getSupportedTemplates();
+        $this->appSupportedModules = $appPathHelper->getSupportedModules();
+        $this->appSupportedLanguages = $appPathHelper->getSupportedLanguages();
         $this->appInstallationVersion = $appPathHelper->getCurrentVersion();
         $this->appInstallationCreatedAt = $appPathHelper->getCreatedAt();
 

@@ -27,9 +27,9 @@
             <br />
             <br />
 
-            <h5>Supported Languages ({{count($appInstallationLanguages)}})</h5>
-            @if(!empty($appInstallationLanguages))
-                @foreach($appInstallationLanguages as $language=>$languageName)
+            <h5>Supported Languages ({{count($appSupportedLanguages)}})</h5>
+            @if(!empty($appSupportedLanguages))
+                @foreach($appSupportedLanguages as $language=>$languageName)
                     {{$languageName}} &nbsp;
                 @endforeach
             @else
@@ -46,9 +46,9 @@
 
             <br />
 
-            <h5>Installed Modules ({{count($appInstallationModules)}})</h5>
-            @if(!empty($appInstallationModules))
-                @foreach($appInstallationModules as $module)
+            <h5>Installed Modules ({{count($appSupportedModules)}})</h5>
+            @if(!empty($appSupportedModules))
+                @foreach($appSupportedModules as $module)
                     {{$module['name']}} (v{{$module['version']}}) &nbsp;
                 @endforeach
             @else
@@ -61,9 +61,9 @@
 
             <br />
 
-            <h5>Supported Templates ({{count($appInstallationTemplates)}})</h5>
-            @if(!empty($appInstallationTemplates))
-                @foreach($appInstallationTemplates as $template)
+            <h5>Supported Templates ({{count($appSupportedTemplates)}})</h5>
+            @if(!empty($appSupportedTemplates))
+                @foreach($appSupportedTemplates as $template)
                     {{$template['name']}} (v{{$template['version']}}) &nbsp;
                 @endforeach
             @else
@@ -73,9 +73,7 @@
         </div>
         <div class="tab-pane" id="database" role="tabpanel" aria-labelledby="database-tab" tabindex="0">..s.</div>
     </div>
-
-
-
+    
 
     {{--@dump($this->appInstallation)--}}
 </div>
