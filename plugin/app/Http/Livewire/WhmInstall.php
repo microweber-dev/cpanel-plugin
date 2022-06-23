@@ -75,7 +75,12 @@ class WhmInstall extends Component
             $install = new MicroweberInstaller();
             $install->setChownUser($hostingAccounts['user']);
             $install->enableChownAfterInstall();
-            $install->setPath($hostingAccounts['documentroot'].'/'.$this->installationDomainPath);
+
+            if (!empty($this->installationDomainPath)) {
+                $this->installationDomainPath = '/' . $this->installationDomainPath;
+            }
+
+            $install->setPath($hostingAccounts['documentroot'] . $this->installationDomainPath);
             $install->setSourcePath(config('whm-cpanel.sharedPaths.app'));
 
             $install->setLanguage($this->installationLanguage);
@@ -98,8 +103,6 @@ class WhmInstall extends Component
             $install->setAdminPassword($this->installationAdminPassword);
 
             $run = $install->run();
-
-            dispatch(new AppInstallationsScan());
 
             return $run;
         }
