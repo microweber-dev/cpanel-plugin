@@ -16,11 +16,9 @@ class AppInstallation extends Model
      */
     public static function saveOrUpdateInstallation($hosting, $installation)
     {
-
         $findInstallation = AppInstallation::where('user', $hosting['user'])
             ->where('domain',$hosting['domain'])
             ->where('server_name',$hosting['servername'])
-            ->where('home_dir',$hosting['homedir'])
             ->where('document_root',$hosting['documentroot'])
             ->where('path',$installation['path'])
             ->first();

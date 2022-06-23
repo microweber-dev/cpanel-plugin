@@ -7,7 +7,7 @@ use App\Cpanel\CpanelApi;
 use App\Cpanel\InstalledAppsScanner;
 use App\Models\AppInstallation;
 use Livewire\Component;
-use MicroweberPackages\SharedServerScripts\MicroweberInstallationsRecursiveScanner;
+use MicroweberPackages\SharedServerScripts\MicroweberInstallationsScanner;
 use MicroweberPackages\SharedServerScripts\MicroweberSharedPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberInstaller;
 
@@ -107,8 +107,8 @@ class WhmInstall extends Component
             $install->setAdminUsername($this->installationAdminUsername);
             $install->setAdminPassword($this->installationAdminPassword);
             $run = $install->run();
-            
-            $scanner = new MicroweberInstallationsRecursiveScanner();
+
+            $scanner = new MicroweberInstallationsScanner();
             $installation = $scanner->scanPath($path);
 
             if (!empty($installation)) {

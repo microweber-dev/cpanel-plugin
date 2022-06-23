@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Cpanel\CpanelApi;
 use App\Models\AppInstallation;
 use App\Cpanel\InstalledAppsScanner;
 use Illuminate\Console\Command;
+use MicroweberPackages\SharedServerScripts\MicroweberInstallationsScanner;
 
 class AppInstallationsScan extends Command
 {
@@ -39,14 +41,23 @@ class AppInstallationsScan extends Command
      */
     public function handle()
     {
-        $scanner = new InstalledAppsScanner();
-        $installations = $scanner->scanAllAccounts();
-        if (empty($installations)) {
+        $cpanelApi = new CpanelApi();
+        $domains = $cpanelApi->getAllDomains();
+        if (empty($domains)) {
             return;
         }
 
-        foreach ($installations as $installation) {
-            AppInstallation::saveOrUpdateInstallation($installation);
+        foreach ($domains as $domain) {
+
+            $scan = new MicroweberInstallationsScanner();
+            $scan->setPath($domain['documentroot']);
+            $installations = $scan->scanRecusrive();
+
+            if (!empty($installations)) {
+                foreach ($installations as $installation) {
+                    AppInstallation::saveOrUpdateInstallation($domain, $installation);
+                }
+            }
         }
 
         // Search for deleted installations
