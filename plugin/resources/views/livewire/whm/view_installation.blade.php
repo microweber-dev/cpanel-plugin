@@ -4,6 +4,10 @@
         <a href="{{asset('/index.cgi')}}" class="btn btn-outline-primary">Back to Microweber Plugin</a>
     </p>
 
+    @if($this->installedSuccess)
+        <div class="alert alert-success">Application is installed successful.</div>
+    @endif
+
     <h4>{{$this->appInstallation->domain}}</h4>
 
     <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">

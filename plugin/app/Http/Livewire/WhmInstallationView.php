@@ -17,6 +17,7 @@ class WhmInstallationView extends Component
     public $appInstallationVersion = [];
     public $appInstallationCreatedAt = [];
     public $confirmUninstall = false;
+    public $installedSuccess = false;
 
     public function render()
     {
@@ -25,9 +26,15 @@ class WhmInstallationView extends Component
 
     public function mount($id)
     {
+
+        $request = request();
+        if ($request->get('installed_success') == 1) {
+            $this->installedSuccess = true;
+        }
+
         $findInstallation = AppInstallation::where('id', $id)->first();
         if ($findInstallation == null) {
-            return;
+            return $this->redirect(asset('') . 'index.cgi');
         }
 
         $appPathHelper = new MicroweberAppPathHelper();

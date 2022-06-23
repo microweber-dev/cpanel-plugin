@@ -106,9 +106,8 @@ class WhmInstall extends Component
             $install->setAdminEmail($this->installationAdminEmail);
             $install->setAdminUsername($this->installationAdminUsername);
             $install->setAdminPassword($this->installationAdminPassword);
-          //  $run = $install->run();
-
-
+            $run = $install->run();
+            
             $scanner = new MicroweberInstallationsRecursiveScanner();
             $installation = $scanner->scanPath($path);
 
