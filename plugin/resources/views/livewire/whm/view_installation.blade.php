@@ -27,7 +27,7 @@
             <br />
             <br />
 
-            <h5>Installed Languages ({{count($appInstallationLanguages)}})</h5>
+            <h5>Supported Languages ({{count($appInstallationLanguages)}})</h5>
             @if(!empty($appInstallationLanguages))
                 @foreach($appInstallationLanguages as $language=>$languageName)
                     {{$languageName}} &nbsp;
@@ -61,7 +61,7 @@
 
             <br />
 
-            <h5>Installed Templates ({{count($appInstallationTemplates)}})</h5>
+            <h5>Supported Templates ({{count($appInstallationTemplates)}})</h5>
             @if(!empty($appInstallationTemplates))
                 @foreach($appInstallationTemplates as $template)
                     {{$template['name']}} (v{{$template['version']}}) &nbsp;
