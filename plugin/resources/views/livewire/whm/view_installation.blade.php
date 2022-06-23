@@ -1,5 +1,9 @@
 <div class="mt-5">
 
+    <a href="{{asset('/index.cgi')}}">Back to Microweber Plugin</a>
+    <br />
+    <br />
+
     <h4>{{$this->appInstallation->domain}}</h4>
 
     <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
@@ -73,7 +77,7 @@
         </div>
         <div class="tab-pane" id="database" role="tabpanel" aria-labelledby="database-tab" tabindex="0">..s.</div>
     </div>
-    
+
 
     {{--@dump($this->appInstallation)--}}
 </div>
