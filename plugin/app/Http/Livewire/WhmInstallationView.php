@@ -2,13 +2,11 @@
 
 namespace App\Http\Livewire;
 
-use App\Console\Commands\AppInstallationsScan;
-use App\Cpanel\CpanelApi;
 use App\Models\AppInstallation;
 use Livewire\Component;
 use MicroweberPackages\SharedServerScripts\MicroweberAppPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberSharedPathHelper;
-use MicroweberPackages\SharedServerScripts\MicroweberInstaller;
+use MicroweberPackages\SharedServerScripts\MicroweberUninstaller;
 
 class WhmInstallationView extends Component
 {
@@ -18,6 +16,7 @@ class WhmInstallationView extends Component
     public $appSupportedLanguages = [];
     public $appInstallationVersion = [];
     public $appInstallationCreatedAt = [];
+    public $confirmUninstall = false;
 
     public function render()
     {
@@ -41,5 +40,26 @@ class WhmInstallationView extends Component
         $this->appInstallationCreatedAt = $appPathHelper->getCreatedAt();
 
         $this->appInstallation = $findInstallation;
+    }
+
+    public function update()
+    {
+
+    }
+
+    public function confirmUninstall()
+    {
+        $this->confirmUninstall = true;
+    }
+
+    public function uninstall()
+    {
+        $uninstall = new MicroweberUninstaller();
+        $uninstall->setPath($this->appInstallation->path);
+        $uninstall->run();
+
+        $this->appInstallation->delete();
+
+        return $this->redirect(asset('') . 'index.cgi');
     }
 }

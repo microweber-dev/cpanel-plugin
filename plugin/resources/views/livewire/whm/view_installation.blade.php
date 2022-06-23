@@ -1,8 +1,8 @@
-<div class="mt-5">
+<div class="mt-3">
 
-    <a href="{{asset('/index.cgi')}}">Back to Microweber Plugin</a>
-    <br />
-    <br />
+    <p>
+        <a href="{{asset('/index.cgi')}}">Back to Microweber Plugin</a>
+    </p>
 
     <h4>{{$this->appInstallation->domain}}</h4>
 
@@ -42,8 +42,13 @@
 
             <hr />
 
-            <button class="btn btn-outline-success">Update</button>
-            <button class="btn btn-outline-danger">Uninstall</button>
+            <button class="btn btn-outline-success" wire:click="update()">Update</button>
+
+            @if($this->confirmUninstall)
+                <button class="btn btn-outline-danger" wire:click="uninstall()">Are you sure?</button>
+            @else
+                <button class="btn btn-outline-danger" wire:click="confirmUninstall()">Uninstall</button>
+            @endif
 
         </div>
         <div class="tab-pane" id="modules" role="tabpanel" aria-labelledby="modules-tab" tabindex="0">
