@@ -4,7 +4,10 @@ namespace App\Http\Livewire;
 
 use App\Console\Commands\AppInstallationsScan;
 use App\Cpanel\CpanelApi;
+use App\Cpanel\InstalledAppsScanner;
+use App\Models\AppInstallation;
 use Livewire\Component;
+use MicroweberPackages\SharedServerScripts\MicroweberInstallationsRecursiveScanner;
 use MicroweberPackages\SharedServerScripts\MicroweberSharedPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberInstaller;
 
@@ -56,15 +59,15 @@ class WhmInstall extends Component
         }
 
         $cpanelApi = new CpanelApi();
-        $hostingAccounts = $cpanelApi->getHostingDetailsByDomainName($this->installationDomainName);
-        if (!empty($hostingAccounts)) {
+        $hostingAccount = $cpanelApi->getHostingDetailsByDomainName($this->installationDomainName);
+        if (!empty($hostingAccount)) {
 
-            $dbPrefix = $cpanelApi->makeDbPrefixFromUsername($hostingAccounts['user']);
+            $dbPrefix = $cpanelApi->makeDbPrefixFromUsername($hostingAccount['user']);
             $dbPassword = $cpanelApi->randomPassword(12);
             $dbUsername = $dbName = $dbPrefix . 'mw'.date('mdHis');
 
             if ($this->installationDatabaseDriver == 'mysql') {
-                $createDatabase = $cpanelApi->createDatabaseWithUser($hostingAccounts['user'], $dbName, $dbUsername, $dbPassword);
+                $createDatabase = $cpanelApi->createDatabaseWithUser($hostingAccount['user'], $dbName, $dbUsername, $dbPassword);
                 if (!$createDatabase) {
                     // Can't create database
                     return;
@@ -73,14 +76,16 @@ class WhmInstall extends Component
 
 
             $install = new MicroweberInstaller();
-            $install->setChownUser($hostingAccounts['user']);
+            $install->setChownUser($hostingAccount['user']);
             $install->enableChownAfterInstall();
 
             if (!empty($this->installationDomainPath)) {
                 $this->installationDomainPath = '/' . $this->installationDomainPath;
             }
 
-            $install->setPath($hostingAccounts['documentroot'] . $this->installationDomainPath);
+            $path = $hostingAccount['documentroot'] . $this->installationDomainPath;
+
+            $install->setPath($path);
             $install->setSourcePath(config('whm-cpanel.sharedPaths.app'));
 
             $install->setLanguage($this->installationLanguage);
@@ -101,10 +106,18 @@ class WhmInstall extends Component
             $install->setAdminEmail($this->installationAdminEmail);
             $install->setAdminUsername($this->installationAdminUsername);
             $install->setAdminPassword($this->installationAdminPassword);
+          //  $run = $install->run();
 
-            $run = $install->run();
 
-            return $run;
+            $scanner = new MicroweberInstallationsRecursiveScanner();
+            $installation = $scanner->scanPath($path);
+
+            if (!empty($installation)) {
+                $installationId = AppInstallation::saveOrUpdateInstallation($hostingAccount, $installation);
+                return $this->redirect(asset('/') . 'index.cgi?router=installation/' . $installationId.'&installed_success=1');
+            }
+
+            return $this->redirect(asset('/') . 'index.cgi');
         }
 
 

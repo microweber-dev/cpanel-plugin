@@ -3,10 +3,12 @@
 namespace App\Cpanel;
 
 use App\MicroweberVersionsManager;
-use MicroweberPackages\SharedServerScripts\MicroweberInstallationsRecursiveScanner;
 
 class InstalledAppsScanner
 {
+    /**
+     * @var CpanelApi
+     */
     private $cpanelApi;
 
     public function __construct()
@@ -14,26 +16,33 @@ class InstalledAppsScanner
         $this->cpanelApi = new CpanelApi();
     }
 
-    public function scanAllAccounts()
+    /**
+     * @return array|void
+     */
+    public function getAllAccounts()
     {
-        $return = array();
+        $allAccounts = array();
 
         $accounts = $this->cpanelApi->execApi1('listaccts', array('search' => '', 'searchtype' => 'user'));
         if ($accounts and isset($accounts['data']) and isset($accounts['data']['acct'])) {
             foreach ($accounts['data']['acct'] as $account) {
                 if (isset($account['user'])) {
-                    $user_domains = $this->scanByUsername($account['user']);
+                    $user_domains = $this->getAllDomainsByUsername($account['user']);
                 }
                 if (isset($user_domains) and $user_domains) {
-                    $return = array_merge($return, $user_domains);
+                    $allAccounts = array_merge($allAccounts, $user_domains);
 
                 }
             }
         }
-        return $return;
+        return $allAccounts;
     }
 
-    public function scanByUsername($username = false)
+    /**
+     * @param $username
+     * @return array|void
+     */
+    public function getAllDomainsByUsername($username = false)
     {
         $method = false;
         if (isset($this->cpanel) and is_object($this->cpanel) and method_exists($this->cpanel, 'uapi')) {
@@ -72,30 +81,7 @@ class InstalledAppsScanner
             }
         }
 
-        $installations = array();
-        foreach ($allDomains as $domain) {
-
-           $recursiveScan = new MicroweberInstallationsRecursiveScanner();
-           $recursiveScan->setPath($domain['documentroot']);
-
-           foreach ($recursiveScan->scan() as $installation) {
-
-                $domain['path'] = $installation['path'];
-                $domain['created_at'] = $installation['created_at'];
-                $domain['version'] = $installation['version'];
-
-                if ($installation['is_symlink']) {
-                    $domain['is_symlink'] = 1;
-                    $domain['symlink_target'] = true;
-                } else {
-                    $domain['is_symlink'] = 0;
-                    $domain['symlink_target'] = false;
-                }
-
-                $installations[] = $domain;
-            }
-        }
-
-        return $installations;
+        return $allDomains;
     }
+
 }

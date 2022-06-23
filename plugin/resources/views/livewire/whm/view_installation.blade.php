@@ -1,7 +1,7 @@
 <div class="mt-3">
 
     <p>
-        <a href="{{asset('/index.cgi')}}">Back to Microweber Plugin</a>
+        <a href="{{asset('/index.cgi')}}" class="btn btn-outline-primary">Back to Microweber Plugin</a>
     </p>
 
     <h4>{{$this->appInstallation->domain}}</h4>
