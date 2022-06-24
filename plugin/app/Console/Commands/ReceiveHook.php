@@ -138,7 +138,6 @@ class ReceiveHook extends Command
             }
         }
 
-
         return 0;
     }
 }
