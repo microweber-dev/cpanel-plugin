@@ -2,9 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Console\Commands\AppInstallationsScan;
 use App\Cpanel\CpanelApi;
-use App\Cpanel\InstalledAppsScanner;
 use App\Models\AppInstallation;
 use Livewire\Component;
 use MicroweberPackages\SharedServerScripts\MicroweberInstallationsScanner;
