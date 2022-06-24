@@ -91,8 +91,10 @@ class WhmInstall extends Component
             $install->setLanguage($this->installationLanguage);
             $install->setTemplate($this->installationTemplate);
 
-            if ($this->installationType == 'symlinked') {
+            if ($this->installationType == 'symlink') {
                 $install->setSymlinkInstallation();
+            } else {
+                $install->setStandaloneInstallation();
             }
 
             $install->setDatabaseDriver($this->installationDatabaseDriver);
@@ -106,6 +108,7 @@ class WhmInstall extends Component
             $install->setAdminEmail($this->installationAdminEmail);
             $install->setAdminUsername($this->installationAdminUsername);
             $install->setAdminPassword($this->installationAdminPassword);
+
             $run = $install->run();
 
             $scanner = new MicroweberInstallationsScanner();
