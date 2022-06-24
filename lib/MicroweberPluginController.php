@@ -34,7 +34,7 @@ class MicroweberPluginController
         $settings_from_admin = $settings_from_admin->read();
 
         $is_symlinked = false;
-        if (isset($settings_from_admin['install_type']) and $settings_from_admin['install_type'] == 'symlinked') {
+        if (isset($settings_from_admin['install_type']) and $settings_from_admin['install_type'] == 'symlink') {
             $is_symlinked = true;
 
         }
