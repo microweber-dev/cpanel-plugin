@@ -41,6 +41,7 @@ class AppInstallationsScan extends Command
      */
     public function handle()
     {
+        return;
         $cpanelApi = new CpanelApi();
         $domains = $cpanelApi->getAllDomains();
         if (empty($domains)) {
