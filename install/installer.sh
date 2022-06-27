@@ -17,7 +17,9 @@ if [ -n "$plugin_vendor" ]; then
     echo "$plugin_vendor"
 fi
 
-find /usr/local/cpanel/microweber/plugin/vendor -type f -iname "*.sh" -exec chmod +x {} \;
+find /usr/local/cpanel/microweber/plugin -type d -exec chmod 0755 {} \;
+find /usr/local/cpanel/microweber/plugin -type f -exec chmod 0644 {} \;
+
 find /usr/local/cpanel/microweber/plugin/vendor/microweber-packages/shared-server-scripts/shell-scripts -type f -iname "*.sh" -exec chmod +x {} \;
 
 ## Create plugin database
