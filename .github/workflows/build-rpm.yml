@@ -20,7 +20,7 @@ jobs:
         dnf makecache --refresh
         dnf -y install ncftp
         yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils
-        yum install -y php php-fpm php-curl php-cli php-json php-mysql php-opcache php-dom php-exif php-fileinfo php-zip php-mbstring php-hash php-imagick php-openssl php-pcre php-xml php-bcmath php-filter php-pear php-gd php-mcrypt php-intl php-iconv php-zlib php-xmlreader
+        yum install -y php php-fpm php-curl php-cli php-json php-opcache php-dom php-exif php-fileinfo php-zip php-mbstring php-hash php-openssl php-pcre php-xml php-bcmath php-filter php-pear php-gd php-intl php-iconv php-zlib php-xmlreader
         yum install -y ncftp 
 
     - name: Install composer
