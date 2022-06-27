@@ -33,13 +33,13 @@
 
             <br />
             <h5>Details</h5>
-            <span>App version is: </span> <b>{{$appInstallationVersion}}</b> <br />
-            <span>App creation date:</span> <b>{{$appInstallationCreatedAt}}</b><br />
+            <span>App version is: </span> <b>{{$this->appInstallation->version}}</b> <br />
+            <span>App creation date:</span> <b>{{$this->appInstallation->created_at}}</b><br />
             <br />
             <br />
 
-            <h5>Supported Languages ({{count($appSupportedLanguages)}})</h5>
-            @if(!empty($appSupportedLanguages))
+            <h5>Supported Languages ({{count($this->appInstallation->supported_languages)}})</h5>
+            @if(!empty($this->appInstallation->supported_languages))
                 @foreach($appSupportedLanguages as $language=>$languageName)
                     {{$languageName}} &nbsp;
                 @endforeach
@@ -62,9 +62,9 @@
 
             <br />
 
-            <h5>Installed Modules ({{count($appSupportedModules)}})</h5>
-            @if(!empty($appSupportedModules))
-                @foreach($appSupportedModules as $module)
+            <h5>Installed Modules ({{count($this->appInstallation->supported_modules)}})</h5>
+            @if(!empty($this->appInstallation->supported_modules))
+                @foreach($this->appInstallation->supported_modules as $module)
                     {{$module['name']}} (v{{$module['version']}}) &nbsp;
                 @endforeach
             @else
@@ -77,9 +77,9 @@
 
             <br />
 
-            <h5>Supported Templates ({{count($appSupportedTemplates)}})</h5>
-            @if(!empty($appSupportedTemplates))
-                @foreach($appSupportedTemplates as $template)
+            <h5>Supported Templates ({{count($this->appInstallation->supported_templates)}})</h5>
+            @if(!empty($this->appInstallation->supported_templates))
+                @foreach($this->appInstallation->supported_templates as $template)
                     {{$template['name']}} (v{{$template['version']}}) &nbsp;
                 @endforeach
             @else

@@ -10,11 +10,6 @@ use MicroweberPackages\SharedServerScripts\MicroweberUninstaller;
 class WhmInstallationView extends Component
 {
     public $appInstallation;
-    public $appSupportedTemplates = [];
-    public $appSupportedModules = [];
-    public $appSupportedLanguages = [];
-    public $appInstallationVersion = '';
-    public $appInstallationCreatedAt = '';
     public $confirmUninstall = false;
     public $installedSuccess = false;
 
