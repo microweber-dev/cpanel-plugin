@@ -12,6 +12,12 @@ fi
 
 find /usr/local/cpanel/microweber/plugin/vendor/microweber-packages/shared-server-scripts/shell-scripts -type f -iname "*.sh" -exec chmod +x {} \;
 
+## Create plugin vendor install
+plugin_vendor=`cd /usr/local/cpanel/microweber/plugin/ && composer install`
+if [ -n "$plugin_vendor" ]; then
+    echo "Unable to make plugin_vendor"
+    echo "$plugin_vendor"
+fi
 
 ## Create plugin database
 plugin_database=`touch /usr/local/cpanel/microweber/plugin/database/database.sqlite`
@@ -20,8 +26,14 @@ if [ -n "$plugin_database" ]; then
     echo "$plugin_database"
 fi
 
-## Create symlinks
+## Create plugin migrate
+plugin_migrate=`touch /usr/local/cpanel/microweber/plugin/artisan migrate`
+if [ -n "$plugin_migrate" ]; then
+    echo "Unable to make plugin_migrate"
+    echo "$plugin_migrate"
+fi
 
+## Create symlinks
 echo "Creating dirs...";
 
 step1=`mkdir -p /usr/local/cpanel/whostmgr/docroot/cgi/3rdparty/microweber/`
