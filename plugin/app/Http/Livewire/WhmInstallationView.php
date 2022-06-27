@@ -44,9 +44,9 @@ class WhmInstallationView extends Component
     {
         $appPathHelper = new MicroweberAppPathHelper();
         $appPathHelper->setPath($this->appInstallation->path);
-        $loginAsAdmin = $appPathHelper->loginAsAdmin();
-        if ($loginAsAdmin) {
-            $this->confirmLoginAsAdmin = $loginAsAdmin;
+        $token = $appPathHelper->generateAdminLoginToken();
+        if ($token) {
+            $this->confirmLoginAsAdmin = $this->appInstallation->url .'/api/user_login?secret_key='. $token;
         }
     }
 
