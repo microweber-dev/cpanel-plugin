@@ -7,7 +7,6 @@ use App\Models\AppInstallation;
 use Livewire\Component;
 use MicroweberPackages\SharedServerScripts\MicroweberAppPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberInstallationsScanner;
-use MicroweberPackages\SharedServerScripts\MicroweberSharedPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberInstaller;
 
 class WhmInstall extends Component

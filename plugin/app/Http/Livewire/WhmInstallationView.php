@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use App\Models\AppInstallation;
 use Livewire\Component;
 use MicroweberPackages\SharedServerScripts\MicroweberAppPathHelper;
-use MicroweberPackages\SharedServerScripts\MicroweberSharedPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberUninstaller;
 
 class WhmInstallationView extends Component
