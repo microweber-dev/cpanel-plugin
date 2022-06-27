@@ -14,16 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/installation/{id}',function ($id) {
+Route::get('/installation/{id}', function ($id) {
 
     return app()->make(\App\Http\Controllers\WhmRenderLivewireController::class)->render([
-        'componentName'=> 'whm-installation-view',
-        'componentParams'=> ['id'=>$id],
+        'componentName' => 'whm-installation-view',
+        'componentParams' => ['id' => $id],
     ]);
 
 })->name('installation.view');
 
-Route::any('/', function (\Illuminate\Http\Request $request) {
+Route::get('/install', function (\Illuminate\Http\Request $request) {
 
     $runMigration = false;
     $dbFile = storage_path('database.sqlite');
@@ -40,12 +40,16 @@ Route::any('/', function (\Illuminate\Http\Request $request) {
         dispatch(new AppInstallationsScan());
     }
 
+});
+
+Route::any('/', function (\Illuminate\Http\Request $request) {
+
     $router = $request->get('router', false);
 
     if (!$router) {
         return app()->make(\App\Http\Controllers\WhmRenderLivewireController::class)->render([
-            'componentName'=> 'whm-tabs',
-            'componentParams'=> [],
+            'componentName' => 'whm-tabs',
+            'componentParams' => [],
         ]);
     }
 
