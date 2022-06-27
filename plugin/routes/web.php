@@ -1,5 +1,6 @@
 <?php
 
+use App\Console\Commands\AppInstallationsScan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,21 @@ Route::get('/installation/{id}',function ($id) {
 })->name('installation.view');
 
 Route::any('/', function (\Illuminate\Http\Request $request) {
+
+    $runMigration = false;
+    $dbFile = storage_path('database.sqlite');
+    if (!is_file($dbFile)) {
+        $runMigration = true;
+    } else {
+        if (empty(file_get_contents($dbFile))) {
+            $runMigration = true;
+        }
+    }
+
+    if ($runMigration) {
+        \Artisan::call('migrate');
+        dispatch(new AppInstallationsScan());
+    }
 
     $router = $request->get('router', false);
 
