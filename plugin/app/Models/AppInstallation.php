@@ -35,7 +35,7 @@ class AppInstallation extends Model
         }
 
         $siteUrl = 'http://' . $hosting['domain'];
-        $siteUrl = $siteUrl .'/'. str_replace($hosting['documentroot'], '', $installation['path']);
+        $siteUrl = $siteUrl . str_replace($hosting['documentroot'], '', $installation['path']);
 
         $findInstallation->url = $siteUrl;
         $findInstallation->supported_modules = $installation['supported_modules'];
