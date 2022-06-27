@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Cpanel\CpanelApi;
 use App\Models\AppInstallation;
 use Livewire\Component;
+use MicroweberPackages\SharedServerScripts\MicroweberAppPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberInstallationsScanner;
 use MicroweberPackages\SharedServerScripts\MicroweberSharedPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberInstaller;
@@ -42,7 +43,7 @@ class WhmInstall extends Component
         $cpanelApi = new CpanelApi();
         $this->domains = $cpanelApi->getAllDomains();
 
-        $sharedPath = new MicroweberSharedPathHelper();
+        $sharedPath = new MicroweberAppPathHelper();
         $sharedPath->setPath(config('whm-cpanel.sharedPaths.app'));
 
         $this->supportedLanguages = $sharedPath->getSupportedLanguages();
