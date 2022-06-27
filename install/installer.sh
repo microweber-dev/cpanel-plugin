@@ -11,7 +11,7 @@ if [ "$username" != "root" ]; then
 fi
 
 ## Create plugin vendor install
-plugin_vendor=`cd /usr/local/cpanel/microweber/plugin/ && export COMPOSER_ALLOW_SUPERUSER=1 && composer show && composer install`
+plugin_vendor=`cd /usr/local/cpanel/microweber/plugin/ && export COMPOSER_ALLOW_SUPERUSER=1 && composer show && composer install --ignore-platform-reqs`
 if [ -n "$plugin_vendor" ]; then
     echo "Unable to make plugin_vendor"
     echo "$plugin_vendor"
