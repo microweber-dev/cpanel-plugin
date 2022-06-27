@@ -32,9 +32,9 @@ jobs:
     - name: Install composer
       run:
         |
-        php -v
-        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-        php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+        php81 -v
+        php81 -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+        php81 composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
     - name: Run build
       run:
