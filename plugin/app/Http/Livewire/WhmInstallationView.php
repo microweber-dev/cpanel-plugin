@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Models\AppInstallation;
 use Livewire\Component;
-use MicroweberPackages\SharedServerScripts\MicroweberAppPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberSharedPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberUninstaller;
 
@@ -14,8 +13,8 @@ class WhmInstallationView extends Component
     public $appSupportedTemplates = [];
     public $appSupportedModules = [];
     public $appSupportedLanguages = [];
-    public $appInstallationVersion = [];
-    public $appInstallationCreatedAt = [];
+    public $appInstallationVersion = '';
+    public $appInstallationCreatedAt = '';
     public $confirmUninstall = false;
     public $installedSuccess = false;
 
@@ -26,7 +25,6 @@ class WhmInstallationView extends Component
 
     public function mount($id)
     {
-
         $request = request();
         if ($request->get('installed_success') == 1) {
             $this->installedSuccess = true;
@@ -36,15 +34,6 @@ class WhmInstallationView extends Component
         if ($findInstallation == null) {
             return $this->redirect(asset('') . 'index.cgi');
         }
-
-        $appPathHelper = new MicroweberAppPathHelper();
-        $appPathHelper->setPath($findInstallation->path);
-
-        $this->appSupportedTemplates = $appPathHelper->getSupportedTemplates();
-        $this->appSupportedModules = $appPathHelper->getSupportedModules();
-        $this->appSupportedLanguages = $appPathHelper->getSupportedLanguages();
-        $this->appInstallationVersion = $appPathHelper->getCurrentVersion();
-        $this->appInstallationCreatedAt = $appPathHelper->getCreatedAt();
 
         $this->appInstallation = $findInstallation;
     }

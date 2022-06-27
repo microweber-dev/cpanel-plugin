@@ -9,6 +9,13 @@ class AppInstallation extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+      'supported_modules'=>'json',
+      'supported_templates'=>'json',
+      'supported_languages'=>'json',
+      'database_details'=>'json',
+    ];
+
     /**
      * @param $hosting
      * @param $installation
@@ -27,6 +34,9 @@ class AppInstallation extends Model
             $findInstallation = new AppInstallation();
         }
 
+        $findInstallation->supported_modules = $installation['supported_modules'];
+        $findInstallation->supported_templates = $installation['supported_templates'];
+        $findInstallation->supported_languages = $installation['supported_languages'];
         $findInstallation->user = $hosting['user'];
         $findInstallation->domain = $hosting['domain'];
         $findInstallation->server_alias = $hosting['serveralias'];
@@ -40,7 +50,6 @@ class AppInstallation extends Model
         $findInstallation->document_root = $hosting['documentroot'];
         $findInstallation->path = $installation['path'];
         $findInstallation->owner = $hosting['owner'];
-
 
         if ($installation['is_symlink'] > 0){
             $findInstallation->is_symlink = 1;
