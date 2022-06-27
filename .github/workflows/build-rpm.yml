@@ -33,7 +33,7 @@ jobs:
       run:
         |
         cd plugin
-        composer install
+        composer install --ignore-platform-reqs
         cd ../
         cd rpm-builder/
         php pack.php
