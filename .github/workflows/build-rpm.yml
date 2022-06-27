@@ -28,7 +28,8 @@ jobs:
         yum-config-manager --enable remi-php81
         yum repolist
         yum -y install php php-{cli,fpm,mysqlnd,zip,devel,gd,mbstring,curl,xml,pear,bcmath,json,opcache,redis,memcache}
-- name: Install composer
+
+    - name: Install composer
       run:
         |
         php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
