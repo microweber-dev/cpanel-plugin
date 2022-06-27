@@ -23,6 +23,15 @@ jobs:
         yum install -y php 
         yum install -y ncftp 
 
+    - name: Install php
+      run:
+        |
+        dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
+        dnf install epel-release -y
+        dnf module reset php
+        dnf module enable php:remi-8.1
+        dnf install php -y
+
     - name: Run build
       run:
         |
