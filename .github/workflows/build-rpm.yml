@@ -20,10 +20,16 @@ jobs:
         dnf makecache --refresh
         dnf -y install ncftp
         yum install -y createrepo rpm-build rpm-sign wget gcc python3 yum-utils
-        yum install -y php php-fpm php-curl php-cli php-json php-opcache php-dom php-exif php-fileinfo php-zip php-mbstring php-hash php-openssl php-pcre php-xml php-bcmath php-filter php-pear php-gd php-intl php-iconv php-zlib php-xmlreader
-        yum install -y ncftp 
+        yum install -y ncftp
+        yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+        yum -y install https://rpms.remirepo.net/enterprise/remi-release-7.rpm
+        yum -y install yum-utils
+        yum-config-manager --disable 'remi-php*'
+        yum-config-manager --enable remi-php81
+        yum repolist
+        yum -y install php php-{cli,fpm,mysqlnd,zip,devel,gd,mbstring,curl,xml,pear,bcmath,json,opcache,redis,memcache}
 
-    - name: Install composer
+- name: Install composer
       run:
         |
         php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
