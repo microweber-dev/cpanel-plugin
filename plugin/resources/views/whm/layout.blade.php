@@ -85,9 +85,9 @@
 
         <nav aria-label="breadcrumb" class="mt-3 mb-4">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Plugins</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><b>Microweber Plugin</b></li>
+                <li class="breadcrumb-item">Home</li>
+                <li class="breadcrumb-item">Plugins</li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="{{asset('/index.cgi')}}">Microweber Plugin</a></li>
             </ol>
         </nav>
 
