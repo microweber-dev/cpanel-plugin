@@ -54,6 +54,9 @@
             @if($this->confirmLoginAsAdmin)
                 <a href="{{$this->confirmLoginAsAdmin}}" target="_new" class="btn btn-outline-success">Confirm login</a>
             @else
+                <div wire:loading wire:target="loginAsAdmin">
+                    Generating token ...
+                </div>
                 <button class="btn btn-outline-success" wire:click="loginAsAdmin()">Login as Admin</button>
             @endif
 
