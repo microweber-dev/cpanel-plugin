@@ -129,7 +129,7 @@ $appConfig = [
     |
     */
 
-    'key' => 'base64:baaq7HHZn0bTnEXNmZxNAesJtEHHOBSbf7BidU02H+s=', // env('APP_KEY'),
+    'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
 

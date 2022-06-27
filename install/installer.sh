@@ -10,15 +10,12 @@ if [ "$username" != "root" ]; then
     exit 1
 fi
 
-## Create plugin vendor install
-plugin_vendor=`cd /usr/local/cpanel/microweber/plugin/ && unlink composer.lock && export COMPOSER_ALLOW_SUPERUSER=1 && composer show && composer install --ignore-platform-reqs`
-if [ -n "$plugin_vendor" ]; then
-    echo "Unable to make plugin_vendor"
-    echo "$plugin_vendor"
+## Create plugin key generate
+plugin_key_generate=`cd /usr/local/cpanel/microweber/plugin && cp .env.example .env && php artisan key:generate`
+if [ -n "$plugin_key_generate" ]; then
+    echo "Unable to make plugin_key_generate"
+    echo "$plugin_key_generate"
 fi
-
-find /usr/local/cpanel/microweber -type d -exec chmod 0755 {} \;
-find /usr/local/cpanel/microweber -type f -exec chmod 0644 {} \;
 
 find /usr/local/cpanel/microweber/plugin/vendor/microweber-packages/shared-server-scripts/shell-scripts -type f -iname "*.sh" -exec chmod +x {} \;
 
@@ -30,7 +27,7 @@ if [ -n "$plugin_database" ]; then
 fi
 
 ## Create plugin migrate
-plugin_migrate=`touch /usr/local/cpanel/microweber/plugin/artisan migrate`
+plugin_migrate=`cd /usr/local/cpanel/microweber/plugin && php artisan migrate`
 if [ -n "$plugin_migrate" ]; then
     echo "Unable to make plugin_migrate"
     echo "$plugin_migrate"
