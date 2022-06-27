@@ -87,9 +87,9 @@
             @endif
 
         </div>
-        <div class="tab-pane" id="database" role="tabpanel" aria-labelledby="database-tab" tabindex="0">..s.</div>
+        <div class="tab-pane" id="database" role="tabpanel" aria-labelledby="database-tab" tabindex="0">
+            No details
+        </div>
     </div>
 
-
-    {{--@dump($this->appInstallation)--}}
 </div>
