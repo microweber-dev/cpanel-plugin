@@ -32,6 +32,7 @@ jobs:
     - name: Install composer
       run:
         |
+        php -v
         php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
         php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
@@ -39,7 +40,8 @@ jobs:
       run:
         |
         cd plugin
-        composer install --ignore-platform-reqs
+        php -v
+        composer install
         cd ../
         cd rpm-builder/
         php pack.php
