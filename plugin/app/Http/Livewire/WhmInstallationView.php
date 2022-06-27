@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\AppInstallation;
 use Livewire\Component;
+use MicroweberPackages\SharedServerScripts\MicroweberAppPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberSharedPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberUninstaller;
 
@@ -12,6 +13,7 @@ class WhmInstallationView extends Component
     public $appInstallation;
     public $confirmUninstall = false;
     public $installedSuccess = false;
+    public $confirmLoginAsAdmin = false;
 
     public function render()
     {
@@ -36,6 +38,16 @@ class WhmInstallationView extends Component
     public function update()
     {
 
+    }
+
+    public function loginAsAdmin()
+    {
+        $appPathHelper = new MicroweberAppPathHelper();
+        $appPathHelper->setPath($this->appInstallation->path);
+        $loginAsAdmin = $appPathHelper->loginAsAdmin();
+        if ($loginAsAdmin) {
+            $this->confirmLoginAsAdmin = $loginAsAdmin;
+        }
     }
 
     public function confirmUninstall()

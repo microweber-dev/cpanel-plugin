@@ -49,7 +49,13 @@
 
             <hr />
 
-            <button class="btn btn-outline-success" wire:click="update()">Update</button>
+            {{--<button class="btn btn-outline-success" wire:click="update()">Update</button>--}}
+
+            @if($this->confirmLoginAsAdmin)
+                <a href="{{$this->confirmLoginAsAdmin}}" target="_new" class="btn btn-outline-success">Confirm login</a>
+            @else
+                <button class="btn btn-outline-success" wire:click="loginAsAdmin()">Login as Admin</button>
+            @endif
 
             @if($this->confirmUninstall)
                 <button class="btn btn-outline-danger" wire:click="uninstall()">Are you sure?</button>
