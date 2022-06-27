@@ -28,9 +28,11 @@ jobs:
         |
         dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
         dnf install epel-release -y
-        dnf module reset php
-        dnf module enable php:remi-8.1
+        dnf module reset php -y
+        dnf module enable php:remi-8.1 -y
         dnf install php -y
+        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+        php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
     - name: Run build
       run:
