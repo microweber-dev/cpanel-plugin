@@ -1,7 +1,7 @@
 <?php
 include_once 'helpers.php';
 
-$rpm_ver = "0.0.1";
+$rpm_ver = trim(file_get_contents(dirname(__DIR__) . '/version.txt'));
 $rpm_package_name = "microweber-cms";
 
 $workdir = __DIR__ . '/../../workdir/core/rpm/cpanel-microweber';
