@@ -11,7 +11,7 @@
     <h4>
         {{$this->appInstallation->domain}}
     </h4>
-    <p>{{$this->appInstallation->path}}</p>
+    <a href="{{$this->appInstallation->url}}" target="_new">{{$this->appInstallation->url}}</a>
 
     <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
