@@ -8,7 +8,7 @@
     <h5>Available Templates ({{count($supportedTemplates)}})</h5>
     @if(!empty($supportedTemplates))
     @foreach($supportedTemplates as $template)
-        {{$template['name']}} (v{{$template['version']}}) &nbsp;
+        {{$template['name']}} @if($template['version'])(v{{$template['version']}})@endif &nbsp; 
     @endforeach
     @else
         No templates installed
