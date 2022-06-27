@@ -40,7 +40,7 @@
 
             <h5>Supported Languages ({{count($this->appInstallation->supported_languages)}})</h5>
             @if(!empty($this->appInstallation->supported_languages))
-                @foreach($appSupportedLanguages as $language=>$languageName)
+                @foreach($this->appInstallation->supported_languages as $language=>$languageName)
                     {{$languageName}} &nbsp;
                 @endforeach
             @else
