@@ -26,7 +26,7 @@ jobs:
     - name: Install php
       run:
         |
-        dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
+        dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm
         dnf install epel-release -y
         dnf module reset php -y
         dnf module enable php:remi-8.1 -y
