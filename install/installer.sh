@@ -10,14 +10,15 @@ if [ "$username" != "root" ]; then
     exit 1
 fi
 
-find /usr/local/cpanel/microweber/plugin/vendor/microweber-packages/shared-server-scripts/shell-scripts -type f -iname "*.sh" -exec chmod +x {} \;
-
 ## Create plugin vendor install
-plugin_vendor=`cd /usr/local/cpanel/microweber/plugin/ && composer install`
+plugin_vendor=`cd /usr/local/cpanel/microweber/plugin/ && export COMPOSER_ALLOW_SUPERUSER=1 && composer show && composer install`
 if [ -n "$plugin_vendor" ]; then
     echo "Unable to make plugin_vendor"
     echo "$plugin_vendor"
 fi
+
+find /usr/local/cpanel/microweber/plugin/vendor/microweber-packages/shared-server-scripts/shell-scripts -type f -iname "*.sh" -exec chmod +x {} \;
+
 
 ## Create plugin database
 plugin_database=`touch /usr/local/cpanel/microweber/plugin/database/database.sqlite`
