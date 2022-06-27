@@ -27,7 +27,7 @@ jobs:
         yum-config-manager --disable 'remi-php*'
         yum-config-manager --enable remi-php81
         yum repolist
-        yum -y install php php-{cli,fpm,mysqlnd,zip,devel,gd,mbstring,curl,xml,pear,bcmath,json,opcache,redis,memcache}
+        yum -y install php php-*
 
 - name: Install composer
       run:
