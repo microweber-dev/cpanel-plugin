@@ -49,23 +49,27 @@
 
             <hr />
 
-            {{--<button class="btn btn-outline-success" wire:click="update()">Update</button>--}}
+            <div class="row">
+                <div class="col-md-2">
+                {{--<button class="btn btn-outline-success" wire:click="update()">Update</button>--}}
 
-            @if($this->confirmLoginAsAdmin)
-                <a href="{{$this->confirmLoginAsAdmin}}" target="_new" class="btn btn-outline-success">Confirm login</a>
-            @else
-                <div wire:loading wire:target="loginAsAdmin">
-                    Generating token ...
+                @if($this->confirmLoginAsAdmin)
+                    <a href="{{$this->confirmLoginAsAdmin}}" target="_new" class="btn btn-outline-success">Confirm login</a>
+                @else
+                    <button class="btn btn-outline-success" wire:click="loginAsAdmin()">Login as Admin</button>
+                    <div wire:loading wire:target="loginAsAdmin">
+                        Generating token ...
+                    </div>
+                @endif
                 </div>
-                <button class="btn btn-outline-success" wire:click="loginAsAdmin()">Login as Admin</button>
-            @endif
-
-            @if($this->confirmUninstall)
-                <button class="btn btn-outline-danger" wire:click="uninstall()">Are you sure?</button>
-            @else
-                <button class="btn btn-outline-danger" wire:click="confirmUninstall()">Uninstall</button>
-            @endif
-
+                <div class="col-md-6">
+                @if($this->confirmUninstall)
+                    <button class="btn btn-outline-danger" wire:click="uninstall()">Are you sure?</button>
+                @else
+                    <button class="btn btn-outline-danger" wire:click="confirmUninstall()">Uninstall</button>
+                @endif
+                </div>
+            </div>
         </div>
         <div class="tab-pane" id="modules" role="tabpanel" aria-labelledby="modules-tab" tabindex="0">
 
