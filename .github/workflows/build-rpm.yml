@@ -26,6 +26,9 @@ jobs:
     - name: Run build
       run:
         |
+        cd plugin
+        composer install
+        cd ../
         cd rpm-builder/
         php pack.php
         RPM_FILE="$(php update_repo.php)"
