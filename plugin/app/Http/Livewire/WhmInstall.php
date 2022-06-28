@@ -4,10 +4,12 @@ namespace App\Http\Livewire;
 
 use App\Cpanel\CpanelApi;
 use App\Models\AppInstallation;
+use App\Models\Option;
 use Livewire\Component;
 use MicroweberPackages\SharedServerScripts\MicroweberAppPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberInstallationsScanner;
 use MicroweberPackages\SharedServerScripts\MicroweberInstaller;
+use MicroweberPackages\SharedServerScripts\MicroweberWhmcsConnector;
 
 class WhmInstall extends Component
 {
@@ -17,7 +19,7 @@ class WhmInstall extends Component
     public $installationDomainName;
     public $installationDomainPath = '';
     public $installationLanguage = 'en';
-    public $installationTemplate = 'new-world';
+    public $installationTemplate = false;
     public $installationType = 'symlink';
     public $installationDatabaseDriver = 'sqlite';
     public $installationAdminEmail;
@@ -31,6 +33,15 @@ class WhmInstall extends Component
 
         if (!empty($this->installationDomainName)) {
             $this->installationAdminEmail = 'admin@' . $this->installationDomainName;
+
+            if (empty($this->installationTemplate)) {
+                $whmcsConnector = new MicroweberWhmcsConnector();
+                $whmcsConnector->setUrl(Option::getOption('whmcs_url', 'settings'));
+                $whmcsConnector->setDomainName($this->installationDomainName);
+                $selectedTemplate = $whmcsConnector->getSelectedTemplateFromWhmcsUser();
+
+                $this->installationTemplate = $selectedTemplate;
+            }
         }
 
         return view('livewire.whm.install');
