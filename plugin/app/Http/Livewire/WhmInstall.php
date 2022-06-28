@@ -35,12 +35,12 @@ class WhmInstall extends Component
             $this->installationAdminEmail = 'admin@' . $this->installationDomainName;
 
             if (empty($this->installationTemplate)) {
+
                 $whmcsConnector = new MicroweberWhmcsConnector();
                 $whmcsConnector->setUrl(Option::getOption('whmcs_url', 'settings'));
                 $whmcsConnector->setDomainName($this->installationDomainName);
-                $selectedTemplate = $whmcsConnector->getSelectedTemplateFromWhmcsUser();
+                $this->installationTemplate = $whmcsConnector->getSelectedTemplateFromWhmcsUser();
 
-                $this->installationTemplate = $selectedTemplate;
             }
         }
 

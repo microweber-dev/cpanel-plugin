@@ -8,6 +8,7 @@ use App\Models\Option;
 use Illuminate\Console\Command;
 use MicroweberPackages\SharedServerScripts\MicroweberInstallationsScanner;
 use MicroweberPackages\SharedServerScripts\MicroweberInstaller;
+use MicroweberPackages\SharedServerScripts\MicroweberWhmcsConnector;
 
 class ReceiveHook extends Command
 {
@@ -107,8 +108,13 @@ class ReceiveHook extends Command
             $install->setPath($path);
             $install->setSourcePath(config('whm-cpanel.sharedPaths.app'));
 
+            $whmcsConnector = new MicroweberWhmcsConnector();
+            $whmcsConnector->setUrl(Option::getOption('whmcs_url', 'settings'));
+            $whmcsConnector->setDomainName($data['domain']);
+            $templateFromWhmcs = $whmcsConnector->getSelectedTemplateFromWhmcsUser();
+            $install->setTemplate($templateFromWhmcs);
+
           //  $install->setLanguage($this->installationLanguage);
-          //  $install->setTemplate($this->installationTemplate);
 
             if ($settings['installation_type'] == 'symlink') {
                 $install->setSymlinkInstallation();
