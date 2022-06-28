@@ -33,20 +33,21 @@ class WhmAppInstallationsTable extends DataTableComponent
          //   Column::make("Id", "id")->sortable(),
             ScreenshotColumn::make("Screenshot", "screenshot")
                 ->location(function($row) {
-
-                return '';
+                return asset('img/no-screenshot.png');
             }),
 
             HtmlColumn::make('Details')
                 ->setOutputHtml(function($row) {
                     $html = '<div><b>'.$row->url.'</b></div><br />';
                     $html .= '<div>'.$row->path.'</div>';
-                    $html .= '<div>User: <b>'.$row->user.'</b></div>';
                     if ($row->version > 0) {
                         $html .= '<div><span class="badge bg-success">v'.$row->version.'</span></div>';
                     }
                     return $html;
                 }),
+
+            Column::make("Owner", "user"),
+            Column::make("Created At", "created_at"),
 
             HtmlColumn::make('Actions')
                 ->setOutputHtml(function($row) {
