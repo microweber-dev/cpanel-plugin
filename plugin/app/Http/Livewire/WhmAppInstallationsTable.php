@@ -2,7 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\View\Columns\HtmlColumn;
+use App\View\Columns\ScreenshotColumn;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\AppInstallation;
@@ -28,21 +31,32 @@ class WhmAppInstallationsTable extends DataTableComponent
     {
         return [
          //   Column::make("Id", "id")->sortable(),
-            Column::make("Domain", "domain"),
-            Column::make("User", "user"),
-            Column::make("Path", "path"),
-            Column::make("Version", "version"),
-            LinkColumn::make('View','view')
-                ->title(function($row){
-                    return 'View';
-                })
+            ScreenshotColumn::make("Screenshot", "screenshot")
                 ->location(function($row) {
-                    return asset('index.cgi?router=installation/' . $row->id);
-                })
-                ->attributes(function($row) {
-                    return [
-                        'class' => 'btn btn-outline-dark btn-sm',
-                    ];
+
+                return '';
+            }),
+
+            HtmlColumn::make('Details')
+                ->setOutputHtml(function($row) {
+                    $html = '<div><b>'.Str::limit($row->domain, 40).'</b></div>';
+                    $html .= '<div>'.$row->path.'</div>';
+                    $html .= '<div>User: <b>'.$row->user.'</b></div>';
+                    if ($row->version > 0) {
+                        $html .= '<div><span class="badge bg-success">v'.$row->version.'</span></div>';
+                    }
+                    return $html;
+                }),
+
+            HtmlColumn::make('Actions')
+                ->setOutputHtml(function($row) {
+                    $html = '
+
+                    <a href="'.$row->url.'" target="_blank" class="btn btn-outline-dark btn-sm">View website</a>
+                    <a href="'.asset('index.cgi?router=installation/' . $row->id).'" class="btn btn-outline-dark btn-sm">Settings</a>
+
+                    ';
+                    return $html;
                 }),
         ];
     }
