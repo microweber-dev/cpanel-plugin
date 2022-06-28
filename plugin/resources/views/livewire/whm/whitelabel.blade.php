@@ -34,11 +34,11 @@
 
     <div class="alert alert-primary">
         <p>
-            Registered Name: Peter Ivanov <br>
-            Plan: Hosting Pro White Label <br>
-            Billing Cycle: Monthly <br>
-            Due on: 2022-05-23 <br>
-            Registraion on: 2021-06-23 <br>
+            Registered Name: <br>
+            Plan:  <br>
+            Billing Cycle:  <br>
+            Due on: <br>
+            Registraion on: <br>
         </p>
 
         @if($confirmRemoveLicense)
@@ -65,15 +65,15 @@
         </div>
         <div class="mb-3">
             <label class="form-label" for="adminLoginWhiteLabelUrl">Admin login - White Label URL?</label>
-            <input class="form-control" id="adminLoginWhiteLabelUrl" wire:model="state.admin_login_url" type="text" placeholder="Admin login - White Label URL?" data-sb-validations="" />
+            <input class="form-control" id="adminLoginWhiteLabelUrl" wire:model="state.admin_logo_login_link" type="text" placeholder="Admin login - White Label URL?" data-sb-validations="" />
         </div>
         <div class="mb-3">
-            <label class="form-label" for="enableSupportLinks">Enable support links?</label>
-            <input class="form-control" id="enableSupportLinks" wire:model="state.contact_page" type="text" placeholder="Enable support links?" data-sb-validations="" />
+            <label class="form-label" for="enableSupportLinks">Custom support links</label>
+            <input class="form-control" id="enableSupportLinks" wire:model="state.custom_support_url" type="text" placeholder="Enable support links?" data-sb-validations="" />
         </div>
         <div class="mb-3">
             <div class="form-check form-switch">
-                <input class="form-check-input" id="enableSupportLinks" wire:model="state.enable_support_links" type="checkbox" name="enableSupportLinks" />
+                <input class="form-check-input" id="enableSupportLinks" wire:model="state.enable_service_links" type="checkbox" name="enableSupportLinks" />
                 <label class="form-check-label" for="enableSupportLinks">Enable support links</label>
             </div>
         </div>
@@ -83,25 +83,25 @@
         </div>
         <div class="mb-3">
             <div class="form-check form-switch">
-                <input class="form-check-input" id="hidePoweredByLink" wire:model="state.hide_powered_by_link" type="checkbox" name="hidePoweredByLink" />
+                <input class="form-check-input" id="hidePoweredByLink" wire:model="state.disable_powered_by_link" type="checkbox" name="hidePoweredByLink" />
                 <label class="form-check-label" for="hidePoweredByLink">Hide &quot;Powered by&quot; link </label>
             </div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="logoForAdminPanelSize180X35Px">Logo for Admin panel (size: 180x35px) </label>
-            <input class="form-control" id="logoForAdminPanelSize180X35Px" wire:model="state.logo_admin_panel" type="text" placeholder="Logo for Admin panel (size: 180x35px) " data-sb-validations="" />
+            <input class="form-control" id="logoForAdminPanelSize180X35Px" wire:model="state.logo_admin" type="text" placeholder="Logo for Admin panel (size: 180x35px) " data-sb-validations="" />
         </div>
         <div class="mb-3">
             <label class="form-label" for="logoForLiveEditToolbarSize50X50Px">Logo for Live-Edit toolbar (size: 50x50px) </label>
-            <input class="form-control" id="logoForLiveEditToolbarSize50X50Px" wire:model="state.logo_live_edit_toolbar" type="text" placeholder="Logo for Live-Edit toolbar (size: 50x50px) " data-sb-validations="" />
+            <input class="form-control" id="logoForLiveEditToolbarSize50X50Px" wire:model="state.logo_live_edit" type="text" placeholder="Logo for Live-Edit toolbar (size: 50x50px) " data-sb-validations="" />
         </div>
         <div class="mb-3">
             <label class="form-label" for="logoForLoginScreenMaxWidth290Px">Logo for Login screen (max width: 290px) </label>
-            <input class="form-control" id="logoForLoginScreenMaxWidth290Px" wire:model="state.logo_login_screen" type="text" placeholder="Logo for Login screen (max width: 290px) " data-sb-validations="" />
+            <input class="form-control" id="logoForLoginScreenMaxWidth290Px" wire:model="state.logo_login" type="text" placeholder="Logo for Login screen (max width: 290px) " data-sb-validations="" />
         </div>
         <div class="mb-3">
             <div class="form-check form-switch">
-                <input class="form-check-input" id="disableMicroweberMarketplace" wire:model="state.disable_microweber_marketplace" type="checkbox" name="disableMicroweberMarketplace" />
+                <input class="form-check-input" id="disableMicroweberMarketplace" wire:model="state.disable_marketplace" type="checkbox" name="disableMicroweberMarketplace" />
                 <label class="form-check-label" for="disableMicroweberMarketplace"> Disable Microweber Marketplace </label>
             </div>
         </div>
