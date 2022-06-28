@@ -36,6 +36,7 @@ class CreateAppInstallationsTable extends Migration
             $table->text('version')->nullable();
             $table->text('php_version')->nullable();
             $table->text('template')->nullable();
+            $table->text('screenshot')->nullable();
             $table->longText('database_details')->nullable();
             $table->longText('supported_modules')->nullable();
             $table->longText('supported_templates')->nullable();

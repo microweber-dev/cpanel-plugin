@@ -36,8 +36,13 @@ class AppInstallation extends Model
 
         $siteUrl = 'http://' . $hosting['domain'];
         $siteUrl = $siteUrl . str_replace($hosting['documentroot'], '', $installation['path']);
-
         $findInstallation->url = $siteUrl;
+
+        if (isset($installation['app_details']['template_screenshot_url'])) {
+            $findInstallation->template = $installation['app_details']['template'];
+            $findInstallation->screenshot = str_replace('{SITE_URL}', $siteUrl.'/', $installation['app_details']['template_screenshot_url']);
+        }
+
         $findInstallation->supported_modules = $installation['supported_modules'];
         $findInstallation->supported_templates = $installation['supported_templates'];
         $findInstallation->supported_languages = $installation['supported_languages'];
