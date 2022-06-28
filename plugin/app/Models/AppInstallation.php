@@ -79,4 +79,11 @@ class AppInstallation extends Model
         return $findInstallation->id;
     }
 
+    public function getScreenshotUrl()
+    {
+        if (!empty($this->screenshot)) {
+            return $this->screenshot;
+        }
+        return asset('img/no-screenshot.png');
+    }
 }

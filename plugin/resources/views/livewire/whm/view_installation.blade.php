@@ -15,7 +15,7 @@
 
         <div class="col-md-4">
             <a href="{{$this->appInstallation->url}}" target="_blank">
-                <div style="background-image: url({{$this->appInstallation->screenshot}});background-size: cover;height: 400px">
+                <div style="background-image: url({{$this->appInstallation->getScreenshotUrl()}});background-position: top;background-size: cover;height: 400px">
                 </div>
             </a>
         </div>
