@@ -26,6 +26,7 @@ class WhmWhitelabel extends Component
             $whitelabel = new MicroweberWhitelabelUpdater();
             $whitelabel->setPath(config('whm-cpanel.sharedPaths.app'));
             $whitelabel->apply($this->state);
+
         }
 
         return view('livewire.whm.whitelabel');
