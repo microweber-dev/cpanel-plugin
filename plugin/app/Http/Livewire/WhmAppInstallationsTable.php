@@ -33,6 +33,9 @@ class WhmAppInstallationsTable extends DataTableComponent
          //   Column::make("Id", "id")->sortable(),
             ScreenshotColumn::make("Screenshot", "screenshot")
                 ->location(function($row) {
+                if (!empty($row->screenshot)) {
+                    return $row->screenshot;
+                }
                 return asset('img/no-screenshot.png');
             }),
 
