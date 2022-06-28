@@ -37,7 +37,7 @@ class WhmAppInstallationsTable extends DataTableComponent
                     return 'View';
                 })
                 ->location(function($row) {
-                    return 'index.cgi?router=installation/' . $row->id;
+                    return asset('index.cgi?router=installation/' . $row->id);
                 })
                 ->attributes(function($row) {
                     return [
