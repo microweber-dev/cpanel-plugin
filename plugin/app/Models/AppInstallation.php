@@ -64,7 +64,11 @@ class AppInstallation extends Model
         }
 
         $findInstallation->version = $installation['version'];
-        $findInstallation->php_version = $hosting['phpversion'];
+
+        if (isset($hosting['phpversion'])) {
+            $findInstallation->php_version = $hosting['phpversion'];
+        }
+
         $findInstallation->save();
 
         return $findInstallation->id;
