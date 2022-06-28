@@ -43,7 +43,7 @@ class FireHooks
     public function send_hook($hook)
     {
         $filename = $this->pluginPath .'/storage/receive_whm_hooks/'.$hook.'_' . time() . '_'.rand(1111,9999).'.json';
-        $save = file_put_contents($filename, json_encode($this->input,JSON_PRETTY_PRINT));
+        $save = file_put_contents($filename, json_encode($this->input, JSON_PRETTY_PRINT));
         if ($save) {
             $command = 'php ' . $this->pluginPath . '/artisan plugin:whm-receive-hook --hook='.$hook.' --file=' . $filename;
             return shell_exec($command);

@@ -50,7 +50,6 @@ class ReceiveHook extends Command
         if (empty($hook)) {
             return ;
         }
-
         $file = $this->option('file');
         if (empty($file)) {
             return ;
@@ -58,6 +57,7 @@ class ReceiveHook extends Command
         if (!is_file($file)) {
             return;
         }
+
         $decodedFile = json_decode(file_get_contents($file), true);
         if (empty($decodedFile)) {
             return;
@@ -89,11 +89,13 @@ class ReceiveHook extends Command
             $adminUsername = 'mw_' . time() . rand(1111,9999);
             $adminEmail = 'mw@' . $data['domain'];
 
-            if ($settings['installation_database_driver'] == 'mysql') {
-                $createDatabase = $cpanelApi->createDatabaseWithUser($hostingAccount['user'], $dbName, $dbUsername, $dbPassword);
-                if (!$createDatabase) {
-                    // Can't create database
-                    return;
+            if (isset($settings['installation_database_driver'])) {
+                if ($settings['installation_database_driver'] == 'mysql') {
+                    $createDatabase = $cpanelApi->createDatabaseWithUser($hostingAccount['user'], $dbName, $dbUsername, $dbPassword);
+                    if (!$createDatabase) {
+                        // Can't create database
+                        return;
+                    }
                 }
             }
 
@@ -114,18 +116,20 @@ class ReceiveHook extends Command
 
           //  $install->setLanguage($this->installationLanguage);
 
-            if ($settings['installation_type'] == 'symlink') {
-                $install->setSymlinkInstallation();
-            } else {
-                $install->setStandaloneInstallation();
+            $install->setStandaloneInstallation();
+            if (isset($settings['installation_type'])) {
+                if ($settings['installation_type'] == 'symlink') {
+                    $install->setSymlinkInstallation();
+                }
             }
 
-            $install->setDatabaseDriver($settings['installation_database_driver']);
-
-            if ($settings['installation_database_driver'] == 'mysql') {
-                $install->setDatabaseUsername($dbUsername);
-                $install->setDatabasePassword($dbPassword);
-                $install->setDatabaseName($dbName);
+            if (isset($settings['installation_database_driver'])) {
+                if ($settings['installation_database_driver'] == 'mysql') {
+                    $install->setDatabaseUsername($dbUsername);
+                    $install->setDatabasePassword($dbPassword);
+                    $install->setDatabaseName($dbName);
+                    $install->setDatabaseDriver('mysql');
+                }
             }
 
             $install->setAdminEmail($adminEmail);
