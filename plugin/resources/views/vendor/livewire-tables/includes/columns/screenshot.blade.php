@@ -1,1 +1,2 @@
-<img src="{{ $path }}" style="max-height:100px" {!! count($attributes) ? $column->arrayToAttributes($attributes) : '' !!} />
+<div style="background-image: url({{ $path }});background-size: cover;width: 200px;height: 100px">
+</div>
