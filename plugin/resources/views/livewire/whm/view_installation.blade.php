@@ -2,14 +2,20 @@
     <p>
         <a href="{{asset('/index.cgi')}}">Back to Microweber Plugin</a>
     </p>
-    @if($this->installedSuccess)
+
+
+    <div class="card">
+        <div class="card-body">
+
+
+        @if($this->installedSuccess)
         <div class="alert alert-success">Application is installed successful.</div>
     @endif
     <div class="row">
 
         <div class="col-md-4">
             <a href="{{$this->appInstallation->url}}" target="_blank">
-                <div style="background-image: url({{$this->appInstallation->screenshot}});background-size: cover;height: 330px">
+                <div style="background-image: url({{$this->appInstallation->screenshot}});background-size: cover;height: 400px">
                 </div>
             </a>
         </div>
@@ -129,5 +135,7 @@
 
         </div>
 
+    </div>
+    </div>
     </div>
 </div>
