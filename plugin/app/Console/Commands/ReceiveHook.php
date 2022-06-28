@@ -18,10 +18,8 @@ class ReceiveHook extends Command
      * @var string
      */
     protected $signature = 'plugin:whm-receive-hook
-
         {--hook=}
         {--file=}
-
     ';
 
     /**

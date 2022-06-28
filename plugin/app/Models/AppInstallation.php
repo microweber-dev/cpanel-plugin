@@ -55,7 +55,7 @@ class AppInstallation extends Model
         $findInstallation->path = $installation['path'];
         $findInstallation->owner = $hosting['owner'];
 
-        if ($installation['is_symlink'] > 0){
+        if ($installation['is_symlink'] > 0) {
             $findInstallation->is_symlink = 1;
             $findInstallation->is_standalone = 0;
         } else {
