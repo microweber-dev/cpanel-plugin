@@ -15,7 +15,6 @@ class WhmInstallations extends Component
     public function scan()
     {
         dispatch(new AppInstallationsScan());
-
         $this->emit('refreshInstallations');
     }
 }

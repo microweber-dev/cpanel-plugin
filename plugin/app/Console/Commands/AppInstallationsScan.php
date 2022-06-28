@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Cpanel\CpanelApi;
 use App\Models\AppInstallation;
-use App\Cpanel\InstalledAppsScanner;
 use Illuminate\Console\Command;
 use MicroweberPackages\SharedServerScripts\MicroweberInstallationsScanner;
 
@@ -46,7 +45,7 @@ class AppInstallationsScan extends Command
         if (empty($domains)) {
             return;
         }
-
+        
         foreach ($domains as $domain) {
 
             $scan = new MicroweberInstallationsScanner();
