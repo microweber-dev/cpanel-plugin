@@ -39,7 +39,7 @@ class WhmAppInstallationsTable extends DataTableComponent
 
             HtmlColumn::make('Details')
                 ->setOutputHtml(function($row) {
-                    $html = '<div><b>'.Str::limit($row->domain, 40).'</b></div>';
+                    $html = '<div><b>'.$row->url.'</b></div><br />';
                     $html .= '<div>'.$row->path.'</div>';
                     $html .= '<div>User: <b>'.$row->user.'</b></div>';
                     if ($row->version > 0) {
