@@ -1,18 +1,4 @@
 <?php
-/*
-use App\Cpanel\CpanelApi;
-use App\MicroweberInstallCommand;
-use App\MicroweberStorage;
-use App\MicroweberVersionsManager;
-use App\MicroweberWhmcsConnector;
-
-include_once(__DIR__ . '/MicroweberStorage.php');
-include_once(__DIR__ . '/MicroweberVersionsManager.php');
-include_once(__DIR__ . '/MicroweberInstallCommand.php');
-include_once(__DIR__ . '/MicroweberCpanelApi.php');
-include_once(__DIR__ . '/MicroweberLogger.php');
-include_once(__DIR__ . '/MicroweberWhmcsConnector.php');*/
-
 class FireHooks
 {
     private $input;
