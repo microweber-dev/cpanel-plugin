@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\AppInstallation;
 use Livewire\Component;
 use MicroweberPackages\SharedServerScripts\MicroweberAppPathHelper;
+use MicroweberPackages\SharedServerScripts\MicroweberReinstaller;
 use MicroweberPackages\SharedServerScripts\MicroweberUninstaller;
 
 class WhmInstallationView extends Component
@@ -52,6 +53,15 @@ class WhmInstallationView extends Component
     public function confirmUninstall()
     {
         $this->confirmUninstall = true;
+    }
+
+    public function reinstall()
+    {
+        $reInstall = new MicroweberReinstaller();
+        $reInstall->setSourcePath(config('whm-cpanel.sharedPaths.app'));
+        $reInstall->setSymlinkInstallation();
+        $reInstall->setPath($this->appInstallation->path);
+        $reInstall->run();
     }
 
     public function uninstall()

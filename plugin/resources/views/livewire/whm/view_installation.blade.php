@@ -61,7 +61,6 @@
                             <span>App version is: </span> <b>{{$this->appInstallation->version}}</b> <br/>
                             <span>App creation date:</span> <b>{{$this->appInstallation->created_at}}</b><br/>
                             <br/>
-                            {{--<button class="btn btn-outline-success" wire:click="update()">Update</button>--}}
 
                             <a href="{{$this->appInstallation->url}}" target="_new"  class="btn btn-outline-primary">View Website</a>
 
@@ -74,6 +73,8 @@
                                     Generating token ...
                                 </div>
                             @endif
+
+                            <button class="btn btn-outline-dark" wire:click="reinstall()">Reinstall</button>
 
                             @if($this->confirmUninstall)
                                 <button class="btn btn-outline-danger" wire:click="uninstall()">Are you sure?</button>
