@@ -82,6 +82,9 @@
 
         <div wire:loading wire:target="install">
             Installing ...
+            <div wire:poll="foo">
+                Current time: {{ $log }}
+            </div>
         </div>
 
     </div>

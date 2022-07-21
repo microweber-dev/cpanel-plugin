@@ -135,6 +135,11 @@ class WhmInstall extends Component
             return $this->redirect(asset('/') . 'index.cgi');
         }
 
+    }
 
+    public $log;
+    public function foo()
+    {
+        $this->log = time();
     }
 }
