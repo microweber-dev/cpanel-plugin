@@ -65,6 +65,11 @@ class WhmInstall extends Component
         $this->installationDatabaseDriver = Option::getOption('installation_database_driver', 'settings','sqlite');;
     }
 
+    public function startInstall()
+    {
+        $this->dispatchBrowserEvent('installStarted');
+    }
+
     public function install()
     {
         if (empty($this->installationDomainName)) {
@@ -121,7 +126,6 @@ class WhmInstall extends Component
             $install->setAdminEmail($this->installationAdminEmail);
             $install->setAdminUsername($this->installationAdminUsername);
             $install->setAdminPassword($this->installationAdminPassword);
-
             $install->run();
 
             $scanner = new MicroweberInstallationsScanner();
@@ -135,11 +139,5 @@ class WhmInstall extends Component
             return $this->redirect(asset('/') . 'index.cgi');
         }
 
-    }
-
-    public $log;
-    public function foo()
-    {
-        $this->log = time();
     }
 }

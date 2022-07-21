@@ -78,14 +78,21 @@
             <input class="form-control" id="adminPassword" type="password" wire:model="installationAdminPassword" placeholder="Admin Password" />
         </div>
 
-        <button class="btn btn-outline-success btn-block mt-4" wire:click="install()" type="button">Install</button>
+        <button class="btn btn-outline-success btn-block mt-4" wire:click="startInstall()" type="button">Install</button>
 
-        <div wire:loading wire:target="install">
-            Installing ...
-            <div wire:poll="foo">
-                Current time: {{ $log }}
-            </div>
+        <div wire:loading wire:target="startInstall">
+            Installing ... <div class="js-installation-log"></div>
         </div>
+
+
+        <script type="text/javascript">
+            window.addEventListener('installStarted', e => {
+                @this.install();
+                setInterval(function() {
+                    // $('.js-installation-log').html(222);
+                }, 1000);
+            });
+        </script>
 
     </div>
 </div>
