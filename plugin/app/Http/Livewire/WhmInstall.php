@@ -20,7 +20,7 @@ class WhmInstall extends Component
     public $installationDomainPath = '';
     public $installationLanguage = 'en';
     public $installationTemplate = false;
-    public $installationType = 'symlink';
+    public $installationType = 'symlinked';
     public $installationDatabaseDriver = 'sqlite';
     public $installationAdminEmail;
     public $installationAdminUsername;
@@ -59,6 +59,10 @@ class WhmInstall extends Component
         $this->supportedLanguages = $sharedPath->getSupportedLanguages();
         $this->supportedTemplates = $sharedPath->getSupportedTemplates();
 
+        $this->installationLanguage = Option::getOption('installation_language', 'settings','en');;
+        $this->installationTemplate = Option::getOption('installation_template', 'settings','new-world');;
+        $this->installationType = Option::getOption('installation_type', 'settings','symlinked');
+        $this->installationDatabaseDriver = Option::getOption('installation_database_driver', 'settings','sqlite');;
     }
 
     public function install()

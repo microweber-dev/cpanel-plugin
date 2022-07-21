@@ -19,12 +19,12 @@
         </div>
         <div class="mb-3">
             <label class="form-label d-block">Default Installation type</label>
-            <div class="form-check form-check-inline">
+            <div class="form-check form-check-inline"> 
                 <input class="form-check-input" id="default" type="radio" wire:model="state.installation_type" value="default" name="installation_type" />
                 <label class="form-check-label" for="default">Default</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" id="symLinkedSavesABigAmountOfDiskSpace" type="radio" wire:model="state.installation_type" value="symlink" name="installation_type" />
+                <input class="form-check-input" id="symLinkedSavesABigAmountOfDiskSpace" type="radio" wire:model="state.installation_type" value="symlinked" name="installation_type" />
                 <label class="form-check-label" for="symLinkedSavesABigAmountOfDiskSpace">Sym-Linked <small>(saves a big amount of disk space)</small></label>
             </div>
             <div class="invalid-feedback" data-sb-feedback="defaultInstallationType:required">One option is required.</div>

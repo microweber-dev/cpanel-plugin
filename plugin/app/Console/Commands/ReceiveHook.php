@@ -118,7 +118,7 @@ class ReceiveHook extends Command
 
             $install->setStandaloneInstallation();
             if (isset($settings['installation_type'])) {
-                if ($settings['installation_type'] == 'symlink') {
+                if ($settings['installation_type'] == 'symlinked') {
                     $install->setSymlinkInstallation();
                 }
             }
