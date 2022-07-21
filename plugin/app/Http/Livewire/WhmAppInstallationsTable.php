@@ -40,6 +40,11 @@ class WhmAppInstallationsTable extends DataTableComponent
                 ->setOutputHtml(function($row) {
                     $html = '<div><b>'.$row->url.'</b></div><br />';
                     $html .= '<div>'.$row->path.'</div>';
+                    if ($row->is_symlink) {
+                        $html .= '<div><span class="badge bg-success">Symlink</span></div>';
+                    } else {
+                        $html .= '<div><span class="badge bg-success">Standalone</span></div>';
+                    }
                     if ($row->version > 0) {
                         $html .= '<div><span class="badge bg-success">v'.$row->version.'</span></div>';
                     }
