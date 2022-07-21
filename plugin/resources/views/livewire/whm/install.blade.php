@@ -83,23 +83,24 @@
         <div wire:loading wire:target="startInstall">
             Installing ... <div id="js-installation-log"></div>
         </div>
-        
+
         <script type="text/javascript">
-            function readInstallationLog()
+            function readInstallationLog(file)
             {
                 var request = new XMLHttpRequest();
-                request.open('GET', '{{asset($logFilename)}}', true);
+                request.open('GET',file, true);
                 request.send(null);
                 request.onreadystatechange = function () {
                     if (request.readyState === 4 && request.status === 200) {
                         document.getElementById('js-installation-log').innerHTML = request.responseText;
                     }
-                    readInstallationLog();
                 }
             }
             window.addEventListener('installStarted', e => {
                 @this.install();
-                readInstallationLog();
+                setInterval(function() {
+                    readInstallationLog('{{asset('/')}}{{$logFilename}}');
+                }, 3000);
             });
         </script>
 
