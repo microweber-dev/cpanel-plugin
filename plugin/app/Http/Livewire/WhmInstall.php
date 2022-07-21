@@ -65,9 +65,14 @@ class WhmInstall extends Component
         $this->installationDatabaseDriver = Option::getOption('installation_database_driver', 'settings','sqlite');;
     }
 
+    public $logFilename;
+    public $logFileRealpath;
     public function startInstall()
     {
         $this->dispatchBrowserEvent('installStarted');
+
+        $this->logFilename = 'installations_log/'.md5($this->installationDomainName . $this->installationDomainPath).'.txt';
+        $this->logFileRealpath = storage_path($this->logFilename);
     }
 
     public function install()

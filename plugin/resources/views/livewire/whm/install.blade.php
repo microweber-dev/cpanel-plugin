@@ -81,16 +81,25 @@
         <button class="btn btn-outline-success btn-block mt-4" wire:click="startInstall()" type="button">Install</button>
 
         <div wire:loading wire:target="startInstall">
-            Installing ... <div class="js-installation-log"></div>
+            Installing ... <div id="js-installation-log"></div>
         </div>
-
-
+        
         <script type="text/javascript">
+            function readInstallationLog()
+            {
+                var request = new XMLHttpRequest();
+                request.open('GET', '{{asset($logFilename)}}', true);
+                request.send(null);
+                request.onreadystatechange = function () {
+                    if (request.readyState === 4 && request.status === 200) {
+                        document.getElementById('js-installation-log').innerHTML = request.responseText;
+                    }
+                    readInstallationLog();
+                }
+            }
             window.addEventListener('installStarted', e => {
                 @this.install();
-                setInterval(function() {
-                    // $('.js-installation-log').html(222);
-                }, 1000);
+                readInstallationLog();
             });
         </script>
 
