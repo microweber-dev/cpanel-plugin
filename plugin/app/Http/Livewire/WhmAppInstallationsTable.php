@@ -57,10 +57,8 @@ class WhmAppInstallationsTable extends DataTableComponent
             HtmlColumn::make('Actions')
                 ->setOutputHtml(function($row) {
                     $html = '
-
-                    <a href="'.$row->url.'" target="_blank" class="btn btn-outline-dark btn-sm">View website</a>
                     <a href="'.asset('index.cgi?router=installation/' . $row->id).'" class="btn btn-outline-dark btn-sm">Settings</a>
-
+                    <a href="'.$row->url.'" target="_blank" class="btn btn-outline-dark btn-sm">Go to website</a>
                     ';
                     return $html;
                 }),

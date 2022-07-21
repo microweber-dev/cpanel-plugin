@@ -19,7 +19,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label d-block">Default Installation type</label>
-            <div class="form-check form-check-inline"> 
+            <div class="form-check form-check-inline">
                 <input class="form-check-input" id="default" type="radio" wire:model="state.installation_type" value="default" name="installation_type" />
                 <label class="form-check-label" for="default">Default</label>
             </div>

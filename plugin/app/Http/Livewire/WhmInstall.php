@@ -104,10 +104,10 @@ class WhmInstall extends Component
             $install->setLanguage($this->installationLanguage);
             $install->setTemplate($this->installationTemplate);
 
-            if ($this->installationType == 'symlink') {
+            if ($this->installationType == 'symlinked') {
                 $install->setSymlinkInstallation();
             } else {
-                $install->setStandaloneInstallation();
+                $install->setStandaloneInstallation(); 
             }
 
             $install->setDatabaseDriver($this->installationDatabaseDriver);
