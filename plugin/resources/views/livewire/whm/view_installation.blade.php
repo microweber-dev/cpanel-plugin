@@ -65,16 +65,19 @@
                             <a href="{{$this->appInstallation->url}}" target="_new"  class="btn btn-outline-primary">View Website</a>
 
                             @if($this->confirmLoginAsAdmin)
-                                <a href="{{$this->confirmLoginAsAdmin}}" target="_new" class="btn btn-outline-success">Confirm
-                                    login</a>
+                                <a href="{{$this->confirmLoginAsAdmin}}" target="_new" class="btn btn-success">
+                                    Confirm login</a>
                             @else
-                                <button class="btn btn-outline-success" wire:click="loginAsAdmin()">Login as Admin</button>
+                                <button class="btn btn-outline-dark" wire:click="loginAsAdmin()">Login as Admin</button>
                                 <div wire:loading wire:target="loginAsAdmin">
                                     Generating token ...
                                 </div>
                             @endif
 
                             <button class="btn btn-outline-dark" wire:click="reinstall()">Reinstall</button>
+                            <div wire:loading wire:target="reinstall">
+                                Reinstalling ...
+                            </div>
 
                             @if($this->confirmUninstall)
                                 <button class="btn btn-outline-danger" wire:click="uninstall()">Are you sure?</button>
