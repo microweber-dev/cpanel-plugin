@@ -349,6 +349,9 @@ class MicroweberInstallCommand
             $this->log('Performing php artisan microweber:install');
 
             $exec = "cd {$user_public_html_folder} ;";
+            $exec2 = $exec;
+
+
             $exec .= "php -d memory_limit=4095M artisan microweber:install ";
             $exec .= escapeshellarg($contact_email) . " " . escapeshellarg($auth_user) . " " . escapeshellarg($auth_pass) . " " . escapeshellarg($database_host) . " " . escapeshellarg($database_name) . " " . escapeshellarg($database_user) . " " . escapeshellarg($database_password) . " " . $database_driver . " -p " . $database_prefix;
             $exec .= " -t " . $default_template . " -d 1";
@@ -359,6 +362,32 @@ class MicroweberInstallCommand
                 $exec .= " -l " . $opts['language'];
             }
 
+            $exec_args = [
+                '--email='.escapeshellarg($contact_email),
+                '--username='. escapeshellarg($auth_user),
+                '--password='. escapeshellarg($auth_pass),
+                '--db-host='.escapeshellarg($database_host),
+                '--db-name='.escapeshellarg($database_name),
+                '--db-username='.escapeshellarg($database_user),
+                '--db-password='.escapeshellarg($database_password),
+                '--db-driver='.$database_driver,
+                '--db-prefix='.$database_prefix,
+                '--default-content=1',
+                '--template='.$default_template
+            ];
+
+            if (isset($opts['config_only']) and $opts['config_only']) {
+                $exec_args[] = '--config-only=1';
+            }
+
+            if (isset($opts['language']) and $opts['language']) {
+                $exec_args[] = '--language='.$opts['language'];
+            }
+
+
+            $exec2 .= "php -d memory_limit=4095M artisan microweber:install " . implode(' ', $exec_args);
+$exec = $exec2;
+            // php artisan microweber:install --email=admin@example.com --username=admin --password=mypassword --db-host=storage/database.sqlite --db-name=microweber --db-password=nopass --db-driver=sqlite --db-prefix=site_ --template=new-world --default-content=1
 
             $message = $message . "\n\n\n" . $exec;
 
