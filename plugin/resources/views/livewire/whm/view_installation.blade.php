@@ -52,9 +52,9 @@
 
                         <div class="col-md-12">
                             <h4 class="mt-3">
-                                {{$this->appInstallation->domain}}
+                                {{$this->appInstallation->url}}
                             </h4>
-                            <a href="{{$this->appInstallation->url}}" target="_new">{{$this->appInstallation->url}}</a>
+                            <a href="{{$this->appInstallation->domain}}" target="_new">Visit the website</a>
 
                             <br />
                             <br />
