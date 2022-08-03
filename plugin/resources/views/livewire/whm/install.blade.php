@@ -78,14 +78,14 @@
             <input class="form-control" id="adminPassword" type="password" wire:model="installationAdminPassword" placeholder="Admin Password" />
         </div>
 
-        <button class="btn btn-outline-success btn-block mt-4" wire:click="startInstall()" type="button">Install</button>
+        <button class="btn btn-outline-success btn-block mt-4" wire:click="install()" type="button">Install</button>
 
-        <div wire:loading wire:target="startInstall">
+        <div wire:loading wire:target="install">
             Installing ... <div id="js-installation-log"></div>
         </div>
 
         <script type="text/javascript">
-            function readInstallationLog(file)
+           /* function readInstallationLog(file)
             {
                 var request = new XMLHttpRequest();
                 request.open('GET',file, true);
@@ -101,7 +101,7 @@
                 setInterval(function() {
                     readInstallationLog('{{asset('/')}}{{$logFilename}}');
                 }, 3000);
-            });
+            });*/
         </script>
 
     </div>
