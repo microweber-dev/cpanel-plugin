@@ -54,7 +54,7 @@
                             <h4 class="mt-3">
                                 {{$this->appInstallation->url}}
                             </h4>
-                            <a href="{{$this->appInstallation->domain}}" target="_new">Visit the website</a>
+                            <a href="{{$this->appInstallation->url}}" target="_new">Visit the website</a>
 
                             <br />
                             <br />
