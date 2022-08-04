@@ -74,7 +74,7 @@ class WhmInstallationView extends Component
     {
         $uninstall = new MicroweberUninstaller();
         $uninstall->setPath($this->appInstallation->path);
-        $uninstall->run();
+        $status = $uninstall->run();
 
         $this->appInstallation->delete();
 
