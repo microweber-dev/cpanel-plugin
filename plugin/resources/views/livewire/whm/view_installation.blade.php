@@ -94,7 +94,14 @@
                             @if ($this->showReinstallOptions)
                                 <div class="bg-dark p-4 mt-4">
 
-                                    <p class="text-light">Select the type of reinstalling</p>
+                                    <p class="text-light">
+                                        Select the type of reinstalling
+                                        <br />
+                                         <small class="text-light">
+                                             The existing installation will be converted to selected type
+                                         </small>
+                                    </p>
+
                                     @if($reinstallMessage)
                                       <p class="text-danger">{{$reinstallMessage}}</p>
                                     @endif
