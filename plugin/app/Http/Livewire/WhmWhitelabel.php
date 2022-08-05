@@ -52,9 +52,32 @@ class WhmWhitelabel extends Component
         $consumeLicense = $composerClient->consumeLicense($this->whitelabelLicenseKey);
         if ($consumeLicense['valid']) {
 
+            $details = [
+                'register_name'=>'None',
+                'company_name'=>'None',
+                'email'=>'None',
+                'product_name'=>'None',
+                'reg_date'=>'None',
+                'next_due_date'=>'None',
+                'billing_cycle'=>'None',
+            ];
+            if (isset(end($consumeLicense['servers'])['details'])) {
+                $licenseServerDetails = end($consumeLicense['servers'])['details'];
+                $details = [
+                    'register_name'=>$licenseServerDetails['registeredname'],
+                    'company_name'=>$licenseServerDetails['companyname'],
+                    'email'=>$licenseServerDetails['email'],
+                    'product_name'=>$licenseServerDetails['productname'],
+                    'reg_date'=>$licenseServerDetails['regdate'],
+                    'next_due_date'=>$licenseServerDetails['nextduedate'],
+                    'billing_cycle'=>$licenseServerDetails['billingcycle'],
+                ];
+            }
+
             Option::updateOption('license_key', $this->whitelabelLicenseKey, 'whitelabel_license');
             Option::updateOption('license_key_status', 'valid', 'whitelabel_license');
             Option::updateOption('license_key_enabled', true, 'whitelabel_license');
+            Option::updateOption('license_key_details', json_encode($details), 'whitelabel_license');
 
             $this->validationMessageWhitelabelKey = 'License key is valid.';
             $this->activeWhitelabel = true;
