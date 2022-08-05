@@ -104,14 +104,16 @@
                                         <option value="symlink">Symlink</option>
                                     </select>
 
-                                    <div wire:loading wire:target="reinstall" class="text-warning">
-                                        Reinstalling ...
-                                    </div>
                                     @if($this->confirmReinstall)
                                         <button class="btn btn-outline-light mt-3" wire:click="reinstall()">Are you sure?</button>
                                     @else
                                         <button class="btn btn-outline-light mt-3" wire:click="confirmReinstall()">Reinstall</button>
                                     @endif
+
+                                    <div wire:loading wire:target="reinstall" class="text-warning">
+                                        Reinstalling ...
+                                    </div>
+
                                 </div>
                             @endif
                         </div>

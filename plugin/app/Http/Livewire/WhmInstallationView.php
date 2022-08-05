@@ -75,9 +75,19 @@ class WhmInstallationView extends Component
         $reInstall->setSourcePath(config('whm-cpanel.sharedPaths.app'));
 
         if ($this->reisntallType == 'symlink') {
+
             $reInstall->setSymlinkInstallation();
+
+            $this->appInstallation->is_symlink = 1;
+            $this->appInstallation->save();
+
         } else if ($this->reisntallType == 'standalone') {
+            
             $reInstall->setStandaloneInstallation();
+
+            $this->appInstallation->is_symlink = 0;
+            $this->appInstallation->save();
+
         } else {
             $this->reinstallMessage = 'Please, select reinstall type.';
             return false;
