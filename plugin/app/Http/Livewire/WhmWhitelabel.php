@@ -41,6 +41,7 @@ class WhmWhitelabel extends Component
     {
         Option::updateOption('license_key', false,'whitelabel_license');
         Option::updateOption('license_key_status', false,'whitelabel_license');
+        Option::updateOption('license_key_enabled', false, 'whitelabel_license');
 
         $this->activeWhitelabel = false;
     }
@@ -53,10 +54,12 @@ class WhmWhitelabel extends Component
 
             Option::updateOption('license_key', $this->whitelabelLicenseKey, 'whitelabel_license');
             Option::updateOption('license_key_status', 'valid', 'whitelabel_license');
+            Option::updateOption('license_key_enabled', true, 'whitelabel_license');
 
             $this->validationMessageWhitelabelKey = 'License key is valid.';
             $this->activeWhitelabel = true;
         } else {
+            Option::updateOption('license_key_enabled', false, 'whitelabel_license');
             $this->validationMessageWhitelabelKey = 'License key is not valid.';
         }
 
