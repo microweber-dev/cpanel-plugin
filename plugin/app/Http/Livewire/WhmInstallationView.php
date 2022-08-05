@@ -11,6 +11,8 @@ use MicroweberPackages\SharedServerScripts\MicroweberUninstaller;
 class WhmInstallationView extends Component
 {
     public $appInstallation;
+    public $reisntallType = '';
+    public $reinstallMessage = '';
     public $confirmReinstall = false;
     public $showReinstallOptions = false;
     public $confirmUninstall = false;
@@ -35,6 +37,11 @@ class WhmInstallationView extends Component
         }
 
         $this->appInstallation = $findInstallation;
+
+        $this->reisntallType = 'standalone';
+        if ($this->appInstallation->is_symlink == 1) {
+            $this->reisntallType = 'symlink';
+        }
     }
 
     public function update()
@@ -67,10 +74,13 @@ class WhmInstallationView extends Component
         $reInstall = new MicroweberReinstaller();
         $reInstall->setSourcePath(config('whm-cpanel.sharedPaths.app'));
 
-        if ($this->appInstallation->is_symlink == 1) {
+        if ($this->reisntallType == 'symlink') {
             $reInstall->setSymlinkInstallation();
-        } else {
+        } else if ($this->reisntallType == 'standalone') {
             $reInstall->setStandaloneInstallation();
+        } else {
+            $this->reinstallMessage = 'Please, select reinstall type.';
+            return false;
         }
 
         $reInstall->setPath($this->appInstallation->path);

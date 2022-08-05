@@ -95,13 +95,16 @@
                                 <div class="bg-dark p-4 mt-4">
 
                                     <p class="text-light">Select the type of reinstalling</p>
-                                    <select class="form-control">
+                                    @if($reinstallMessage)
+                                      <p class="text-danger">{{$reinstallMessage}}</p>
+                                    @endif
+                                    <select class="form-control" wire:model="reisntallType">
                                         <option value="">Select...</option>
                                         <option value="standalone">Standalone</option>
                                         <option value="symlink">Symlink</option>
                                     </select>
 
-                                    <div wire:loading wire:target="reinstall">
+                                    <div wire:loading wire:target="reinstall" class="text-warning">
                                         Reinstalling ...
                                     </div>
                                     @if($this->confirmReinstall)
