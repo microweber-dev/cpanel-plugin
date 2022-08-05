@@ -82,7 +82,7 @@ class WhmInstallationView extends Component
             $this->appInstallation->save();
 
         } else if ($this->reisntallType == 'standalone') {
-            
+
             $reInstall->setStandaloneInstallation();
 
             $this->appInstallation->is_symlink = 0;
@@ -95,6 +95,9 @@ class WhmInstallationView extends Component
 
         $reInstall->setPath($this->appInstallation->path);
         $reInstall->run();
+
+        $this->showReinstallOptions = false;
+        $this->confirmUninstall = false;
     }
 
     public function confirmUninstall()
