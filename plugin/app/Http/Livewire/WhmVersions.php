@@ -31,33 +31,36 @@ class WhmVersions extends Component
         $composerClient->packageServers = [
             'https://market.microweberapi.com/packages/microweberserverpackages/packages.json'
         ];
-        $downloader = new MicroweberModuleConnectorsDownloader();
-        $downloader->setComposerClient($composerClient);
-        $status = $downloader->download(config('whm-cpanel.sharedPaths.modules'));
 
-        $composerClient = new Client();
+        // Download core app
+        $coreDownloader = new MicroweberDownloader();
+
+        $updateAppChannel = Option::getOption('update_app_channel','settings','stable');
+        if ($updateAppChannel == 'stable') {
+            $coreDownloader->setReleaseSource(MicroweberDownloader::STABLE_RELEASE);
+        } else {
+            $coreDownloader->setReleaseSource(MicroweberDownloader::DEV_RELEASE);
+        }
+
+        $coreDownloader->setComposerClient($composerClient);
+        $status = $coreDownloader->download(config('whm-cpanel.sharedPaths.app'));
+
+        // Download modules
+        $modulesDownloader = new MicroweberModuleConnectorsDownloader();
+        $modulesDownloader->setComposerClient($composerClient);
+        $status = $modulesDownloader->download(config('whm-cpanel.sharedPaths.modules'));
+
+        // Download templates
+        $composerClientLicensed = new Client();
         if (Option::getOption('license_key_status', 'whitelabel_license') == 'valid') {
-            $composerClient->addLicense([
+            $composerClientLicensed->addLicense([
                 'local_key' => Option::getOption('license_key', 'whitelabel_license')
             ]);
         }
 
-        $downloader = new MicroweberTemplatesDownloader();
-        $downloader->setComposerClient($composerClient);
-        $status = $downloader->download(config('whm-cpanel.sharedPaths.templates'));
-
-        $downloader = new MicroweberDownloader();
-
-        $updateAppChannel = Option::getOption('update_app_channel','settings','stable');
-        if ($updateAppChannel == 'stable') {
-            $downloader->setReleaseSource(MicroweberDownloader::STABLE_RELEASE);
-        } else {
-            $downloader->setReleaseSource(MicroweberDownloader::DEV_RELEASE);
-        }
-
-        $downloader->setComposerClient($composerClient);
-        $status = $downloader->download(config('whm-cpanel.sharedPaths.app'));
-
+        $templatesDownloader = new MicroweberTemplatesDownloader();
+        $templatesDownloader->setComposerClient($composerClientLicensed);
+        $status = $templatesDownloader->download(config('whm-cpanel.sharedPaths.templates'));
     }
 
     public function render()
