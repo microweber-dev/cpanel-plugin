@@ -60,6 +60,15 @@
                             <br />
                             <span>App version is: </span> <b>{{$this->appInstallation->version}}</b> <br/>
                             <span>App creation date:</span> <b>{{$this->appInstallation->created_at}}</b><br/>
+                            <span>App installation type:</span>
+                            <b>
+                                @if($this->appInstallation->is_symlink == 1)
+                                    Symlinked
+                                @else
+                                    Standalone
+                                @endif
+                            </b>
+                            <br/>
                             <br/>
 
                             <a href="{{$this->appInstallation->url}}" target="_new"  class="btn btn-outline-primary">View Website</a>
@@ -74,15 +83,33 @@
                                 </div>
                             @endif
 
-                            <button class="btn btn-outline-dark" wire:click="reinstall()">Reinstall</button>
-                            <div wire:loading wire:target="reinstall">
-                                Reinstalling ...
-                            </div>
+                            <button class="btn btn-outline-dark" wire:click="showReinstallOptions()">Reinstall</button>
 
                             @if($this->confirmUninstall)
                                 <button class="btn btn-outline-danger" wire:click="uninstall()">Are you sure?</button>
                             @else
                                 <button class="btn btn-outline-danger" wire:click="confirmUninstall()">Uninstall</button>
+                            @endif
+
+                            @if ($this->showReinstallOptions)
+                                <div class="bg-dark p-4 mt-4">
+
+                                    <p class="text-light">Select the type of reinstalling</p>
+                                    <select class="form-control">
+                                        <option value="">Select...</option>
+                                        <option value="standalone">Standalone</option>
+                                        <option value="symlink">Symlink</option>
+                                    </select>
+
+                                    <div wire:loading wire:target="reinstall">
+                                        Reinstalling ...
+                                    </div>
+                                    @if($this->confirmReinstall)
+                                        <button class="btn btn-outline-light mt-3" wire:click="reinstall()">Are you sure?</button>
+                                    @else
+                                        <button class="btn btn-outline-light mt-3" wire:click="confirmReinstall()">Reinstall</button>
+                                    @endif
+                                </div>
                             @endif
                         </div>
 
@@ -97,7 +124,6 @@
                             @else
                                 No languages supported
                             @endif
-
                         </div>
 
 

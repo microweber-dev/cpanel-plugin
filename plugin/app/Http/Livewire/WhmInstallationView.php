@@ -11,6 +11,8 @@ use MicroweberPackages\SharedServerScripts\MicroweberUninstaller;
 class WhmInstallationView extends Component
 {
     public $appInstallation;
+    public $confirmReinstall = false;
+    public $showReinstallOptions = false;
     public $confirmUninstall = false;
     public $installedSuccess = false;
     public $confirmLoginAsAdmin = false;
@@ -50,9 +52,14 @@ class WhmInstallationView extends Component
         }
     }
 
-    public function confirmUninstall()
+    public function showReinstallOptions()
     {
-        $this->confirmUninstall = true;
+        $this->showReinstallOptions = true;
+    }
+
+    public function confirmReinstall()
+    {
+        $this->confirmReinstall = true;
     }
 
     public function reinstall()
@@ -68,6 +75,11 @@ class WhmInstallationView extends Component
 
         $reInstall->setPath($this->appInstallation->path);
         $reInstall->run();
+    }
+
+    public function confirmUninstall()
+    {
+        $this->confirmUninstall = true;
     }
 
     public function uninstall()
