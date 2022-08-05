@@ -10,6 +10,8 @@ use MicroweberPackages\SharedServerScripts\MicroweberWhitelabelUpdater;
 class WhmWhitelabel extends Component
 {
     public $state = [];
+    public $license = [];
+    public $licenseKeyDetails = [];
     public $activeWhitelabel = false;
     public $validationMessageWhitelabelKey = false;
     public $whitelabelLicenseKey = '';
@@ -51,13 +53,12 @@ class WhmWhitelabel extends Component
         $composerClient = new Client();
         $consumeLicense = $composerClient->consumeLicense($this->whitelabelLicenseKey);
         if ($consumeLicense['valid']) {
-
             $details = [
                 'register_name'=>'None',
                 'company_name'=>'None',
                 'email'=>'None',
                 'product_name'=>'None',
-                'reg_date'=>'None',
+                'register_date'=>'None',
                 'next_due_date'=>'None',
                 'billing_cycle'=>'None',
             ];
@@ -68,7 +69,7 @@ class WhmWhitelabel extends Component
                     'company_name'=>$licenseServerDetails['companyname'],
                     'email'=>$licenseServerDetails['email'],
                     'product_name'=>$licenseServerDetails['productname'],
-                    'reg_date'=>$licenseServerDetails['regdate'],
+                    'register_date'=>$licenseServerDetails['regdate'],
                     'next_due_date'=>$licenseServerDetails['nextduedate'],
                     'billing_cycle'=>$licenseServerDetails['billingcycle'],
                 ];
@@ -92,6 +93,11 @@ class WhmWhitelabel extends Component
     {
         // mount state
         $this->state = array_merge($this->state, Option::getAll('whitelabel'));
+        $this->license = Option::getAll('whitelabel_license');
+
+        if (isset($this->license['license_key_details'])) {
+            $this->licenseKeyDetails = json_decode($this->license['license_key_details'], true);
+        }
 
         if (Option::getOption('license_key_status', 'whitelabel_license') == 'valid') {
             $this->activeWhitelabel = true;

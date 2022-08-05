@@ -33,12 +33,13 @@
     @if($activeWhitelabel)
 
     <div class="alert alert-primary">
-        <p>
-            Registered Name: <br>
-            Plan:  <br>
-            Billing Cycle:  <br>
-            Due on: <br>
-            Registraion on: <br>
+        <p> 
+            Registered Name: {{$licenseKeyDetails['register_name']}} <br>
+            Company Name: {{$licenseKeyDetails['company_name']}} <br>
+            Email: {{$licenseKeyDetails['email']}} <br>
+            Billing Cycle:  {{$licenseKeyDetails['billing_cycle']}}<br>
+            Due on: {{$licenseKeyDetails['next_due_date']}}<br>
+            Registraion on: {{$licenseKeyDetails['register_date']}}<br>
         </p>
 
         @if($confirmRemoveLicense)
