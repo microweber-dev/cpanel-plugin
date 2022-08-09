@@ -30,5 +30,6 @@ class WhmInstallations extends Component
     {
         dispatch(new AppInstallationsReinstallAll());
         $this->emit('refreshInstallations');
+        $this->confirmReinstallAll = false;
     }
 }
