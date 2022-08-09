@@ -71,6 +71,11 @@ class WhmInstallationView extends Component
 
     public function reinstall()
     {
+
+        $sharedPath = new MicroweberAppPathHelper();
+        $sharedPath->setPath(config('whm-cpanel.sharedPaths.app'));
+        $currentVersion = $sharedPath->getCurrentVersion();
+
         $reInstall = new MicroweberReinstaller();
         $reInstall->setSourcePath(config('whm-cpanel.sharedPaths.app'));
 
@@ -78,6 +83,7 @@ class WhmInstallationView extends Component
 
             $reInstall->setSymlinkInstallation();
 
+            $this->appInstallation->version = $currentVersion;
             $this->appInstallation->is_symlink = 1;
             $this->appInstallation->save();
 
@@ -85,6 +91,7 @@ class WhmInstallationView extends Component
 
             $reInstall->setStandaloneInstallation();
 
+            $this->appInstallation->version = $currentVersion;
             $this->appInstallation->is_symlink = 0;
             $this->appInstallation->save();
 
