@@ -85,4 +85,5 @@ class WhmAppInstallationsTable extends DataTableComponent
 
         return $query;
     }
+
 }

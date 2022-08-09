@@ -7,6 +7,8 @@ use Livewire\Component;
 
 class WhmInstallations extends Component
 {
+    public $confirmReinstallAll = false;
+
     public function render()
     {
         return view('livewire.whm.installations');
@@ -16,5 +18,16 @@ class WhmInstallations extends Component
     {
         dispatch(new AppInstallationsScan());
         $this->emit('refreshInstallations');
+    }
+
+    public function confirmReinstallAll()
+    {
+        $this->confirmReinstallAll = true;
+    }
+
+    public function reinstallAll()
+    {
+      //  dispatch(new AppInstallationsScan());
+      //  $this->emit('refreshInstallations');
     }
 }
