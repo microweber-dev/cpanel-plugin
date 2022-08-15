@@ -5,7 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Option;
 use Livewire\Component;
 use MicroweberPackages\ComposerClient\Client;
-use MicroweberPackages\SharedServerScripts\MicroweberWhitelabelUpdater;
+use MicroweberPackages\SharedServerScripts\MicroweberWhitelabelSettingsUpdater;
 
 class WhmWhitelabel extends Component
 {
@@ -25,7 +25,7 @@ class WhmWhitelabel extends Component
                 Option::updateOption($key, $value, 'whitelabel');
             }
 
-            $whitelabel = new MicroweberWhitelabelUpdater();
+            $whitelabel = new MicroweberWhitelabelSettingsUpdater();
             $whitelabel->setPath(config('whm-cpanel.sharedPaths.app'));
             $whitelabel->apply($this->state);
 
