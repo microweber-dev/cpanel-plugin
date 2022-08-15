@@ -71,6 +71,9 @@
                 <label class="form-check-label" for="allowResellersToUseTheirOwnWhiteLabel">Allow resellers to use their own White Label?</label>
             </div>
         </div>
+        <div class="mb-3">
+            <button type="button" wire:click="save()" class="btn btn-outline-primary">Save settings</button>
+        </div>
     </div>
 
 </div>
