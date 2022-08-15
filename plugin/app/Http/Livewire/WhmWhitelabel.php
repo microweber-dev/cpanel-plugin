@@ -25,9 +25,12 @@ class WhmWhitelabel extends Component
                 Option::updateOption($key, $value, 'whitelabel');
             }
 
+            $whiteLabelSettings = $this->state;
+            $whiteLabelSettings['whmcs_url'] = Option::getOption('whmcs_url', 'settings');
+
             $whitelabel = new MicroweberWhitelabelSettingsUpdater();
             $whitelabel->setPath(config('whm-cpanel.sharedPaths.app'));
-            $whitelabel->apply($this->state);
+            $whitelabel->apply($whiteLabelSettings);
 
         }
 
