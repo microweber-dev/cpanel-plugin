@@ -44,7 +44,6 @@ class CpanelApi
         return false;
     }
 
-
     public function execUapi($user, $module, $function, $args = array())
     {
         // $user = $this->input->data->user;
@@ -74,7 +73,6 @@ class CpanelApi
         return @json_decode($json, true);
     }
 
-
     public function getMysqlServerType()
     {
         $serv = 'mysql';
@@ -92,7 +90,6 @@ class CpanelApi
         $data = $this->execUapi($user, 'Mysql', 'get_restrictions');
         return $data ["result"]['data'];
     }
-
 
     public function makeDbPrefixFromUsername($user = false)
     {
@@ -134,6 +131,12 @@ class CpanelApi
         }
 
         return $domains;
+    }
+
+    public function getUsername()
+    {
+        $username = $_SERVER['cpanelApi']->exec('<cpanel print="$user">');
+        return $username['cpanelresult']['data']['result'];
     }
 
     public function getHostingDetailsByDomainName($domainName)

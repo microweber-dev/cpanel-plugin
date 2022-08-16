@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Cpanel\CpanelApi;
 use App\View\Columns\HtmlColumn;
 use App\View\Columns\ScreenshotColumn;
 use Illuminate\Database\Eloquent\Builder;
@@ -76,12 +77,14 @@ class CpanelInstallationsTable extends DataTableComponent
             $search = $this->getSearch();
             $search = trim(strtolower($search));
             $query->whereRaw('LOWER(`domain`) LIKE ? ',['%'.$search.'%']);
-            $query->orWhereRaw('LOWER(`user`) LIKE ? ',['%'.$search.'%']);
             $query->orWhereRaw('LOWER(`document_root`) LIKE ? ',['%'.$search.'%']);
             $query->orWhereRaw('LOWER(`home_dir`) LIKE ? ',['%'.$search.'%']);
         }
 
         $query->orderBy('created_at','asc');
+
+        $cpanelApi = new CpanelApi();
+        $query->where('user', $cpanelApi->getUsername());
 
         return $query;
     }
