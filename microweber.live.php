@@ -1,5 +1,20 @@
 <?php
 
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+include('/usr/local/cpanel/php/cpanel.php');
+
+
+$cpanel = new CPANEL();
+echo $cpanel->header();
+echo $cpanel->footer();
+$cpanel->end();
+return;
+
+
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
