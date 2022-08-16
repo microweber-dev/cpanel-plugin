@@ -12,7 +12,7 @@ use App\Models\AppInstallation;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 
-class WhmAppInstallationsTable extends DataTableComponent
+class CpanelInstallationsTable extends DataTableComponent
 {
     protected bool $offlineIndicatorStatus = false;
     protected $model = AppInstallation::class;
@@ -57,7 +57,7 @@ class WhmAppInstallationsTable extends DataTableComponent
             HtmlColumn::make('Actions')
                 ->setOutputHtml(function($row) {
                     $html = '
-                    <a href="'.asset('index.cgi?router=installation/' . $row->id).'" class="btn btn-outline-dark btn-sm">View</a>
+                    <a href="'.asset('microweber.live.php?router=installation/' . $row->id).'" class="btn btn-outline-dark btn-sm">View</a>
 
                     ';
                     //<a href="'.$row->url.'" target="_blank" class="btn btn-outline-dark btn-sm">Go to website</a>

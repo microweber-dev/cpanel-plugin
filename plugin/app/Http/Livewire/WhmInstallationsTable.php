@@ -5,14 +5,11 @@ namespace App\Http\Livewire;
 use App\View\Columns\HtmlColumn;
 use App\View\Columns\ScreenshotColumn;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Str;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\AppInstallation;
-use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
-use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 
-class CpanelAppInstallationsTable extends DataTableComponent
+class WhmInstallationsTable extends DataTableComponent
 {
     protected bool $offlineIndicatorStatus = false;
     protected $model = AppInstallation::class;
@@ -57,7 +54,7 @@ class CpanelAppInstallationsTable extends DataTableComponent
             HtmlColumn::make('Actions')
                 ->setOutputHtml(function($row) {
                     $html = '
-                    <a href="'.asset('microweber.live.php?router=installation/' . $row->id).'" class="btn btn-outline-dark btn-sm">View</a>
+                    <a href="'.asset('index.cgi?router=installation/' . $row->id).'" class="btn btn-outline-dark btn-sm">View</a>
 
                     ';
                     //<a href="'.$row->url.'" target="_blank" class="btn btn-outline-dark btn-sm">Go to website</a>
