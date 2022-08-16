@@ -49,7 +49,7 @@ Route::any('/', function (\Illuminate\Http\Request $request) {
     if (!$router) {
         if (defined('LARAVEL_CPANEL') && LARAVEL_CPANEL == true) {
             return app()->make(\App\Http\Controllers\CpanelRenderLivewireController::class)->render([
-                'componentName' => 'whm-tabs',
+                'componentName' => 'cpanel-tabs',
                 'componentParams' => [],
             ]);
         } else {
