@@ -16,10 +16,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/installation/{id}', function ($id) {
 
-    return app()->make(\App\Http\Controllers\WhmRenderLivewireController::class)->render([
-        'componentName' => 'whm-installation-view',
-        'componentParams' => ['id' => $id],
-    ]);
+    if (defined('LARAVEL_CPANEL') && LARAVEL_CPANEL == true) {
+        return app()->make(\App\Http\Controllers\CpanelRenderLivewireController::class)->render([
+            'componentName' => 'cpanel-installation-view',
+            'componentParams' => ['id' => $id],
+        ]);
+    } else {
+        return app()->make(\App\Http\Controllers\WhmRenderLivewireController::class)->render([
+            'componentName' => 'whm-installation-view',
+            'componentParams' => ['id' => $id],
+        ]);
+    }
 
 })->name('installation.view');
 
