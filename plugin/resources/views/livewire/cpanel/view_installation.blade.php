@@ -1,6 +1,6 @@
 <div class="mt-3">
     <p>
-        <a href="{{asset('/index.cgi')}}">Back to Microweber Plugin</a>
+        <a href="{{asset('/microweber.live.php')}}">Back to Microweber Plugin</a>
     </p>
 
 
