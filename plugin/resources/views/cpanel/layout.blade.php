@@ -87,7 +87,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">Home</li>
                 <li class="breadcrumb-item">Plugins</li>
-                <li class="breadcrumb-item active" aria-current="page"><a href="{{asset('/index.cgi')}}">Microweber Plugin</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="{{asset('/microweber.live.php')}}">Microweber Plugin</a></li>
             </ol>
         </nav>
 
