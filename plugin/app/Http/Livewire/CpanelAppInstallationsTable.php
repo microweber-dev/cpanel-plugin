@@ -57,7 +57,7 @@ class CpanelAppInstallationsTable extends DataTableComponent
             HtmlColumn::make('Actions')
                 ->setOutputHtml(function($row) {
                     $html = '
-                    <a href="'.asset('index.cgi?router=installation/' . $row->id).'" class="btn btn-outline-dark btn-sm">View</a>
+                    <a href="'.asset('index.php?router=installation/' . $row->id).'" class="btn btn-outline-dark btn-sm">View</a>
 
                     ';
                     //<a href="'.$row->url.'" target="_blank" class="btn btn-outline-dark btn-sm">Go to website</a>
