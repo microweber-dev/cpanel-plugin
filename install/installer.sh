@@ -104,6 +104,11 @@ if [ -n "$step21" ]; then
     echo "Unable to complete step 2-1"
 fi
 
+step22=`ln -sfn /usr/local/cpanel/microweber/microweber.live.php /usr/local/cpanel/base/frontend/jupiter/microweber.live.php`
+if [ -n "$step22" ]; then
+    echo "Unable to complete step 2-1"
+fi
+
 
 step5=`ln -sfn /usr/local/cpanel/microweber/install/mw-plugin/microweber.png /usr/local/cpanel/whostmgr/docroot/addon_plugins/microweber.png`
 if [ -n "$step5" ]; then
