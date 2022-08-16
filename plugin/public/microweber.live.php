@@ -4,7 +4,6 @@ use Illuminate\Http\Request;
 
 require_once('/usr/local/cpanel/php/cpanel.php');
 
-global $cpanelApi;
 $_SERVER['cpanelApi'] = new Cpanel();
 
 define('LARAVEL_CPANEL', true);
