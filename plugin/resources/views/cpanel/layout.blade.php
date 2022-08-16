@@ -1,5 +1,7 @@
 @php
-    \App\CpanelLayoutApi::header();
+    require_once('/usr/local/cpanel/php/cpanel.php');
+    $cpanelLayoutApi = new CPANEL();
+    echo $cpanelLayoutApi->header();
 @endphp
 
 <div id="microweber-cpanel">
@@ -106,5 +108,6 @@
 </div>
 
 @php
-    \App\CpanelLayoutApi::footer();
+    echo $cpanelLayoutApi->footer();
+    $cpanelLayoutApi->end();
 @endphp
