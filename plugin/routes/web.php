@@ -47,10 +47,17 @@ Route::any('/', function (\Illuminate\Http\Request $request) {
     $router = $request->get('router', false);
 
     if (!$router) {
-        return app()->make(\App\Http\Controllers\WhmRenderLivewireController::class)->render([
-            'componentName' => 'whm-tabs',
-            'componentParams' => [],
-        ]);
+        if (defined('LARAVEL_CPANEL') && LARAVEL_CPANEL == true) {
+            return app()->make(\App\Http\Controllers\CpanelRenderLivewireController::class)->render([
+                'componentName' => 'whm-tabs',
+                'componentParams' => [],
+            ]);
+        } else {
+            return app()->make(\App\Http\Controllers\WhmRenderLivewireController::class)->render([
+                'componentName' => 'whm-tabs',
+                'componentParams' => [],
+            ]);
+        }
     }
 
     return \App\Http\RequestRoute::fireRouteRequest($router, $request);
