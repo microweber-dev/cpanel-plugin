@@ -1,9 +1,3 @@
-@php
-    require_once('/usr/local/cpanel/php/cpanel.php');
-    $cpanelLayoutApi = new CPANEL();
-    echo $cpanelLayoutApi->header();
-@endphp
-
 <div id="microweber-cpanel">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
@@ -106,8 +100,3 @@
 
 
 </div>
-
-@php
-    echo $cpanelLayoutApi->footer();
-    $cpanelLayoutApi->end();
-@endphp

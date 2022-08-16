@@ -2,6 +2,12 @@
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
+require_once('/usr/local/cpanel/php/cpanel.php');
+
+global $cpanelApi;
+$cpanelApi = new Cpanel();
+//echo $cpanelApi->header();
+
 define('LARAVEL_CPANEL', true);
 define('LARAVEL_START', microtime(true));
 
@@ -53,3 +59,6 @@ $response = $kernel->handle(
 )->send();
 
 $kernel->terminate($request, $response);
+
+//echo $cpanelApi->footer();
+$cpanelApi->end();
