@@ -28,6 +28,7 @@ jobs:
         yum-config-manager --enable remi-php81
         yum repolist
         yum -y install php php-{cli,fpm,fileinfo,zip,devel,mbstring,curl,xml,bcmath,json}
+        sudo sed -i '/^failovermethod=/d' /etc/yum.repos.d/*.repo
         yum -y clean all
         yum -y check
         yum -y check-update
