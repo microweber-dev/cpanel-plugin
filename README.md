@@ -125,4 +125,4 @@ Now if you make new domain with a plan that has the "microweber" feature, you wi
 ![setup_mw_after_create.png](assets/setup_mw_after_create.png "")
 
 
-Refer to the [Trobuleshoting](TROUBLESHOOTING.md) if you encounter any problems
+Refer to the [Troubleshooting](TROUBLESHOOTING.md) if you encounter any problems
