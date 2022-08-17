@@ -3,19 +3,18 @@
 namespace App\Console\Commands;
 
 use App\Cpanel\CpanelApi;
-use App\Cpanel\WHMApi;
 use App\Models\AppInstallation;
 use Illuminate\Console\Command;
 use MicroweberPackages\SharedServerScripts\MicroweberInstallationsScanner;
 
-class WhmInstallationsScan extends Command
+class CpanelInstallationsScan extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'plugin:whm-app-installations-scan';
+    protected $signature = 'plugin:cpanel-app-installations-scan';
 
     /**
      * The console command description.
@@ -41,7 +40,7 @@ class WhmInstallationsScan extends Command
      */
     public function handle()
     {
-        $cpanelApi = new WHMApi();
+        $cpanelApi = new CpanelApi();
         $domains = $cpanelApi->getAllDomains();
         if (empty($domains)) {
             return;
