@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Uninstalling Microweber cPanel plugin...";
+echo "Uninstalling Microweber plugin...";
 
 ## Check if being ran by root
 
@@ -18,6 +18,7 @@ fi
 /bin/rm -rf /usr/local/cpanel/whostmgr/docroot/cgi/microweber
 /bin/rm -rf /usr/local/cpanel/whostmgr/docroot/templates/microweber
 
-/usr/local/cpanel/scripts/uninstall_plugin /usr/local/cpanel/microweber/install/mw-plugin
+/usr/local/cpanel/scripts/uninstall_plugin /usr/local/cpanel/microweber/install/mw-plugin --theme paper_lantern
+/usr/local/cpanel/scripts/uninstall_plugin /usr/local/cpanel/microweber/install/mw-plugin --theme jupiter
 /usr/local/cpanel/bin/unregister_appconfig /usr/local/cpanel/microweber/install/microweber.conf
 /usr/local/cpanel/bin/manage_hooks delete script /usr/local/cpanel/microweber/hooks/mw_hooks.php
