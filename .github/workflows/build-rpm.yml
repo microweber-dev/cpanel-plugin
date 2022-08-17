@@ -44,7 +44,7 @@ jobs:
         |
         cd plugin
         php -v
-        composer install
+        composer install --ignore-platform-reqs
         cd ../
         cd rpm-builder/
         php pack.php
