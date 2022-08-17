@@ -34,11 +34,12 @@
 
     <div class="alert alert-primary">
         <p>
-            Registered Name: <br>
-            Plan:  <br>
-            Billing Cycle:  <br>
-            Due on: <br>
-            Registraion on: <br>
+            Registered Name: <b>{{$licenseKeyDetails['register_name']}}</b> <br>
+            Company Name: <b>{{$licenseKeyDetails['company_name']}}</b> <br>
+            Email: <b>{{$licenseKeyDetails['email']}}</b> <br>
+            Billing Cycle: <b> {{$licenseKeyDetails['billing_cycle']}}</b><br>
+            Due on: <b>{{$licenseKeyDetails['next_due_date']}}</b><br>
+            Registraion on: <b>{{$licenseKeyDetails['register_date']}}</b><br>
         </p>
 
         @if($confirmRemoveLicense)

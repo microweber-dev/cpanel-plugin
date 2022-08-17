@@ -8,7 +8,7 @@ use MicroweberPackages\SharedServerScripts\MicroweberAppPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberReinstaller;
 use MicroweberPackages\SharedServerScripts\MicroweberUninstaller;
 
-class WhmInstallationView extends Component
+class CpanelInstallationView extends Component
 {
     public $appInstallation;
     public $reisntallType = '';
@@ -21,7 +21,7 @@ class WhmInstallationView extends Component
 
     public function render()
     {
-        return view('livewire.whm.view_installation');
+        return view('livewire.cpanel.view_installation');
     }
 
     public function mount($id)
@@ -33,7 +33,7 @@ class WhmInstallationView extends Component
 
         $findInstallation = AppInstallation::where('id', $id)->first();
         if ($findInstallation == null) {
-            return $this->redirect(asset('') . 'index.cgi');
+            return $this->redirect(asset('') . 'microweber.live.php');
         }
 
         $this->appInstallation = $findInstallation;
@@ -119,6 +119,6 @@ class WhmInstallationView extends Component
 
         $this->appInstallation->delete();
 
-        return $this->redirect(asset('') . 'index.cgi');
+        return $this->redirect(asset('') . 'microweber.live.php');
     }
 }

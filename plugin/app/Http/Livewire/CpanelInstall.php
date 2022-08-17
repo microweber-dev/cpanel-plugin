@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Cpanel\WhmApi;
+use App\Cpanel\CpanelApi;
 use App\Models\AppInstallation;
 use App\Models\Option;
 use Livewire\Component;
@@ -11,7 +11,7 @@ use MicroweberPackages\SharedServerScripts\MicroweberInstallationsScanner;
 use MicroweberPackages\SharedServerScripts\MicroweberInstaller;
 use MicroweberPackages\SharedServerScripts\MicroweberWhmcsConnector;
 
-class WhmInstall extends Component
+class CpanelInstall extends Component
 {
     public $supportedTemplates = [];
     public $supportedLanguages = [];
@@ -44,14 +44,14 @@ class WhmInstall extends Component
             }
         }
 
-        return view('livewire.whm.install');
+        return view('livewire.cpanel.install');
     }
 
     public function mount()
     {
 
-        $whmApi = new WhmApi();
-        $this->domains = $whmApi->getAllDomains();
+        $cpanelApi = new CpanelApi();
+        $this->domains = $cpanelApi->getAllDomains();
 
         $sharedPath = new MicroweberAppPathHelper();
         $sharedPath->setPath(config('whm-cpanel.sharedPaths.app'));
@@ -81,16 +81,16 @@ class WhmInstall extends Component
             return;
         }
 
-        $whmApi = new WhmApi();
-        $hostingAccount = $whmApi->getHostingDetailsByDomainName($this->installationDomainName);
+        $cpanelApi = new CpanelApi();
+        $hostingAccount = $cpanelApi->getHostingDetailsByDomainName($this->installationDomainName);
         if (!empty($hostingAccount)) {
 
-            $dbPrefix = $whmApi->makeDbPrefixFromUsername($hostingAccount['user']);
-            $dbPassword = $whmApi->randomPassword(12);
+            $dbPrefix = $cpanelApi->makeDbPrefix();
+            $dbPassword = $cpanelApi->randomPassword(12);
             $dbUsername = $dbName = $dbPrefix . 'mw'.date('mdHis');
 
             if ($this->installationDatabaseDriver == 'mysql') {
-                $createDatabase = $whmApi->createDatabaseWithUser($hostingAccount['user'], $dbName, $dbUsername, $dbPassword);
+                $createDatabase = $cpanelApi->createDatabaseWithUser($dbName, $dbUsername, $dbPassword);
                 if (!$createDatabase) {
                     // Can't create database
                     return;
@@ -138,10 +138,10 @@ class WhmInstall extends Component
 
             if (!empty($installation)) {
                 $installationId = AppInstallation::saveOrUpdateInstallation($hostingAccount, $installation);
-                return $this->redirect(asset('/') . 'index.cgi?router=installation/' . $installationId.'&installed_success=1');
+                return $this->redirect(asset('/') . 'microweber.live.php?router=installation/' . $installationId.'&installed_success=1');
             }
 
-            return $this->redirect(asset('/') . 'index.cgi');
+            return $this->redirect(asset('/') . 'microweber.live.php');
         }
 
     }

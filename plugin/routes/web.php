@@ -1,6 +1,6 @@
 <?php
 
-use App\Console\Commands\AppInstallationsScan;
+use App\Console\Commands\WhmInstallationsScan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,10 +16,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/installation/{id}', function ($id) {
 
-    return app()->make(\App\Http\Controllers\WhmRenderLivewireController::class)->render([
-        'componentName' => 'whm-installation-view',
-        'componentParams' => ['id' => $id],
-    ]);
+    if (defined('LARAVEL_CPANEL') && LARAVEL_CPANEL == true) {
+        return app()->make(\App\Http\Controllers\CpanelRenderLivewireController::class)->render([
+            'componentName' => 'cpanel-installation-view',
+            'componentParams' => ['id' => $id],
+        ]);
+    } else {
+        return app()->make(\App\Http\Controllers\WhmRenderLivewireController::class)->render([
+            'componentName' => 'whm-installation-view',
+            'componentParams' => ['id' => $id],
+        ]);
+    }
 
 })->name('installation.view');
 
@@ -37,7 +44,7 @@ Route::get('/install', function (\Illuminate\Http\Request $request) {
 
     if ($runMigration) {
         \Artisan::call('migrate');
-        dispatch(new AppInstallationsScan());
+        dispatch(new WhmInstallationsScan());
     }
 
 });
@@ -47,10 +54,17 @@ Route::any('/', function (\Illuminate\Http\Request $request) {
     $router = $request->get('router', false);
 
     if (!$router) {
-        return app()->make(\App\Http\Controllers\WhmRenderLivewireController::class)->render([
-            'componentName' => 'whm-tabs',
-            'componentParams' => [],
-        ]);
+        if (defined('LARAVEL_CPANEL') && LARAVEL_CPANEL == true) {
+            return app()->make(\App\Http\Controllers\CpanelRenderLivewireController::class)->render([
+                'componentName' => 'cpanel-tabs',
+                'componentParams' => [],
+            ]);
+        } else {
+            return app()->make(\App\Http\Controllers\WhmRenderLivewireController::class)->render([
+                'componentName' => 'whm-tabs',
+                'componentParams' => [],
+            ]);
+        }
     }
 
     return \App\Http\RequestRoute::fireRouteRequest($router, $request);

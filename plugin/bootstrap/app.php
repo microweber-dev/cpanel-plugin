@@ -52,4 +52,40 @@ $app->singleton(
 |
 */
 
+if (!function_exists('mkdir_recursive')) {
+    function mkdir_recursive($pathname)
+    {
+        if ($pathname == '') {
+            return false;
+        }
+        is_dir(dirname($pathname)) || mkdir_recursive(dirname($pathname));
+
+        return is_dir($pathname) || @mkdir($pathname);
+    }
+}
+
+if (defined('LARAVEL_CPANEL') && LARAVEL_CPANEL == true) {
+
+    $storagePath = $_SERVER['TMPDIR'] . DIRECTORY_SEPARATOR . 'microweber-plugin/storage';
+    if (!is_dir($storagePath)) {
+        mkdir($storagePath);
+    }
+
+    $storageCachePaths = [
+        '/app/public',
+        '/framework/cache',
+        '/framework/sessions',
+        '/framework/testing',
+        '/framework/views',
+        '/logs',
+    ];
+    foreach ($storageCachePaths as $cachePath) {
+        if (!is_dir($storagePath . $cachePath)) {
+            mkdir_recursive($storagePath . $cachePath);
+        }
+    }
+
+    $app->useStoragePath($storagePath);
+}
+
 return $app;

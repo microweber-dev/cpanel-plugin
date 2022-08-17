@@ -99,9 +99,15 @@ if [ -n "$step2" ]; then
     echo "Unable to complete step 2"
 fi
 
-step21=`ln -sfn /usr/local/cpanel/microweber/microweber.live.php /usr/local/cpanel/base/frontend/paper_lantern/microweber.live.php`
-if [ -n "$step21" ]; then
-    echo "Unable to complete step 2-1"
+
+step2_cpanel=`ln -sfn /usr/local/cpanel/microweber/plugin/public /usr/local/cpanel/base/frontend/paper_lantern/microweber`
+if [ -n "$step2_cpanel" ]; then
+    echo "Unable to complete step step2_cpanel"
+fi
+
+step21_cpanel=`ln -sfn /usr/local/cpanel/microweber/plugin/public /usr/local/cpanel/base/frontend/jupiter/microweber`
+if [ -n "$step21_cpanel" ]; then
+    echo "Unable to complete step step21_cpanel"
 fi
 
 

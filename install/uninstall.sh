@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Uninstalling Microweber cPanel plugin...";
+echo "Uninstalling Microweber plugin...";
 
 ## Check if being ran by root
 
@@ -9,53 +9,16 @@ if [ "$username" != "root" ]; then
     echo "Please run this script as root";
 fi
 
-unregister_cp=`/usr/local/cpanel/scripts/uninstall_plugin /usr/local/cpanel/microweber/install/mw-plugin`
+/bin/rm -rf /usr/local/cpanel/whostmgr/docroot/cgi/3rdparty/microweber
+/bin/rm -rf /usr/local/cpanel/base/frontend/paper_lantern/microweber
+/bin/rm -rf /usr/local/cpanel/base/frontend/jupiter/microweber
+/bin/rm -rf /usr/local/cpanel/whostmgr/docroot/3rdparty/microweber
+/bin/rm -rf /usr/local/cpanel/whostmgr/docroot/addon_plugins/microweber.png
+/bin/rm -rf /var/cpanel/microweber
+/bin/rm -rf /usr/local/cpanel/whostmgr/docroot/cgi/microweber
+/bin/rm -rf /usr/local/cpanel/whostmgr/docroot/templates/microweber
 
-if [ -z "$unregister_cp" ]; then
-    echo "Unable to remove cPanel plugin"
-fi
-
-unregister_whm=`/usr/local/cpanel/bin/unregister_appconfig /usr/local/cpanel/microweber/install/microweber.conf`
-
-if [ -z "$unregister_whm" ]; then
-    echo "Unable to remove WHM plugin"
-fi
-
-unregister_hooks=`/usr/local/cpanel/bin/manage_hooks delete script /usr/local/cpanel/microweber/hooks/mw_hooks.php`
-
-if [ -z "$unregister_hooks" ]; then
-    echo "Unable to remove hooks"
-fi
-
-## Remove symlinks
-
-echo "Removing symlinks...";
-
-step1=`rm -rf /usr/local/cpanel/whostmgr/docroot/cgi/3rdparty/microweber`
-
-if [ -n "$step1" ]; then
-    echo "Unable to complete step 1"
-fi
-
-step11=`rm -rf /usr/local/cpanel/base/frontend/paper_lantern/microweber.live.php`
-
-if [ -n "$step11" ]; then
-    echo "Unable to complete step 1-1"
-fi
-step2=`rm -rf /usr/local/cpanel/whostmgr/docroot/3rdparty/microweber`
-
-if [ -n "$step2" ]; then
-    echo "Unable to complete step 2"
-fi
-
-step3=`rm -rf /usr/local/cpanel/whostmgr/docroot/addon_plugins/microweber.png`
-
-if [ -n "$step3" ]; then
-    echo "Unable to complete step 3"
-fi
-
-step4=`rm -rf /var/cpanel/microweber`
-
-if [ -n "$step4" ]; then
-    echo "Unable to complete step 4"
-fi
+/usr/local/cpanel/scripts/uninstall_plugin /usr/local/cpanel/microweber/install/mw-plugin --theme paper_lantern
+/usr/local/cpanel/scripts/uninstall_plugin /usr/local/cpanel/microweber/install/mw-plugin --theme jupiter
+/usr/local/cpanel/bin/unregister_appconfig /usr/local/cpanel/microweber/install/microweber.conf
+/usr/local/cpanel/bin/manage_hooks delete script /usr/local/cpanel/microweber/hooks/mw_hooks.php

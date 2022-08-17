@@ -6,7 +6,7 @@
     "name": "Microweber",
     "type": "link",
     "id": "microweber",
-    "uri": "microweber.live.php",
+    "uri": "microweber/microweber.live.php",
     "featuremanager": true
   }
 ]

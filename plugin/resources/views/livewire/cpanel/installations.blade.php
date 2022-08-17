@@ -1,6 +1,6 @@
 <div>
 
-    <livewire:whm-installations-table />
+    <livewire:cpanel-installations-table />
 
     <br />
     <button class="btn btn-sm btn-outline-success" wire:click="scan()" wire:loading.attr="disabled">

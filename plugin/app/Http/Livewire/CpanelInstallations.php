@@ -2,22 +2,22 @@
 
 namespace App\Http\Livewire;
 
-use App\Console\Commands\WhmInstallationsReinstallAll;
-use App\Console\Commands\WhmInstallationsScan;
+use App\Console\Commands\CpanelInstallationsReinstallAll;
+use App\Console\Commands\CpanelInstallationsScan;
 use Livewire\Component;
 
-class WhmInstallations extends Component
+class CpanelInstallations extends Component
 {
     public $confirmReinstallAll = false;
 
     public function render()
     {
-        return view('livewire.whm.installations');
+        return view('livewire.cpanel.installations');
     }
 
     public function scan()
     {
-        dispatch(new WhmInstallationsScan());
+        dispatch(new CpanelInstallationsScan());
         $this->emit('refreshInstallations');
     }
 
@@ -28,7 +28,7 @@ class WhmInstallations extends Component
 
     public function reinstallAll()
     {
-        dispatch(new WhmInstallationsReinstallAll());
+        dispatch(new CpanelInstallationsReinstallAll());
         $this->emit('refreshInstallations');
         $this->confirmReinstallAll = false;
     }

@@ -16,7 +16,7 @@
         <li class="nav-item"><a class="nav-link @if($component=='whm-settings') active @endif" href="#" wire:click="loadComponent('whm-settings')">Settings</a></li>
     </ul>
 
-    <div class="mt-3">
+    <div class="mt-3"> 
 
         <div wire:loading>
             Loading...
