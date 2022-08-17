@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Cpanel\CpanelApi;
+use App\Cpanel\WhmApi;
 use App\Models\AppInstallation;
 use App\Models\Option;
 use Livewire\Component;
@@ -50,8 +50,8 @@ class WhmInstall extends Component
     public function mount()
     {
 
-        $cpanelApi = new CpanelApi();
-        $this->domains = $cpanelApi->getAllDomains();
+        $whmApi = new WhmApi();
+        $this->domains = $whmApi->getAllDomains();
 
         $sharedPath = new MicroweberAppPathHelper();
         $sharedPath->setPath(config('whm-cpanel.sharedPaths.app'));
@@ -81,16 +81,16 @@ class WhmInstall extends Component
             return;
         }
 
-        $cpanelApi = new CpanelApi();
-        $hostingAccount = $cpanelApi->getHostingDetailsByDomainName($this->installationDomainName);
+        $whmApi = new WhmApi();
+        $hostingAccount = $whmApi->getHostingDetailsByDomainName($this->installationDomainName);
         if (!empty($hostingAccount)) {
 
-            $dbPrefix = $cpanelApi->makeDbPrefixFromUsername($hostingAccount['user']);
-            $dbPassword = $cpanelApi->randomPassword(12);
+            $dbPrefix = $whmApi->makeDbPrefixFromUsername($hostingAccount['user']);
+            $dbPassword = $whmApi->randomPassword(12);
             $dbUsername = $dbName = $dbPrefix . 'mw'.date('mdHis');
 
             if ($this->installationDatabaseDriver == 'mysql') {
-                $createDatabase = $cpanelApi->createDatabaseWithUser($hostingAccount['user'], $dbName, $dbUsername, $dbPassword);
+                $createDatabase = $whmApi->createDatabaseWithUser($hostingAccount['user'], $dbName, $dbUsername, $dbPassword);
                 if (!$createDatabase) {
                     // Can't create database
                     return;

@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Cpanel\CpanelApi;
-use App\Cpanel\WHMApi;
+use App\Cpanel\WhmApi;
 use App\Models\AppInstallation;
 use Illuminate\Console\Command;
 use MicroweberPackages\SharedServerScripts\MicroweberInstallationsScanner;
@@ -41,7 +41,7 @@ class WhmInstallationsScan extends Command
      */
     public function handle()
     {
-        $cpanelApi = new WHMApi();
+        $cpanelApi = new WhmApi();
         $domains = $cpanelApi->getAllDomains();
         if (empty($domains)) {
             return;

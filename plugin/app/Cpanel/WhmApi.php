@@ -3,7 +3,7 @@
 namespace App\Cpanel;
 
 
-class WHMApi
+class WhmApi
 {
     public function checkIfFeatureEnabled($user)
     {
@@ -120,7 +120,7 @@ class WHMApi
 
     public function getAllDomains()
     {
-        $cpanelApi = new WHMApi();
+        $cpanelApi = new WhmApi();
         $accounts = $cpanelApi->execApi1('listaccts', array('search' => '', 'searchtype' => 'user'));
 
         $domains = [];
