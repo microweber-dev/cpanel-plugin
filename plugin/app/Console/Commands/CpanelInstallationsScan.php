@@ -60,7 +60,8 @@ class CpanelInstallationsScan extends Command
         }
 
         // Search for deleted installations
-        $getAppInstallations = AppInstallation::all();
+        $cpanelApi = new CpanelApi();
+        $getAppInstallations = AppInstallation::where('user', $cpanelApi->getUsername())->get();
         if ($getAppInstallations != null) {
             foreach ($getAppInstallations as $appInstallation) {
                 if(!is_file($appInstallation['path'].'/config/microweber.php')) {
