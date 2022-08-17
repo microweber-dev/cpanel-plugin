@@ -61,6 +61,26 @@ class CpanelApi
         return $restriction['prefix'];
     }
 
+    public function createDatabaseWithUser($dbName, $dbUsername, $dbPassword)
+    {
+        $createUser = $this->execUapi('Mysql', 'create_user', array('name' => $dbUsername, 'password' => $dbPassword));
+        if ($createUser['result']['status'] != 1) {
+            return false;
+        }
+
+        $createDatabase = $this->execUapi('Mysql', 'create_database', array('name' => $dbName));
+        if ($createDatabase['result']['status'] != 1) {
+            return false;
+        }
+
+        $setPrivileges = $this->execUapi('Mysql', 'set_privileges_on_database', array('user' => $dbUsername, 'database' => $dbName, 'privileges' => 'ALL PRIVILEGES'));
+        if ($setPrivileges['result']['status'] != 1) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function execUapi($module, $function, $args = array())
     {
         $argsString = '';

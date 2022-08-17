@@ -90,7 +90,7 @@ class CpanelInstall extends Component
             $dbUsername = $dbName = $dbPrefix . 'mw'.date('mdHis');
 
             if ($this->installationDatabaseDriver == 'mysql') {
-                $createDatabase = $cpanelApi->createDatabaseWithUser($hostingAccount['user'], $dbName, $dbUsername, $dbPassword);
+                $createDatabase = $cpanelApi->createDatabaseWithUser($dbName, $dbUsername, $dbPassword);
                 if (!$createDatabase) {
                     // Can't create database
                     return;
