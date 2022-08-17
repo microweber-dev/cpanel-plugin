@@ -120,7 +120,7 @@ class WHMApi
 
     public function getAllDomains()
     {
-        $cpanelApi = new CpanelApi();
+        $cpanelApi = new WHMApi();
         $accounts = $cpanelApi->execApi1('listaccts', array('search' => '', 'searchtype' => 'user'));
 
         $domains = [];
