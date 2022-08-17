@@ -85,7 +85,7 @@ class CpanelInstall extends Component
         $hostingAccount = $cpanelApi->getHostingDetailsByDomainName($this->installationDomainName);
         if (!empty($hostingAccount)) {
 
-            $dbPrefix = $cpanelApi->makeDbPrefixFromUsername($hostingAccount['user']);
+            $dbPrefix = $cpanelApi->makeDbPrefix();
             $dbPassword = $cpanelApi->randomPassword(12);
             $dbUsername = $dbName = $dbPrefix . 'mw'.date('mdHis');
 
