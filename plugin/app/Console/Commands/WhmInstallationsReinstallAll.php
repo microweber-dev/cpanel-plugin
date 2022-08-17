@@ -9,7 +9,7 @@ use MicroweberPackages\SharedServerScripts\MicroweberAppPathHelper;
 use MicroweberPackages\SharedServerScripts\MicroweberInstallationsScanner;
 use MicroweberPackages\SharedServerScripts\MicroweberReinstaller;
 
-class AppInstallationsReinstallAll extends Command
+class WhmInstallationsReinstallAll extends Command
 {
     /**
      * The name and signature of the console command.

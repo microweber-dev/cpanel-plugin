@@ -1,6 +1,6 @@
 <?php
 
-use App\Console\Commands\AppInstallationsScan;
+use App\Console\Commands\WhmInstallationsScan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,7 +44,7 @@ Route::get('/install', function (\Illuminate\Http\Request $request) {
 
     if ($runMigration) {
         \Artisan::call('migrate');
-        dispatch(new AppInstallationsScan());
+        dispatch(new WhmInstallationsScan());
     }
 
 });

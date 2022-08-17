@@ -7,7 +7,7 @@ use App\Models\AppInstallation;
 use Illuminate\Console\Command;
 use MicroweberPackages\SharedServerScripts\MicroweberInstallationsScanner;
 
-class AppInstallationsScan extends Command
+class WhmInstallationsScan extends Command
 {
     /**
      * The name and signature of the console command.
@@ -45,7 +45,7 @@ class AppInstallationsScan extends Command
         if (empty($domains)) {
             return;
         }
-        
+
         foreach ($domains as $domain) {
 
             $scan = new MicroweberInstallationsScanner();
