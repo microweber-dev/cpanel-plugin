@@ -35,7 +35,7 @@ class WhmInstallationsTable extends DataTableComponent
 
             HtmlColumn::make('Details')
                 ->setOutputHtml(function($row) {
-                    $html = '<div><b>'.$row->url.'</b></div><br />';
+                    $html = '<div><a href="'.$row->url.'" target="_blank"><b>'.$row->url.'</b></a></div>';
                     $html .= '<div>'.$row->path.'</div>';
                     if ($row->is_symlink) {
                         $html .= '<div><span class="badge bg-success">Symlink</span></div>';
@@ -54,7 +54,7 @@ class WhmInstallationsTable extends DataTableComponent
             HtmlColumn::make('Actions')
                 ->setOutputHtml(function($row) {
                     $html = '
-                    <a href="'.asset('index.cgi?router=installation/' . $row->id).'" class="btn btn-outline-dark btn-sm">View</a>
+                    <a href="'.asset('index.cgi?router=installation/' . $row->id).'" class="btn btn-outline-dark btn-sm">Details</a>
 
                     ';
                     //<a href="'.$row->url.'" target="_blank" class="btn btn-outline-dark btn-sm">Go to website</a>
