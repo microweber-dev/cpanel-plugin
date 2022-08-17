@@ -39,7 +39,7 @@ class RequestRoute extends Request
 
         $createRequest = self::create($route, $request->getMethod(), $params, $_COOKIE, $_FILES, $_SERVER);
       //   $createRequest->headers->set('accept', 'application/json');
-        
+
         try {
             return app()->handle($createRequest);
         } catch(\Exception $e) {
