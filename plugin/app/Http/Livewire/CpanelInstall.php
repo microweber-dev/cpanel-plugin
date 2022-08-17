@@ -138,10 +138,10 @@ class CpanelInstall extends Component
 
             if (!empty($installation)) {
                 $installationId = AppInstallation::saveOrUpdateInstallation($hostingAccount, $installation);
-                return $this->redirect(asset('/') . 'index.php?router=installation/' . $installationId.'&installed_success=1');
+                return $this->redirect(asset('/') . 'microweber.live.php?router=installation/' . $installationId.'&installed_success=1');
             }
 
-            return $this->redirect(asset('/') . 'index.php');
+            return $this->redirect(asset('/') . 'microweber.live.php');
         }
 
     }
