@@ -42,13 +42,13 @@ rpm -Uvh microweber-cpanel.rpm
 # Usage 
 
 ### You must set your real hostname
-![hostname_change.png](assets/hostname_change.png "")
+![hostname_change.png](https://raw.githubusercontent.com/microweber-dev/cpanel-plugin/master/assets/hostname_change.png "")
 
 
 ### Select the feature list you want to edit 
 Select the feature list, click on "edit" button and add the Microweber feature
 
-![setup_feature.png](assets/setup_feature.png "")
+![setup_feature.png](https://raw.githubusercontent.com/microweber-dev/cpanel-plugin/master/assets/setup_feature.png "")
 
 ### Setup EasyApache 4
 
@@ -61,15 +61,15 @@ You need gd, dom, openssl, zip, curl, mb_string and iconv and other extensions t
 
 Then you have to provision the EasyApache Profile.
 
-![easyapache_provision.png](assets/easyapache_provision.png "")
+![easyapache_provision.png](https://raw.githubusercontent.com/microweber-dev/cpanel-plugin/master/assets/easyapache_provision.png "")
 
-![easyapache_provision_confirm.png](assets/easyapache_provision_confirm.png "")
+![easyapache_provision_confirm.png](https://raw.githubusercontent.com/microweber-dev/cpanel-plugin/master/assets/easyapache_provision_confirm.png "")
 
 
 Please use PHP 7.4 or later. 
 
 
-![easyapache_php_ver.png](assets/easyapache_php_ver.png "")
+![easyapache_php_ver.png](https://raw.githubusercontent.com/microweber-dev/cpanel-plugin/master/assets/easyapache_php_ver.png "")
 
  ## Find The Plugin
 
@@ -78,11 +78,11 @@ Please use PHP 7.4 or later.
 * Login to cPanel and open the plugin under "Software". From that page Microweber can be manually installed to any of the user's domains.
 
 ### Search for Microweber in the sidebar
-![setup_mw.png](assets/setup_mw.png "")
+![setup_mw.png](https://raw.githubusercontent.com/microweber-dev/cpanel-plugin/master/assets/setup_mw.png "")
 
 ### You now need setup your database type and install type 
 
-![setup_install_settings.png](assets/setup_install_settings.png "")
+![setup_install_settings.png](https://raw.githubusercontent.com/microweber-dev/cpanel-plugin/master/assets/setup_install_settings.png "")
 
 * If you select "Automatically install Microweber on new domains creation" , this will install the system when you create new user. 
 * If you select "Allow users to Manually install Microweber from cPanel" , this will allow the users to install manually when they login in their panel
@@ -99,7 +99,7 @@ Make sure your check on  And set `Symlink Protection` to "Off" under "Apache Con
 
 
 
-![setup_symlink2.png](assets/setup_symlink2.png "")
+![setup_symlink2.png](https://raw.githubusercontent.com/microweber-dev/cpanel-plugin/master/assets/setup_symlink2.png "")
 
  
 ### For WHMCS setup
@@ -107,14 +107,14 @@ Make sure your check on  And set `Symlink Protection` to "Off" under "Apache Con
 Setup your connection to the [WHMCS module](https://github.com/microweber-dev/whmcs_plugin "") 
 
 
-![setup_whmcs_integration.png](assets/setup_whmcs_integration.png "")
+![setup_whmcs_integration.png](https://raw.githubusercontent.com/microweber-dev/cpanel-plugin/master/assets/setup_whmcs_integration.png "")
 
 
 ## You are ready. 
 
 Now if you make new domain with a plan that has the "microweber" feature, you will see a website created automatically. 
 
-![setup_mw_after_create.png](assets/setup_mw_after_create.png "")
+![setup_mw_after_create.png](https://raw.githubusercontent.com/microweber-dev/cpanel-plugin/master/assets/setup_mw_after_create.png "")
 
 
 
@@ -122,7 +122,7 @@ Now if you make new domain with a plan that has the "microweber" feature, you wi
 
 Now if you make new domain with a plan that has the "microweber" feature, you will see a website created automatically. 
 
-![setup_mw_after_create.png](assets/setup_mw_after_create.png "")
+![setup_mw_after_create.png](https://raw.githubusercontent.com/microweber-dev/cpanel-plugin/master/assets/setup_mw_after_create.png "")
 
 
 Refer to the [Troubleshooting](TROUBLESHOOTING.md) if you encounter any problems
