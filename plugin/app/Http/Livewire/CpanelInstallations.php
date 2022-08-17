@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Console\Commands\CpanelInstallationsReinstallAll;
+use App\Console\Commands\CpanelInstallationsScan;
 use Livewire\Component;
 
 class CpanelInstallations extends Component

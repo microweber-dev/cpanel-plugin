@@ -42,7 +42,9 @@ class CpanelInstallationsReinstallAll extends Command
      */
     public function handle()
     {
-        $installations = AppInstallation::get();
+        $cpanelApi = new CpanelApi();
+        $installations = AppInstallation::where('user', $cpanelApi->getUsername())->get();
+
         if ($installations->count() > 0) {
             foreach ($installations as $installation) {
 
