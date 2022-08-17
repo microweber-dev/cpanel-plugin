@@ -27,7 +27,7 @@ jobs:
         yum -y install https://rpms.remirepo.net/enterprise/remi-release-7.rpm
         yum -y install yum-utils
         dnf -y upgrade 
-        yum -y update --nobest --allowerasing
+        yum -y update --skip-broken --allowerasing
         yum-config-manager --disable 'remi-php*'
         yum-config-manager --enable remi-php81
         yum repolist
