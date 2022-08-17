@@ -24,17 +24,11 @@ jobs:
         yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
         yum -y install https://rpms.remirepo.net/enterprise/remi-release-7.rpm
         yum -y install yum-utils
-        sudo sed -i '/^failovermethod=/d' /etc/yum.repos.d/*.repo
         yum-config-manager --disable 'remi-php*'
         yum-config-manager --enable remi-php81
         yum repolist
         yum -y install php php-{cli,fpm,fileinfo,zip,devel,mbstring,curl,xml,bcmath,json}
-        yum -y clean all
-        yum -y check
-        yum -y check-update
-        yum -y update
-        yum -y update --nobest
-
+  
     - name: Install composer
       run:
         |
