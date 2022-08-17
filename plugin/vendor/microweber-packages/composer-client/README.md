@@ -1,2 +1,0 @@
-# composer-client
-Composer Client
