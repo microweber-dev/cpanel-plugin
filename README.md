@@ -10,6 +10,11 @@ Run the following commands in the Terminal:
 ```
 wget http://download.microweberapi.com/cpanel-plugin/microweber-cpanel.rpm
 yum install microweber-cpanel.rpm
+
+## If you are on ubutnu 
+
+sudo alien –i microweber-cpanel.rpm
+
 ```
  
 ### Manual installation
