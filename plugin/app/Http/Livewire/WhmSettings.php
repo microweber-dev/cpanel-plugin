@@ -24,12 +24,8 @@ class WhmSettings extends Component
     public function save()
     {
         if (!empty($this->state)) {
-            foreach ($this->state as $key=>$value) {
-                Option::updateOption($key, trim($value), 'settings');
-            }
 
             $whmcsUrl = Option::getOption('whmcs_url', 'settings');
-
             if (isset($this->state['whmcs_url'])) {
                 if ($this->state['whmcs_url'] != $whmcsUrl) {
 
@@ -47,6 +43,10 @@ class WhmSettings extends Component
                     $whitelabel->setPath(config('whm-cpanel.sharedPaths.app'));
                     $whitelabel->apply($whiteLabelSettings);
                 }
+            }
+
+            foreach ($this->state as $key=>$value) {
+                Option::updateOption($key, trim($value), 'settings');
             }
         }
     }
