@@ -51,7 +51,7 @@ class WhmVersions extends Component
 
         $this->supportedLanguages = $sharedPath->getSupportedLanguages();
         $this->supportedTemplates = $sharedPath->getSupportedTemplates();
-        $this->latestVersionOfApp = $release->getVersion();
+        $this->latestVersionOfApp = $this->__getMicroweberDownloaderInstance()->getVersion();
         $this->currentVersionOfApp = $sharedPath->getCurrentVersion();
         $this->latestDownloadDateOfApp = $sharedPath->getCreatedAt();
 
