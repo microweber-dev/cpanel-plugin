@@ -32,6 +32,9 @@
 
     @if($activeWhitelabel)
 
+
+
+
     <div class="alert alert-primary">
         <p>
             Registered Name: <b>{{$licenseKeyDetails['register_name']}}</b> <br>

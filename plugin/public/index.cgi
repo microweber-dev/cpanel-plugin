@@ -1,4 +1,4 @@
-#!/usr/local/cpanel/3rdparty/bin/php-cgi
+#!/opt/cpanel/ea-php81/root/usr/bin/php-cgi
 <?php
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
