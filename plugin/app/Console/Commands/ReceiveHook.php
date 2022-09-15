@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Cpanel\CpanelApi;
+use App\Cpanel\WhmApi;
 use App\Models\AppInstallation;
 use App\Models\Option;
 use Illuminate\Console\Command;
@@ -75,23 +75,26 @@ class ReceiveHook extends Command
             }
 
             $data = $decodedFile['data'];
-            $cpanelApi = new CpanelApi();
-            $hostingAccount = $cpanelApi->getHostingDetailsByDomainName($data['domain']);
+            $whmApi = new WhmApi();
+            $hostingAccount = $whmApi->getHostingDetailsByDomainName($data['domain']);
             if (empty($hostingAccount)) {
                 return;
             }
 
-            $dbPrefix = $cpanelApi->makeDbPrefixFromUsername($hostingAccount['user']);
-            $dbPassword = $cpanelApi->randomPassword(12);
+            dd($data);
+
+
+            $dbPrefix = $whmApi->makeDbPrefixFromUsername($hostingAccount['user']);
+            $dbPassword = $whmApi->randomPassword(12);
             $dbUsername = $dbName = $dbPrefix . 'mw' . date('mdHis');
 
-            $adminPassword = $cpanelApi->randomPassword(6);
+            $adminPassword = $whmApi->randomPassword(6);
             $adminUsername = 'mw_' . time() . rand(1111,9999);
             $adminEmail = 'mw@' . $data['domain'];
 
             if (isset($settings['installation_database_driver'])) {
                 if ($settings['installation_database_driver'] == 'mysql') {
-                    $createDatabase = $cpanelApi->createDatabaseWithUser($hostingAccount['user'], $dbName, $dbUsername, $dbPassword);
+                    $createDatabase = $whmApi->createDatabaseWithUser($hostingAccount['user'], $dbName, $dbUsername, $dbPassword);
                     if (!$createDatabase) {
                         // Can't create database
                         return;
