@@ -11,7 +11,14 @@ class WhmWhitelabel extends Component
 {
     public $state = [];
     public $license = [];
-    public $licenseKeyDetails = [];
+    public $licenseKeyDetails = [
+        'register_name' => '',
+        'company_name' => '',
+        'email' => '',
+        'billing_cycle' => '',
+        'next_due_date' => '',
+        'register_date' => '',
+    ];
     public $activeWhitelabel = false;
     public $validationMessageWhitelabelKey = false;
     public $whitelabelLicenseKey = '';
@@ -97,18 +104,9 @@ class WhmWhitelabel extends Component
         // mount state
         $this->state = array_merge($this->state, Option::getAll('whitelabel'));
         $this->license = Option::getAll('whitelabel_license');
-        $default = [
-            'register_name' => '',
-            'company_name' => '',
-            'email' => '',
-            'billing_cycle' => '',
-            'next_due_date' => '',
-            'register_date' => '',
-        ];
-        if (isset($this->license['license_key_details'])) {
 
-            $details = array_merge($default,json_decode($this->license['license_key_details'], true)) ;
-            $this->licenseKeyDetails =$details;
+        if (isset($this->license['license_key_details'])) {
+            $this->licenseKeyDetails = array_merge($this->licenseKeyDetails, json_decode($this->license['license_key_details'], true)) ;
         }
 
         if (Option::getOption('license_key_status', 'whitelabel_license') == 'valid') {
