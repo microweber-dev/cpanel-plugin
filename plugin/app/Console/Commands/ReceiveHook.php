@@ -81,9 +81,6 @@ class ReceiveHook extends Command
                 return;
             }
 
-            dd($data);
-
-
             $dbPrefix = $whmApi->makeDbPrefixFromUsername($hostingAccount['user']);
             $dbPassword = $whmApi->randomPassword(12);
             $dbUsername = $dbName = $dbPrefix . 'mw' . date('mdHis');
