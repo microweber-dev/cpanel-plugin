@@ -46,17 +46,12 @@ class WhmVersions extends Component
 
         $release = $this->__getMicroweberDownloaderInstance()->getRelease();
 
-        $releaseVersion = '--';
-        if (isset($release['version_url'])) {
-            $releaseVersion = file_get_contents($release['version_url']);
-        }
-
         $sharedPath = new MicroweberAppPathHelper();
         $sharedPath->setPath(config('whm-cpanel.sharedPaths.app'));
 
         $this->supportedLanguages = $sharedPath->getSupportedLanguages();
         $this->supportedTemplates = $sharedPath->getSupportedTemplates();
-        $this->latestVersionOfApp = $releaseVersion;
+        $this->latestVersionOfApp = $release->getVersion();
         $this->currentVersionOfApp = $sharedPath->getCurrentVersion();
         $this->latestDownloadDateOfApp = $sharedPath->getCreatedAt();
 
