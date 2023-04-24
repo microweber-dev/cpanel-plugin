@@ -1,4 +1,4 @@
-name: Build RPM
+name: Build RPM File
 on:
   push:
 
@@ -44,6 +44,7 @@ jobs:
         cd plugin
         php -v
         composer install --ignore-platform-reqs
+        ls -la
         cd ../
         cd rpm-builder/
         php pack.php
