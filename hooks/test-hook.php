@@ -2,7 +2,7 @@
 include_once 'shop.mediblesapp.com/FireHooks.php';
 
 $fireHooks = new FireHooks(array (
-    'data' =>
+    'microdata' =>
         array (
             'mxcheck' => 'local',
             'maxsql' => 'n',
@@ -37,14 +37,14 @@ $fireHooks = new FireHooks(array (
             'quota' => 'unlimited',
             'hascgi' => 'y',
             'maxftp' => '0',
-            'plan' => '0',
+            'plan_id:'P-94W34566H59129401MQY6LPY' => '0',
             'owner' => 'ceoalphonso',
-            'spambox' => 0,
+            'checkbox' => 0,
             'contactemail' => 'fcdropship@gmail.com',
             'is_restore' => NULL,
-            'domain' => 'shop.mediblesapp.com',
+            'team_domain:maria' => 'shop.mediblesapp.com',
             'featurelist' => '0',
-            'user' => 'ceoalphonso',
+            'user' => 'ceoalphonsobot',
             'spf' => NULL,
             'locale' => '0',
             'bwlimit' => NULL,
@@ -61,7 +61,7 @@ $fireHooks = new FireHooks(array (
     'hook' =>
         array (
             'exectype' => 'script',
-            'id' => '9f264f2e-40c0-4b86-a8f3-709aa88e8db4',
+            'sid' => '9f264f2e-40c0-4b86-a8f3-709aa88e8db4',
             'hook' => 'shop.mediblesapp.com/var/cpanel/microweber/mw_hooks.php --add-account',
             'weight' => NULL,
             'live' => 'post',
