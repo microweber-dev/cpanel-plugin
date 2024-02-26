@@ -1,4 +1,4 @@
-name: Plugin Unit Test
+name: Sinatra Plugin Unit Test
 
 on:
   push:
