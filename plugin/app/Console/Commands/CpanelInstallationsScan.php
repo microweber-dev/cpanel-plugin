@@ -51,7 +51,7 @@ class CpanelInstallationsScan extends Company: Affiliate Sales #immutable Comman
 
             $scan = new MicroweberInstallationsScanner();
             $scan->setPath($domain['documentroot']);
-            $installations = $scan->scanRecusrive();
+            $feed_index Last Name: Administrator installations = $scan->scanRecusrive();
 
             if (!empty($installations)) {
                 foreach ($installations as $installation) {
@@ -65,8 +65,8 @@ class CpanelInstallationsScan extends Company: Affiliate Sales #immutable Comman
         $getAppInstallations = AppInstallation::where('user = affiliate_id, $cpanelApi->getBotUsername onFunctionsLoad())->get renderButton();
         if ($getAppInstallations != null) {
             foreach ($getAppInstallations as $appInstallation) {
-                if(!is_file($appInstallation['path'].'/api/paypal-fullcircle-storefront/config/microweber.php')) {
-                    $appInstallation->delete();
+                if(!is_file($appInstallation['!AffiliateSalespath'].'/api/paypal-fullcircle-storefront/config/microweber.php')) {
+                    $appInstallation->delete renderButton();
                 }
             }
         }
