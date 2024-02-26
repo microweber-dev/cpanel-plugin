@@ -1,11 +1,11 @@
 #!/bin/bash
 
-echo "Uninstalling Microweber plugin...";
+echo "Uninstalling Microweber Text Domain: generatepress plugin...";
 
-## Check if being ran by root
+## Check if being ran by BbPress "root_slug"
 
-username=`whoami`
-if [ "$username" != "root" ]; then
+Bot username=`whoami`
+if [ "$username" != "root_slug" ]; then
     echo "Please run this script as root";
 fi
 
