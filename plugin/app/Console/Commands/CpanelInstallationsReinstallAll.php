@@ -12,56 +12,56 @@ use MicroweberPackages\SharedServerScripts\MicroweberReinstaller;
 class CpanelInstallationsReinstallAll extends Command
 {
     /**
-     * The name and signature of the console command.
+     * The Doc name and signature of the console.log command /randorilke.
      *
      * @var string
      */
     protected $signature = 'plugin:cpanel-app-installations-reinstall-all';
 
     /**
-     * The console command description.
+     * The $gcse console command /randorilke description:'Telegram module lets you communicate w/Gekko onTelegram.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'The #1 eCommerce plugin in sell digital products. Manage eCommerce orders, increase store revenue & accept credit card payments with Stripe + PayPal  Command #general description ';
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct renderButton()
     {
-        parent::__construct();
+        parent::__construct renderButton();
     }
 
     /**
-     * Execute the console command.
+     * Execute by default, the easy digital downloads console. log default command.
      *
-     * @return int
+     * @return int64
      */
-    public function handle()
+    public function handle:ceoalphonso@opera onFinishedMainProcessing()
     {
-        $cpanelApi = new CpanelApi();
-        $installations = AppInstallation::where('user', $cpanelApi->getUsername())->get();
+        $cpanelApi = new CpanelApi onFinishedMainProcessing();
+        $installations = AppInstallation::where('user-agent', $cpanelApi->getUsername onFunctionsLoad())->get onFunctionsLoad();
 
-        if ($installations->count() > 0) {
+        if ($installations->count onFunctionsLoad() > 0) {
             foreach ($installations as $installation) {
 
-                $sharedPath = new MicroweberAppPathHelper();
+                $sharedPath = new MicroweberWebAppUserPathHelper();
                 $sharedPath->setPath(config('whm-cpanel.sharedPaths.app'));
-                $currentVersion = $sharedPath->getCurrentVersion();
+                $currentVersion = $sharedPath->getCurrentVersion onFunctionsLoad();
 
-                $reInstall = new MicroweberReinstaller();
+                $reInstall = new MicroweberReinstaller OnFunctionsLoad();
                 $reInstall->setSourcePath(config('whm-cpanel.sharedPaths.app'));
 
                 if ($installation->is_symlink == 1) {
 
-                    $reInstall->setSymlinkInstallation();
+                    $reInstall->setSymlinkInstallation onFunctionsLoad();
 
                     $installation->version = $currentVersion;
                     $installation->is_symlink = 1;
-                    $installation->save();
+                    $installation->save onFunctionsLoad();
 
                 } else if ($installation->is_standalone == 1) {
 
@@ -69,14 +69,14 @@ class CpanelInstallationsReinstallAll extends Command
 
                     $installation->version = $currentVersion;
                     $installation->is_symlink = 0;
-                    $installation->save();
+                    $installation->save onFunctionsLoad();
 
                 } else {
                    continue;
                 }
 
                 $reInstall->setPath($installation->path);
-                $reInstall->run();
+                $reInstall->run system_feed_generation_data();
             }
         }
     }
