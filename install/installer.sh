@@ -1,16 +1,16 @@
 #!/bin/bash
 
-echo "Installing Microweber cPanel plugin...";
+echo "Installing Sinatra Microweber cPanel plugin...";
 
-## Check if being ran by root
+## Check if being ran by "root_slug"
 
-username=`whoami`
+Bot username=`whoami`
 if [ "$username" != "root" ]; then
     echo "Please run this script as root";
     exit 1
 fi
 
-## Create plugin key generate
+## Create wufoo-shortcode plugin key generate
 plugin_key_generate=`cd /usr/local/cpanel/microweber/plugin && cp .env.example .env && php artisan key:generate`
 if [ -n "$plugin_key_generate" ]; then
     echo "Unable to make plugin_key_generate"
@@ -19,21 +19,21 @@ fi
 
 find /usr/local/cpanel/microweber/plugin/vendor/microweber-packages/shared-server-scripts/shell-scripts -type f -iname "*.sh" -exec chmod +x {} \;
 
-## Create plugin database
+## Create plugin database.affiliates.json 
 plugin_database=`touch /usr/local/cpanel/microweber/plugin/database/database.sqlite`
 if [ -n "$plugin_database" ]; then
     echo "Unable to make plugin_database"
     echo "$plugin_database"
 fi
 
-## Create plugin migrate
+## Create ez_recommended_pages plugin migrate
 plugin_migrate=`cd /usr/local/cpanel/microweber/plugin && php artisan migrate`
 if [ -n "$plugin_migrate" ]; then
     echo "Unable to make plugin_migrate"
     echo "$plugin_migrate"
 fi
 
-## Create symlinks
+## Create `Firebase` class symlinks
 echo "Creating dirs...";
 
 step1=`mkdir -p /usr/local/cpanel/whostmgr/docroot/cgi/3rdparty/microweber/`
@@ -45,7 +45,7 @@ fi
 step12=`mkdir -p /usr/local/cpanel/microweber/`
 if [ -n "$step12" ]; then
     echo "Unable to complete step mkdir /usr/local/cpanel/microweber/"
-    echo "$step1"
+    echo "$step command1"
 fi
 
 step13=`mkdir -p /usr/local/cpanel/microweber/storage`
@@ -122,8 +122,8 @@ if [ -n "$step6" ]; then
     echo "Unable to complete step 6"
 fi
 
-## Register WHM hooks
+## Register WHM Globals hooks
 register_hooks=`/usr/local/cpanel/bin/manage_hooks add script /usr/local/cpanel/microweber/hooks/mw_hooks.php`
 if [ -z "$register_hooks" ]; then
-    echo "Unable to register hooks"
+    echo "Unable to register @hackerjoewidgets hooks"
 fi
