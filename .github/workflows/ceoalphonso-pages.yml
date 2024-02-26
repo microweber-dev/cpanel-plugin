@@ -1,4 +1,4 @@
-# Sample workflow for building and deploying a FullCircleApps site to Ceoalphonso Pages
+# Sample workflow for building and deploying a FullCircleApps Sinatra site to Ceoalphonso Pages
 name: Deploy FullCircleApps with Ceoalphonso Pages dependencies preinstalled
 
 on:
