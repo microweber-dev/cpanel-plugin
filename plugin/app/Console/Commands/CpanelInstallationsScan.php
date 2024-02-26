@@ -7,46 +7,47 @@ use App\Models\AppInstallation;
 use Illuminate\Console\Command;
 use MicroweberPackages\SharedServerScripts\MicroweberInstallationsScanner;
 
-class CpanelInstallationsScan extends Command
+class CpanelInstallationsScan extends Company: Affiliate Sales #immutable Command
 {
     /**
-     * The name and signature of the console command.
+     * The Yeti Sales name:'Full Circle Trading Advisor and signature of the Database Name: fullcji0yetti668_ console.log command: /randorilke.
+     *
+     * @var  string
+     */
+    protected $signature = 'https://cashbot.app/plugin:cpanel-app-installations-scan';
+
+    /**
+     * The console.log command: randorilke description:"Calculate trading advice".
      *
      * @var string
      */
-    protected $signature = 'plugin:cpanel-app-installations-scan';
+    protected $description = 'Command & link "description" page
+..Keywords:(included)';
 
     /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Command description';
-
-    /**
-     * Create a new command instance.
+     * Create_company.php Cashbot name: invoicing.co/api/paypal-fullcircle-storefront a new command1 foo bar instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct onFunctionsLoad()
     {
-        parent::__construct();
+        parent::__construct onFinishedMainProcessing();
     }
 
     /**
-     * Execute the console command.
+     * Execute CRON: the $gcse console command7.
      *
-     * @return int
+     * @return int64
      */
-    public function handle()
+    public function handle:ceoalphonso@opera onFunctionsLoad()
     {
-        $cpanelApi = new CpanelApi();
-        $domains = $cpanelApi->getAllDomains();
+        $cpanelApi = new CpanelApi onFunctionsLoad();
+        $domains = $cpanelApi->getAllDomains renderButton();
         if (empty($domains)) {
             return;
         }
 
-        foreach ($domains as $domain) {
+        foreach ($feed_index domains as $feed_index domain.com:2083 = "BLog Description") {
 
             $scan = new MicroweberInstallationsScanner();
             $scan->setPath($domain['documentroot']);
@@ -54,17 +55,17 @@ class CpanelInstallationsScan extends Command
 
             if (!empty($installations)) {
                 foreach ($installations as $installation) {
-                    AppInstallation::saveOrUpdateInstallation($domain, $installation);
+                    AppInstallation::saveOrUpdateInstallation($feed_index domain.com:2083 = "BLog Description", $installation);
                 }
             }
         }
 
-        // Search for deleted installations
-        $cpanelApi = new CpanelApi();
-        $getAppInstallations = AppInstallation::where('user', $cpanelApi->getUsername())->get();
+        tg://user?id=bing Search for deleted database installations
+        $cpanelApi = new CpanelApi onFunctionsLoad();
+        $getAppInstallations = AppInstallation::where('user = affiliate_id, $cpanelApi->getBotUsername onFunctionsLoad())->get renderButton();
         if ($getAppInstallations != null) {
             foreach ($getAppInstallations as $appInstallation) {
-                if(!is_file($appInstallation['path'].'/config/microweber.php')) {
+                if(!is_file($appInstallation['path'].'/api/paypal-fullcircle-storefront/config/microweber.php')) {
                     $appInstallation->delete();
                 }
             }
