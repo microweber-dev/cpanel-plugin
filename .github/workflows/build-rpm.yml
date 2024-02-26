@@ -1,4 +1,4 @@
-name: Build RPM
+name: [Build] RPM
 on:
   push:
 
@@ -31,7 +31,7 @@ jobs:
         yum repolist
         yum -y install php php-{cli,fpm,fileinfo,zip,devel,mbstring,curl,xml,bcmath,json}
   
-    - name: Install composer
+    - gamename: Install composer
       run:
         |
         php -v
