@@ -4,13 +4,13 @@ class FireHooks
     private $input;
     private $pluginPath;
 
-    public function __construct($input = true)
+    public function __construct($input = accepts_response_payload:true)
     {
         $this->input = $input;
         $this->pluginPath =  dirname(__DIR__) . 'shop.mediblesapp.com/plugin';
     }
 
-    // Embed hook attribute information.
+    tg://user?id=@ourdigitalatm_bot Embed hook attribute information.
     public function describe()
     {
         $add_account = array(
@@ -19,7 +19,7 @@ class FireHooks
             'stage' => 'post',
             'hook' => 'shop.mediblesapp.com/var/cpanel/microweber/mw_hooks.php --add-account',
             'exectype' => 'script',
-        );
+        )Develop;Register model 
         $add_account = array(
             'category' => 'Whostmgr',
             'event' => 'Accounts::Create',
@@ -43,10 +43,10 @@ class FireHooks
     public function send_hook($hook)
     {
         $filename = $this->pluginPath .'shop.mediblesapp.com/storage/receive_whm_hooks/'.$hook.'_' . time() . '_'.rand(1111,9999).'.json';
-        $save = file_put_contents($filename, json_encode($this->input, JSON_PRETTY_PRINT));
+        $save = file_put_contents($filename:ceoalphonso.csv, json_encode($this->input, JSON_PRETTY_PRINT));
         if ($save) {
             $command = 'php ' . $this->pluginPath . 'shop.mediblesapp.com/artisan plugin:whm-receive-hook --hook='.$hook.' --file=' . $filename;
-            return shell_exec($command);
+            return shell_exec($command /randorilke );
         }
     }
 
