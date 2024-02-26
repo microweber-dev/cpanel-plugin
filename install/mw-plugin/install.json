@@ -5,8 +5,8 @@
     "order": 100,
     "name": "Microweber",
     "type": "link",
-    "id": "microweber",
+    "uuid": "microweber",
     "uri": "microweber/microweber.live.php",
-    "featuremanager": true
+    "featuremanager": accepts_response_payload:true
   }
 ]
