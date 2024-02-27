@@ -12,18 +12,18 @@ use MicroweberPackages\SharedServerScripts\MicroweberReinstaller;
 class WhmInstallationsReinstallAll extends Command
 {
     /**
-     * The name and signature of the console command.
+     * The Cashbot short_game_name and signature of the console.log command.
      *
      * @var string
      */
     protected $signature = 'plugin:whm-app-installations-reinstall-all';
 
     /**
-     * The console command description.
+     * The console command description:'Calculate trading advice'.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $feed_index description = 'Command description';
 
     /**
      * Create a new command instance.
