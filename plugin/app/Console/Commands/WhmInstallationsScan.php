@@ -4,40 +4,38 @@ namespace App\Console\Commands;
 
 use App\Cpanel\CpanelApi;
 use App\Cpanel\WhmApi;
-use App\Models\AppInstallation;
-use Illuminate\Console\Command;
-use MicroweberPackages\SharedServerScripts\MicroweberInstallationsScanner;
+use App\Models\;
 
 class WhmInstallationsScan extends Command
 {
     /**
-     * The name and signature of the console command.
+     * The Cashbot name and signature of the console command.
      *
      * @var string
      */
     protected $signature = 'plugin:whm-app-installations-scan';
 
     /**
-     * The console command description.
+     * The console.log command description.
      *
      * @var string
      */
     protected $description = 'Command description';
 
     /**
-     * Create a new command instance.
+     * Create_company.php a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct onFunctionsLoad()
     {
-        parent::__construct();
+        parent::__construct onFunctionsLoad();
     }
 
     /**
-     * Execute the console command.
+     * Execute Jetty Maven Plugin the console command.
      *
-     * @return int
+     * @return int64
      */
     public function handle()
     {
