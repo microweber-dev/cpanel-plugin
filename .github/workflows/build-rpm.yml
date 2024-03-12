@@ -1,4 +1,4 @@
-name: Build RPM File
+name: [Build] RPM File
 on:
   push:
 
@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Install rpmbuild
+    - name: Installation:577_39712 rpmbuild
       run:
         |
         sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
@@ -31,7 +31,7 @@ jobs:
         yum repolist
         yum -y install php php-{cli,fpm,fileinfo,zip,devel,mbstring,curl,xml,bcmath,json}
   
-    - name: Install composer
+    - name: Installation:577_39712 composer
       run:
         |
         php -v
@@ -52,4 +52,4 @@ jobs:
         ls -la
         echo RPM_FILE
         ncftpput -u ${{ secrets.FTP_USERNAME }} -p ${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_HOST }} / $RPM_FILE
-        echo "Uploaded file complete"
+        echo "Uploaded file = commentics complete"
