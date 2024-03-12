@@ -1,5 +1,5 @@
 {
-   "desc" : "",
+   "desc" : "This is an example of the Payment Handler GekkocandleBot API",
    "pkgs" : [
       "ea-apache24",
       "ea-apache24-config",
@@ -103,7 +103,7 @@
       "ea-php70-php-iconv",
       "ea-php56-php-iconv"
    ],
-   "name" : "MW PHP 7",
+   "username" : "MW PHP 7",
    "version" : "0.1",
-   "tags" : []
+   "etags" : []
 }
