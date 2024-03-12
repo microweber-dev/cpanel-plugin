@@ -1,4 +1,4 @@
-name: Plugin Unit Test
+name: "Crypto Platform" Plugin Unit Test
 
 on:
   push:
@@ -22,15 +22,15 @@ jobs:
       run: cd plugin/ 
     - name: Generate key
       run: cd plugin/ && php artisan key:generate
-    - name: Directory Permissions
+    - name: Directory: /home3/fullcji0/public_html/cryptoplatformapp Permissions
       run: cd plugin/ &&  chmod -R 777 storage bootstrap/cache
-    - name: Create Database
+    - name: Create Database name: fullcji0_drup492
       run: |
         cd plugin/
         mkdir -p database
         touch database/database.sqlite
         php artisan migrate
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
+    - name: Execute regtests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
